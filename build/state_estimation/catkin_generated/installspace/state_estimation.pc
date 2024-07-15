@@ -1,0 +1,8 @@
+prefix=/home/andrew/wei_research_ws/install
+
+Name: state_estimation
+Description: Description of state_estimation
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lMav -lCamera
+Requires: message_runtime cv_bridge roscpp rospy std_msgs geometry_msgs pcl_conversions
