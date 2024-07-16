@@ -10,6 +10,7 @@ from cv_bridge import CvBridge
 
 import numpy as np
 import pandas as pd
+import os
 from time import time, sleep
 from scipy.spatial import Delaunay
 import matplotlib.pyplot as plt
@@ -169,6 +170,7 @@ class PTZCamera():
 
         self.pub_pos                = rospy.Publisher("local/position", Point, queue_size=10)
         self.pub_exchange_data      = rospy.Publisher("local/exchange_data",ExchangeData, queue_size=10)
+        # self.pub_utility            = rospy.Publisher("/iris_"+str(self.id)+"/utility", Float64, queue_size=10)
 
         self.pub_vel_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_velocity/cmd_vel", TwistStamped, queue_size=10)       
 
@@ -567,6 +569,7 @@ class PTZCamera():
 
                     self.total_score += self.sensor_weight[role][event]*np.sum(tmp)
                 self.sensor_scores[role][event] = np.sum(quality)
+        # self.pub_utility.publish(self.total_score)
                     
     def ComputeControlSignal(self):
         u_p = np.array([0., 0.])  
@@ -701,6 +704,16 @@ class PTZCamera():
             
             gradient[np.isnan(gradient)] = 0
                 
+        return gradient
+    
+    def ComputeEventGradient(self, target, event, type):
+        x_coords, y_coords = np.meshgrid(np.arange(self.size[0]), np.arange(self.size[1]), indexing='ij')
+        pos_self    = self.pos              # x_{R_i}   the pose of the agent
+        grid_size   = self.grid_size
+        gradient    = np.zeros(self.size)
+        pos_target  = target[0]             # hat_x     the pose of target after correction
+        breve_p     = target[1]             # breve_p   the covariance of target's pose
+        
         return gradient
     
     def ComputeSelfQuality(self, role, event):
@@ -965,21 +978,47 @@ if __name__ == "__main__":
     cnt = 0
     
     while not rospy.is_shutdown() and not kill and not failure:
-        # rospy.loginfo("Updating...")
         UAV_self.Update()
-        
+        rospy.loginfo("Updating...")
+            
         frame.append(cnt)
         score.append(UAV_self.total_score)
         pos_x.append(UAV_self.pos[0])
         pos_y.append(UAV_self.pos[1])
         cnt += 1
         
-        rate.sleep()
-    
-    plt_dict = {'frame_id'              : frame,
+        plt_dict = {'frame_id'              : frame,
                 str(id)+"'s score"      : score,
                 "pos_x"                 : pos_x,
                 "pos_y"                 : pos_y}
             
-    df = pd.DataFrame.from_dict(plt_dict) 
-    df.to_csv (r"~/research_ws/src/voronoi_cbsa/result/8/coop/balance_coop_"+str(id)+".csv", index=False, header=True)
+        # df = pd.DataFrame.from_dict(plt_dict) 
+        # df.to_csv (r"~/wei_research_ws/src/voronoi_cbsa/result/"+str(id)+".csv", index=False, header=True)
+
+        save_path = "/home/andrew/wei_research_ws/src/voronoi_cbsa/result/"
+        isExist = os.path.exists(save_path)
+        rospy.logwarn(str(id) + ": " + str(cnt))
+        if not isExist:
+            os.makedirs(save_path)
+            
+        df = pd.DataFrame.from_dict(plt_dict) 
+        df.to_csv (save_path + str(id) + ".csv", index=False, header=True)
+        
+        rate.sleep()
+    
+    # plt_dict = {'frame_id'              : frame,
+    #             str(id)+"'s score"      : score,
+    #             "pos_x"                 : pos_x,
+    #             "pos_y"                 : pos_y}
+            
+    # # df = pd.DataFrame.from_dict(plt_dict) 
+    # # df.to_csv (r"~/wei_research_ws/src/voronoi_cbsa/result/"+str(id)+".csv", index=False, header=True)
+
+    # save_path = "/home/andrew/wei_research_ws/src/voronoi_cbsa/result/"
+    # isExist = os.path.exists(save_path)
+    # rospy.logwarn(str(id) + ": " + str(cnt))
+    # if not isExist:
+    #     os.makedirs(save_path)
+        
+    # df = pd.DataFrame.from_dict(plt_dict) 
+    # df.to_csv (save_path + str(id) + ".csv", index=False, header=True)
