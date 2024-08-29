@@ -16,7 +16,6 @@ protected:
 	Eigen::VectorXd weightedY;
 	Eigen::MatrixXd fusedP;
 	Eigen::VectorXd fusedX;
-
 	int fusionNum;
 	int state_size;
 public:
@@ -26,5 +25,8 @@ public:
 	virtual void CI_combination();
 	Eigen::MatrixXd getFusedCov();
 	Eigen::VectorXd getFusedState();
+	Eigen::MatrixXd getWeightedS();
+	Eigen::VectorXd getWeightedY();
+	Eigen::VectorXd getWeightedXi_hat();
 };
 #endif

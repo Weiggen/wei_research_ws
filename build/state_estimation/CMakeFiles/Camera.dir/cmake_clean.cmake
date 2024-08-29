@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/andrew/wei_research_ws/devel/lib/libCamera.pdb"
-  "/home/andrew/wei_research_ws/devel/lib/libCamera.so"
+  "/home/weiggen/wei_research_ws/devel/lib/libCamera.pdb"
+  "/home/weiggen/wei_research_ws/devel/lib/libCamera.so"
   "CMakeFiles/Camera.dir/src/Camera.cpp.o"
   "CMakeFiles/Camera.dir/src/Camera.cpp.o.d"
 )

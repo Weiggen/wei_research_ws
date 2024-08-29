@@ -7,5 +7,9 @@
    "INT32MULTIARRAYSTAMPED"
    "<PLOT>"
    "PLOT"
+   "<RMSE>"
+   "RMSE"
+   "<DENSITYGRADIENT>"
+   "DENSITYGRADIENT"
   ))
 

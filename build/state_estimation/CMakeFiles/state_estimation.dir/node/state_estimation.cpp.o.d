@@ -1,5 +1,5 @@
 state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
- /home/andrew/wei_research_ws/src/state_estimation/node/state_estimation.cpp \
+ /home/weiggen/wei_research_ws/src/state_estimation/node/state_estimation.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/9/string \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
@@ -9,7 +9,6 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h \
- /usr/include/c++/9/pstl/pstl_config.h \
  /usr/include/c++/9/bits/stringfwd.h /usr/include/c++/9/bits/memoryfwd.h \
  /usr/include/c++/9/bits/char_traits.h \
  /usr/include/c++/9/bits/stl_algobase.h \
@@ -96,9 +95,7 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/atomic_word.h \
  /usr/include/c++/9/ext/alloc_traits.h \
- /usr/include/c++/9/bits/alloc_traits.h /usr/include/c++/9/string_view \
- /usr/include/c++/9/limits /usr/include/c++/9/bits/functional_hash.h \
- /usr/include/c++/9/bits/string_view.tcc \
+ /usr/include/c++/9/bits/alloc_traits.h \
  /usr/include/c++/9/ext/string_conversions.h /usr/include/c++/9/cstdlib \
  /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -122,6 +119,7 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+ /usr/include/c++/9/bits/functional_hash.h \
  /usr/include/c++/9/bits/basic_string.tcc /usr/include/c++/9/sstream \
  /usr/include/c++/9/istream /usr/include/c++/9/ios \
  /usr/include/c++/9/bits/ios_base.h \
@@ -142,8 +140,7 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/c++/9/bits/ostream.tcc /usr/include/c++/9/bits/istream.tcc \
  /usr/include/c++/9/bits/sstream.tcc /usr/include/c++/9/vector \
  /usr/include/c++/9/bits/stl_construct.h \
- /usr/include/c++/9/bits/stl_uninitialized.h /usr/include/c++/9/utility \
- /usr/include/c++/9/bits/stl_relops.h \
+ /usr/include/c++/9/bits/stl_uninitialized.h \
  /usr/include/c++/9/bits/stl_vector.h \
  /usr/include/c++/9/bits/stl_bvector.h /usr/include/c++/9/bits/vector.tcc \
  /usr/include/c++/9/cmath /usr/include/math.h \
@@ -156,41 +153,17 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
- /usr/include/c++/9/bits/specfun.h /usr/include/c++/9/tr1/gamma.tcc \
- /usr/include/c++/9/tr1/special_function_util.h \
- /usr/include/c++/9/tr1/bessel_function.tcc \
- /usr/include/c++/9/tr1/beta_function.tcc \
- /usr/include/c++/9/tr1/ell_integral.tcc \
- /usr/include/c++/9/tr1/exp_integral.tcc \
- /usr/include/c++/9/tr1/hypergeometric.tcc \
- /usr/include/c++/9/tr1/legendre_function.tcc \
- /usr/include/c++/9/tr1/modified_bessel_func.tcc \
- /usr/include/c++/9/tr1/poly_hermite.tcc \
- /usr/include/c++/9/tr1/poly_laguerre.tcc \
- /usr/include/c++/9/tr1/riemann_zeta.tcc /usr/include/c++/9/random \
+ /usr/include/c++/9/random /usr/include/c++/9/limits \
  /usr/include/c++/9/bits/random.h \
  /usr/include/c++/9/bits/uniform_int_dist.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/opt_random.h \
  /usr/include/c++/9/bits/random.tcc /usr/include/c++/9/numeric \
- /usr/include/c++/9/bits/stl_numeric.h \
- /usr/include/c++/9/pstl/glue_numeric_defs.h \
- /usr/include/c++/9/pstl/execution_defs.h /usr/include/c++/9/algorithm \
+ /usr/include/c++/9/bits/stl_numeric.h /usr/include/c++/9/algorithm \
+ /usr/include/c++/9/utility /usr/include/c++/9/bits/stl_relops.h \
  /usr/include/c++/9/bits/stl_algo.h \
  /usr/include/c++/9/bits/algorithmfwd.h \
  /usr/include/c++/9/bits/stl_heap.h /usr/include/c++/9/bits/stl_tempbuf.h \
- /usr/include/c++/9/pstl/glue_algorithm_defs.h \
- /usr/include/c++/9/functional /usr/include/c++/9/tuple \
- /usr/include/c++/9/array /usr/include/c++/9/bits/uses_allocator.h \
- /usr/include/c++/9/bits/invoke.h /usr/include/c++/9/bits/refwrap.h \
- /usr/include/c++/9/bits/std_function.h /usr/include/c++/9/unordered_map \
- /usr/include/c++/9/ext/aligned_buffer.h \
- /usr/include/c++/9/bits/hashtable.h \
- /usr/include/c++/9/bits/hashtable_policy.h \
- /usr/include/c++/9/bits/node_handle.h /usr/include/c++/9/optional \
- /usr/include/c++/9/bits/enable_special_members.h \
- /usr/include/c++/9/bits/unordered_map.h \
- /usr/include/c++/9/bits/erase_if.h /usr/include/eigen3/Eigen/Dense \
- /usr/include/eigen3/Eigen/Core \
+ /usr/include/eigen3/Eigen/Dense /usr/include/eigen3/Eigen/Core \
  /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
  /usr/include/eigen3/Eigen/src/Core/util/Macros.h \
  /usr/include/c++/9/complex \
@@ -201,8 +174,11 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/mm_malloc.h \
  /usr/include/c++/9/stdlib.h /usr/include/c++/9/cstddef \
  /usr/include/c++/9/cassert /usr/include/assert.h \
- /usr/include/c++/9/cstring /usr/include/string.h /usr/include/strings.h \
- /usr/include/c++/9/climits \
+ /usr/include/c++/9/functional /usr/include/c++/9/tuple \
+ /usr/include/c++/9/array /usr/include/c++/9/bits/uses_allocator.h \
+ /usr/include/c++/9/bits/invoke.h /usr/include/c++/9/bits/refwrap.h \
+ /usr/include/c++/9/bits/std_function.h /usr/include/c++/9/cstring \
+ /usr/include/string.h /usr/include/strings.h /usr/include/c++/9/climits \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
@@ -754,13 +730,16 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/boost/predef/os/bsd/open.h \
  /usr/include/boost/predef/os/bsd/net.h \
  /usr/include/boost/predef/os/android.h \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/quadmath.h \
  /usr/include/x86_64-linux-gnu/sys/time.h \
  /opt/ros/noetic/include/ros/rate.h /opt/ros/noetic/include/ros/console.h \
  /opt/ros/noetic/include/ros/console_backend.h /usr/include/c++/9/cstdarg \
  /usr/include/c++/9/map /usr/include/c++/9/bits/stl_tree.h \
+ /usr/include/c++/9/ext/aligned_buffer.h \
  /usr/include/c++/9/bits/stl_map.h /usr/include/c++/9/bits/stl_multimap.h \
- /usr/include/log4cxx/level.h /usr/include/log4cxx/logstring.h \
- /usr/include/log4cxx/log4cxx.h /usr/include/log4cxx/helpers/transcoder.h \
+ /usr/include/c++/9/bits/erase_if.h /usr/include/log4cxx/level.h \
+ /usr/include/log4cxx/logstring.h /usr/include/log4cxx/log4cxx.h \
+ /usr/include/log4cxx/helpers/transcoder.h \
  /usr/include/log4cxx/helpers/objectimpl.h \
  /usr/include/log4cxx/helpers/object.h \
  /usr/include/log4cxx/helpers/class.h \
@@ -785,7 +764,6 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/c++/9/bits/atomic_base.h \
  /usr/include/c++/9/bits/atomic_lockfree_defines.h \
  /usr/include/c++/9/backward/auto_ptr.h \
- /usr/include/c++/9/pstl/glue_memory_defs.h \
  /usr/include/boost/checked_delete.hpp \
  /usr/include/boost/core/checked_delete.hpp \
  /usr/include/boost/smart_ptr/detail/shared_count.hpp \
@@ -1314,10 +1292,10 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /opt/ros/noetic/include/geometry_msgs/Twist.h \
  /opt/ros/noetic/include/geometry_msgs/Vector3.h \
  /opt/ros/noetic/include/std_msgs/Bool.h \
- /home/andrew/wei_research_ws/devel/include/state_estimation/EIFpairStamped.h \
- /home/andrew/wei_research_ws/devel/include/state_estimation/Plot.h \
+ /home/weiggen/wei_research_ws/devel/include/state_estimation/EIFpairStamped.h \
+ /home/weiggen/wei_research_ws/devel/include/state_estimation/Plot.h \
  /opt/ros/noetic/include/gazebo_msgs/ModelStates.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/Mav.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/Mav.h \
  /opt/ros/noetic/include/sensor_msgs/Imu.h \
  /opt/ros/noetic/include/mavros_msgs/State.h \
  /opt/ros/noetic/include/tf/tf.h /opt/ros/noetic/include/tf/exceptions.h \
@@ -1345,7 +1323,6 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/include/boost/container_hash/detail/float_functions.hpp \
  /usr/include/boost/container_hash/detail/limits.hpp \
  /usr/include/boost/integer/static_log2.hpp /usr/include/c++/9/typeindex \
- /usr/include/c++/9/variant \
  /usr/include/boost/container_hash/extensions.hpp \
  /usr/include/boost/detail/container_fwd.hpp /usr/include/c++/9/deque \
  /usr/include/c++/9/bits/stl_deque.h /usr/include/c++/9/bits/deque.tcc \
@@ -1586,21 +1563,24 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /opt/ros/noetic/include/tf2_msgs/FrameGraph.h \
  /opt/ros/noetic/include/tf2_msgs/FrameGraphRequest.h \
  /opt/ros/noetic/include/tf2_msgs/FrameGraphResponse.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/Camera.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/Camera.h \
  /opt/ros/noetic/include/sensor_msgs/JointState.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/TEIF_Lidar.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/EIF.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/TEIF.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/HEIF_self.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/HEIF.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/HEIF_target.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/TEIF_Lidar.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/EIF.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/TEIF.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/MathLib.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/HEIF_self.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/HEIF.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/HEIF_target.h \
  /usr/local/include/OsqpEigen/OsqpEigen.h \
  /usr/local/include/OsqpEigen/Constants.hpp \
- /usr/local/include/osqp/osqp.h /usr/local/include/osqp/types.h \
- /usr/local/include/osqp/glob_opts.h \
+ /usr/local/include/OsqpEigen/Compat.hpp /usr/local/include/osqp/osqp.h \
  /usr/local/include/osqp/osqp_configure.h \
- /usr/local/include/osqp/constants.h /usr/local/include/osqp/util.h \
- /usr/local/include/osqp/cs.h /usr/local/include/osqp/lin_alg.h \
+ /usr/local/include/osqp/osqp_api_constants.h \
+ /usr/local/include/osqp/osqp_api_types.h \
+ /usr/local/include/osqp/osqp_api_functions.h \
+ /usr/local/include/osqp/osqp_export_define.h \
+ /usr/local/include/osqp/osqp_api_utils.h \
  /usr/local/include/OsqpEigen/Data.hpp \
  /usr/local/include/OsqpEigen/SparseMatrixHelper.hpp \
  /usr/include/eigen3/Eigen/Sparse /usr/include/eigen3/Eigen/SparseCore \
@@ -1682,10 +1662,12 @@ state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o: \
  /usr/local/include/OsqpEigen/Data.tpp \
  /usr/local/include/OsqpEigen/Settings.hpp \
  /usr/local/include/OsqpEigen/Solver.hpp \
- /usr/local/include/OsqpEigen/Solver.tpp /usr/local/include/osqp/auxil.h \
- /usr/local/include/osqp/scaling.h /usr/local/include/OsqpEigen/Debug.hpp \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_pose.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/SEIF.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_neighbors.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/GT_measurement_ros.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/EIFpairs_ros.h
+ /usr/local/include/OsqpEigen/Solver.tpp \
+ /usr/local/include/OsqpEigen/Debug.hpp \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_pose.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_neighbors.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_lidar_neighbors.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/GT_measurement_ros.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/EIFpairs_ros.h \
+ /home/weiggen/wei_research_ws/devel/include/state_estimation/densityGradient.h

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/andrew/wei_research_ws/devel/lib/formation_ctrl/cmd_node"
-  "/home/andrew/wei_research_ws/devel/lib/formation_ctrl/cmd_node.pdb"
+  "/home/weiggen/wei_research_ws/devel/lib/formation_ctrl/cmd_node"
+  "/home/weiggen/wei_research_ws/devel/lib/formation_ctrl/cmd_node.pdb"
   "CMakeFiles/cmd_node.dir/node/cmd_node.cpp.o"
   "CMakeFiles/cmd_node.dir/node/cmd_node.cpp.o.d"
   "CMakeFiles/cmd_node.dir/src/getch.cpp.o"

@@ -1,5 +1,5 @@
 formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
- /home/andrew/wei_research_ws/src/formation_gaz_sim/node/formation_cbf_node.cpp \
+ /home/weiggen/wei_research_ws/src/formation_gaz_sim/node/formation_cbf_node.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/9/cmath \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
@@ -9,7 +9,6 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h \
- /usr/include/c++/9/pstl/pstl_config.h \
  /usr/include/c++/9/bits/cpp_type_traits.h \
  /usr/include/c++/9/ext/type_traits.h /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -56,7 +55,12 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
- /usr/include/c++/9/bits/specfun.h /usr/include/c++/9/bits/stl_algobase.h \
+ /opt/ros/noetic/include/ros/ros.h /opt/ros/noetic/include/ros/time.h \
+ /opt/ros/noetic/include/ros/platform.h /usr/include/c++/9/stdlib.h \
+ /usr/include/c++/9/cstdlib /usr/include/c++/9/string \
+ /usr/include/c++/9/bits/stringfwd.h /usr/include/c++/9/bits/memoryfwd.h \
+ /usr/include/c++/9/bits/char_traits.h \
+ /usr/include/c++/9/bits/stl_algobase.h \
  /usr/include/c++/9/bits/functexcept.h \
  /usr/include/c++/9/bits/exception_defines.h \
  /usr/include/c++/9/ext/numeric_traits.h \
@@ -67,26 +71,9 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/c++/9/debug/assertions.h \
  /usr/include/c++/9/bits/stl_iterator.h \
  /usr/include/c++/9/bits/ptr_traits.h /usr/include/c++/9/debug/debug.h \
- /usr/include/c++/9/bits/predefined_ops.h /usr/include/c++/9/limits \
- /usr/include/c++/9/tr1/gamma.tcc \
- /usr/include/c++/9/tr1/special_function_util.h \
- /usr/include/c++/9/tr1/bessel_function.tcc \
- /usr/include/c++/9/tr1/beta_function.tcc \
- /usr/include/c++/9/tr1/ell_integral.tcc \
- /usr/include/c++/9/tr1/exp_integral.tcc \
- /usr/include/c++/9/tr1/hypergeometric.tcc \
- /usr/include/c++/9/tr1/legendre_function.tcc \
- /usr/include/c++/9/tr1/modified_bessel_func.tcc \
- /usr/include/c++/9/tr1/poly_hermite.tcc \
- /usr/include/c++/9/tr1/poly_laguerre.tcc \
- /usr/include/c++/9/tr1/riemann_zeta.tcc \
- /opt/ros/noetic/include/ros/ros.h /opt/ros/noetic/include/ros/time.h \
- /opt/ros/noetic/include/ros/platform.h /usr/include/c++/9/stdlib.h \
- /usr/include/c++/9/cstdlib /usr/include/c++/9/string \
- /usr/include/c++/9/bits/stringfwd.h /usr/include/c++/9/bits/memoryfwd.h \
- /usr/include/c++/9/bits/char_traits.h /usr/include/c++/9/bits/postypes.h \
- /usr/include/c++/9/cwchar /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/stdarg.h \
+ /usr/include/c++/9/bits/predefined_ops.h \
+ /usr/include/c++/9/bits/postypes.h /usr/include/c++/9/cwchar \
+ /usr/include/wchar.h /usr/lib/gcc/x86_64-linux-gnu/9/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
@@ -130,9 +117,7 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/atomic_word.h \
  /usr/include/c++/9/ext/alloc_traits.h \
- /usr/include/c++/9/bits/alloc_traits.h /usr/include/c++/9/string_view \
- /usr/include/c++/9/bits/functional_hash.h \
- /usr/include/c++/9/bits/string_view.tcc \
+ /usr/include/c++/9/bits/alloc_traits.h \
  /usr/include/c++/9/ext/string_conversions.h /usr/include/c++/9/cstdio \
  /usr/include/stdio.h /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
@@ -145,6 +130,7 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+ /usr/include/c++/9/bits/functional_hash.h \
  /usr/include/c++/9/bits/basic_string.tcc /usr/include/c++/9/iostream \
  /usr/include/c++/9/ostream /usr/include/c++/9/ios \
  /usr/include/c++/9/bits/ios_base.h \
@@ -209,23 +195,7 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/c++/9/bits/algorithmfwd.h \
  /usr/include/c++/9/bits/stl_heap.h /usr/include/c++/9/bits/stl_tempbuf.h \
  /usr/include/c++/9/bits/stl_construct.h \
- /usr/include/c++/9/bits/uniform_int_dist.h \
- /usr/include/c++/9/pstl/glue_algorithm_defs.h \
- /usr/include/c++/9/functional /usr/include/c++/9/tuple \
- /usr/include/c++/9/array /usr/include/c++/9/bits/uses_allocator.h \
- /usr/include/c++/9/bits/invoke.h /usr/include/c++/9/bits/refwrap.h \
- /usr/include/c++/9/bits/std_function.h /usr/include/c++/9/unordered_map \
- /usr/include/c++/9/ext/aligned_buffer.h \
- /usr/include/c++/9/bits/hashtable.h \
- /usr/include/c++/9/bits/hashtable_policy.h \
- /usr/include/c++/9/bits/node_handle.h /usr/include/c++/9/optional \
- /usr/include/c++/9/bits/enable_special_members.h \
- /usr/include/c++/9/bits/unordered_map.h \
- /usr/include/c++/9/bits/erase_if.h /usr/include/c++/9/vector \
- /usr/include/c++/9/bits/stl_uninitialized.h \
- /usr/include/c++/9/bits/stl_vector.h \
- /usr/include/c++/9/bits/stl_bvector.h /usr/include/c++/9/bits/vector.tcc \
- /usr/include/c++/9/pstl/execution_defs.h \
+ /usr/include/c++/9/bits/uniform_int_dist.h /usr/include/c++/9/limits \
  /usr/include/boost/config/no_tr1/cmath.hpp /usr/include/c++/9/cfloat \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/float.h \
  /usr/include/boost/math/tools/user.hpp \
@@ -237,10 +207,11 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/libintl.h /usr/include/c++/9/bits/codecvt.h \
  /usr/include/c++/9/bits/locale_facets_nonio.tcc \
  /usr/include/c++/9/bits/locale_conv.h \
- /usr/include/c++/9/bits/unique_ptr.h \
- /usr/include/c++/9/bits/quoted_string.h /usr/include/c++/9/sstream \
- /usr/include/c++/9/bits/sstream.tcc /usr/include/c++/9/cstring \
- /usr/include/string.h /usr/include/strings.h \
+ /usr/include/c++/9/bits/unique_ptr.h /usr/include/c++/9/tuple \
+ /usr/include/c++/9/array /usr/include/c++/9/bits/uses_allocator.h \
+ /usr/include/c++/9/bits/invoke.h /usr/include/c++/9/bits/quoted_string.h \
+ /usr/include/c++/9/sstream /usr/include/c++/9/bits/sstream.tcc \
+ /usr/include/c++/9/cstring /usr/include/string.h /usr/include/strings.h \
  /usr/include/boost/config/no_tr1/complex.hpp /usr/include/c++/9/complex \
  /usr/include/boost/math/policies/policy.hpp \
  /usr/include/boost/mpl/list.hpp /usr/include/boost/mpl/limits/list.hpp \
@@ -529,6 +500,9 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/boost/exception/exception.hpp \
  /usr/include/boost/current_function.hpp \
  /usr/include/boost/math/special_functions/math_fwd.hpp \
+ /usr/include/c++/9/vector /usr/include/c++/9/bits/stl_uninitialized.h \
+ /usr/include/c++/9/bits/stl_vector.h \
+ /usr/include/c++/9/bits/stl_bvector.h /usr/include/c++/9/bits/vector.tcc \
  /usr/include/boost/math/special_functions/detail/round_fwd.hpp \
  /usr/include/boost/math/tools/promotion.hpp \
  /usr/include/boost/type_traits/is_floating_point.hpp \
@@ -570,13 +544,16 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/boost/predef/os/bsd/open.h \
  /usr/include/boost/predef/os/bsd/net.h \
  /usr/include/boost/predef/os/android.h \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/quadmath.h \
  /usr/include/x86_64-linux-gnu/sys/time.h \
  /opt/ros/noetic/include/ros/rate.h /opt/ros/noetic/include/ros/console.h \
  /opt/ros/noetic/include/ros/console_backend.h /usr/include/c++/9/cstdarg \
  /usr/include/c++/9/map /usr/include/c++/9/bits/stl_tree.h \
+ /usr/include/c++/9/ext/aligned_buffer.h \
  /usr/include/c++/9/bits/stl_map.h /usr/include/c++/9/bits/stl_multimap.h \
- /usr/include/log4cxx/level.h /usr/include/log4cxx/logstring.h \
- /usr/include/log4cxx/log4cxx.h /usr/include/log4cxx/helpers/transcoder.h \
+ /usr/include/c++/9/bits/erase_if.h /usr/include/log4cxx/level.h \
+ /usr/include/log4cxx/logstring.h /usr/include/log4cxx/log4cxx.h \
+ /usr/include/log4cxx/helpers/transcoder.h \
  /usr/include/log4cxx/helpers/objectimpl.h \
  /usr/include/log4cxx/helpers/object.h \
  /usr/include/log4cxx/helpers/class.h \
@@ -597,11 +574,11 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/c++/9/ext/concurrence.h \
  /usr/include/c++/9/bits/shared_ptr.h \
  /usr/include/c++/9/bits/shared_ptr_base.h \
+ /usr/include/c++/9/bits/refwrap.h \
  /usr/include/c++/9/bits/shared_ptr_atomic.h \
  /usr/include/c++/9/bits/atomic_base.h \
  /usr/include/c++/9/bits/atomic_lockfree_defines.h \
  /usr/include/c++/9/backward/auto_ptr.h \
- /usr/include/c++/9/pstl/glue_memory_defs.h \
  /usr/include/boost/checked_delete.hpp \
  /usr/include/boost/core/checked_delete.hpp \
  /usr/include/boost/smart_ptr/detail/shared_count.hpp \
@@ -615,6 +592,7 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp \
  /usr/include/boost/core/addressof.hpp \
  /usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp \
+ /usr/include/c++/9/functional /usr/include/c++/9/bits/std_function.h \
  /usr/include/boost/smart_ptr/detail/sp_convertible.hpp \
  /usr/include/boost/smart_ptr/detail/sp_nullptr_t.hpp \
  /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp \
@@ -1139,7 +1117,7 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /opt/ros/noetic/include/std_msgs/Int32.h \
  /opt/ros/noetic/include/std_msgs/Bool.h \
  /opt/ros/noetic/include/mavros_msgs/Mavlink.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/Mav.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/Mav.h \
  /opt/ros/noetic/include/gazebo_msgs/ModelStates.h \
  /opt/ros/noetic/include/sensor_msgs/Imu.h \
  /opt/ros/noetic/include/tf/tf.h /opt/ros/noetic/include/tf/exceptions.h \
@@ -1167,7 +1145,6 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/boost/container_hash/detail/float_functions.hpp \
  /usr/include/boost/container_hash/detail/limits.hpp \
  /usr/include/boost/integer/static_log2.hpp /usr/include/c++/9/typeindex \
- /usr/include/c++/9/variant \
  /usr/include/boost/container_hash/extensions.hpp \
  /usr/include/boost/detail/container_fwd.hpp /usr/include/c++/9/deque \
  /usr/include/c++/9/bits/stl_deque.h /usr/include/c++/9/bits/deque.tcc \
@@ -1583,17 +1560,19 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/RealQZ.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
- /home/andrew/wei_research_ws/src/state_estimation/include/state_estimation/Camera.h \
+ /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/Camera.h \
  /opt/ros/noetic/include/sensor_msgs/JointState.h \
- /home/andrew/wei_research_ws/src/formation_gaz_sim/include/formation_ctrl/Formation.h \
- /home/andrew/wei_research_ws/src/formation_gaz_sim/include/formation_ctrl/Velocity_cbf.h \
+ /home/weiggen/wei_research_ws/src/formation_gaz_sim/include/formation_ctrl/Formation.h \
+ /home/weiggen/wei_research_ws/src/formation_gaz_sim/include/formation_ctrl/Velocity_cbf.h \
  /usr/local/include/OsqpEigen/OsqpEigen.h \
  /usr/local/include/OsqpEigen/Constants.hpp \
- /usr/local/include/osqp/osqp.h /usr/local/include/osqp/types.h \
- /usr/local/include/osqp/glob_opts.h \
+ /usr/local/include/OsqpEigen/Compat.hpp /usr/local/include/osqp/osqp.h \
  /usr/local/include/osqp/osqp_configure.h \
- /usr/local/include/osqp/constants.h /usr/local/include/osqp/util.h \
- /usr/local/include/osqp/cs.h /usr/local/include/osqp/lin_alg.h \
+ /usr/local/include/osqp/osqp_api_constants.h \
+ /usr/local/include/osqp/osqp_api_types.h \
+ /usr/local/include/osqp/osqp_api_functions.h \
+ /usr/local/include/osqp/osqp_export_define.h \
+ /usr/local/include/osqp/osqp_api_utils.h \
  /usr/local/include/OsqpEigen/Data.hpp \
  /usr/local/include/OsqpEigen/SparseMatrixHelper.hpp \
  /usr/include/eigen3/Eigen/Sparse /usr/include/eigen3/Eigen/SparseCore \
@@ -1675,6 +1654,6 @@ formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o: \
  /usr/local/include/OsqpEigen/Data.tpp \
  /usr/local/include/OsqpEigen/Settings.hpp \
  /usr/local/include/OsqpEigen/Solver.hpp \
- /usr/local/include/OsqpEigen/Solver.tpp /usr/local/include/osqp/auxil.h \
- /usr/local/include/osqp/scaling.h /usr/local/include/OsqpEigen/Debug.hpp \
- /home/andrew/wei_research_ws/devel/include/state_estimation/Plot.h
+ /usr/local/include/OsqpEigen/Solver.tpp \
+ /usr/local/include/OsqpEigen/Debug.hpp \
+ /home/weiggen/wei_research_ws/devel/include/state_estimation/Plot.h

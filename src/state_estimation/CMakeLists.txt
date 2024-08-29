@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   geometry_msgs
+  yolov8_ros_msgs
   message_filters
   message_generation
   cv_bridge
@@ -57,10 +58,11 @@ find_package(OsqpEigen REQUIRED)
 
 ## Generate messages in the 'msg' folder
  add_message_files(
-   FILES
-   Int32MultiArrayStamped.msg  
-   EIFpairStamped.msg
-   Plot.msg
+  FILES
+  Int32MultiArrayStamped.msg  
+  EIFpairStamped.msg
+  Plot.msg
+  densityGradient.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -82,6 +84,7 @@ find_package(OsqpEigen REQUIRED)
    DEPENDENCIES
    std_msgs
    geometry_msgs
+   yolov8_ros_msgs
  )
 
 ################################################
@@ -179,9 +182,11 @@ add_library(EIF
    src/EIF_related/SEIF.cpp
    src/EIF_related/SEIF_pose.cpp
    src/EIF_related/SEIF_neighbors.cpp
+   src/EIF_related/SEIF_lidar_neighbors.cpp
    src/EIF_related/HEIF.cpp
    src/EIF_related/HEIF_self.cpp
    src/EIF_related/HEIF_target.cpp
+   src/EIF_related/MathLib.cpp
 )
 target_link_libraries(EIF
   ${catkin_LIBRARIES} 

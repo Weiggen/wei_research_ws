@@ -2,7 +2,7 @@
 
 message(STATUS "voronoi_cbsa: 12 messages, 0 services")
 
-set(MSG_I_FLAGS "-Ivoronoi_cbsa:/home/andrew/wei_research_ws/src/voronoi_cbsa/msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,64 +17,64 @@ add_custom_target(voronoi_cbsa_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" "geometry_msgs/Point:voronoi_cbsa/Weight:voronoi_cbsa/WeightArray:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" "voronoi_cbsa/Sensor:geometry_msgs/Point:voronoi_cbsa/WeightArray:voronoi_cbsa/SensorArray:voronoi_cbsa/Weight"
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" ""
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" "geometry_msgs/Point:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" "voronoi_cbsa/SensorArray:geometry_msgs/Point:voronoi_cbsa/Sensor"
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" "geometry_msgs/Point:voronoi_cbsa/NeighborInfo:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" "voronoi_cbsa/NeighborInfo:voronoi_cbsa/SensorArray:geometry_msgs/Point:voronoi_cbsa/Sensor"
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" "voronoi_cbsa/ExchangeData:geometry_msgs/Point:voronoi_cbsa/Weight:voronoi_cbsa/WeightArray:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" "voronoi_cbsa/Sensor:voronoi_cbsa/ExchangeData:geometry_msgs/Point:voronoi_cbsa/WeightArray:voronoi_cbsa/SensorArray:voronoi_cbsa/Weight"
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" "geometry_msgs/Point:geometry_msgs/Twist:geometry_msgs/Vector3"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" "geometry_msgs/Vector3:geometry_msgs/Point:geometry_msgs/Twist"
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" "voronoi_cbsa/TargetInfo:geometry_msgs/Twist:geometry_msgs/Point:geometry_msgs/Vector3"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" "voronoi_cbsa/TargetInfo:geometry_msgs/Vector3:geometry_msgs/Point:geometry_msgs/Twist"
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" "voronoi_cbsa/Sensor"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" "voronoi_cbsa/Sensor"
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" ""
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" ""
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" ""
 )
 
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" "voronoi_cbsa/Weight"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" "voronoi_cbsa/Weight"
 )
 
 #
@@ -84,75 +84,75 @@ add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 
@@ -170,29 +170,29 @@ add_custom_target(voronoi_cbsa_generate_messages_cpp
 add_dependencies(voronoi_cbsa_generate_messages voronoi_cbsa_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_cpp _voronoi_cbsa_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -205,75 +205,75 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_cpp)
 ### Section generating for lang: geneus
 ### Generating Messages
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 
@@ -291,29 +291,29 @@ add_custom_target(voronoi_cbsa_generate_messages_eus
 add_dependencies(voronoi_cbsa_generate_messages voronoi_cbsa_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_eus _voronoi_cbsa_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -326,75 +326,75 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_eus)
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 
@@ -412,29 +412,29 @@ add_custom_target(voronoi_cbsa_generate_messages_lisp
 add_dependencies(voronoi_cbsa_generate_messages voronoi_cbsa_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_lisp _voronoi_cbsa_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -447,75 +447,75 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_lisp
 ### Section generating for lang: gennodejs
 ### Generating Messages
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 
@@ -533,29 +533,29 @@ add_custom_target(voronoi_cbsa_generate_messages_nodejs
 add_dependencies(voronoi_cbsa_generate_messages voronoi_cbsa_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_nodejs _voronoi_cbsa_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -568,75 +568,75 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_node
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 
@@ -654,29 +654,29 @@ add_custom_target(voronoi_cbsa_generate_messages_py
 add_dependencies(voronoi_cbsa_generate_messages voronoi_cbsa_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
+get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg" NAME_WE)
 add_dependencies(voronoi_cbsa_generate_messages_py _voronoi_cbsa_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

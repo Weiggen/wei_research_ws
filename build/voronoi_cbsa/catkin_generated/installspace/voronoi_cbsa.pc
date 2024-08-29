@@ -1,4 +1,4 @@
-prefix=/home/andrew/wei_research_ws/install
+prefix=/home/weiggen/wei_research_ws/install
 
 Name: voronoi_cbsa
 Description: Description of voronoi_cbsa

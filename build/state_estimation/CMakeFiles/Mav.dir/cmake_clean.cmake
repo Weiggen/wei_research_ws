@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/andrew/wei_research_ws/devel/lib/libMav.pdb"
-  "/home/andrew/wei_research_ws/devel/lib/libMav.so"
+  "/home/weiggen/wei_research_ws/devel/lib/libMav.pdb"
+  "/home/weiggen/wei_research_ws/devel/lib/libMav.so"
   "CMakeFiles/Mav.dir/src/ROSmsg_related/Mav.cpp.o"
   "CMakeFiles/Mav.dir/src/ROSmsg_related/Mav.cpp.o.d"
 )

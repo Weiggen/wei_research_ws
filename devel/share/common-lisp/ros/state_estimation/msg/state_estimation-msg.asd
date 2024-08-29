@@ -12,4 +12,8 @@
     (:file "_package_Int32MultiArrayStamped" :depends-on ("_package"))
     (:file "Plot" :depends-on ("_package_Plot"))
     (:file "_package_Plot" :depends-on ("_package"))
+    (:file "RMSE" :depends-on ("_package_RMSE"))
+    (:file "_package_RMSE" :depends-on ("_package"))
+    (:file "densityGradient" :depends-on ("_package_densityGradient"))
+    (:file "_package_densityGradient" :depends-on ("_package"))
   ))

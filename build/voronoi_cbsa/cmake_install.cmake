@@ -1,8 +1,8 @@
-# Install script for directory: /home/andrew/wei_research_ws/src/voronoi_cbsa
+# Install script for directory: /home/weiggen/wei_research_ws/src/voronoi_cbsa
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/andrew/wei_research_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/weiggen/wei_research_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -42,67 +42,67 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa/msg" TYPE FILE FILES
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
-    "/home/andrew/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
     )
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa/cmake" TYPE FILE FILES "/home/andrew/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsa-msg-paths.cmake")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa/cmake" TYPE FILE FILES "/home/weiggen/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsa-msg-paths.cmake")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/andrew/wei_research_ws/devel/include/voronoi_cbsa")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/andrew/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/andrew/wei_research_ws/devel/share/common-lisp/ros/voronoi_cbsa")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/weiggen/wei_research_ws/devel/share/common-lisp/ros/voronoi_cbsa")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/andrew/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  execute_process(COMMAND "/usr/bin/python3" -m compileall "/home/andrew/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  execute_process(COMMAND "/usr/bin/python3" -m compileall "/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/andrew/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/andrew/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsa.pc")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/weiggen/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsa.pc")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa/cmake" TYPE FILE FILES "/home/andrew/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsa-msg-extras.cmake")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa/cmake" TYPE FILE FILES "/home/weiggen/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsa-msg-extras.cmake")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa/cmake" TYPE FILE FILES
-    "/home/andrew/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsaConfig.cmake"
-    "/home/andrew/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsaConfig-version.cmake"
+    "/home/weiggen/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsaConfig.cmake"
+    "/home/weiggen/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/voronoi_cbsaConfig-version.cmake"
     )
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa" TYPE FILE FILES "/home/andrew/wei_research_ws/src/voronoi_cbsa/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa" TYPE FILE FILES "/home/weiggen/wei_research_ws/src/voronoi_cbsa/package.xml")
 endif()
 

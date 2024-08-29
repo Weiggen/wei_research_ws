@@ -1,8 +1,8 @@
-# Install script for directory: /home/andrew/wei_research_ws/src/formation_gaz_sim
+# Install script for directory: /home/weiggen/wei_research_ws/src/formation_gaz_sim
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/andrew/wei_research_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/weiggen/wei_research_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -42,18 +42,18 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/andrew/wei_research_ws/build/formation_gaz_sim/catkin_generated/installspace/formation_ctrl.pc")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/weiggen/wei_research_ws/build/formation_gaz_sim/catkin_generated/installspace/formation_ctrl.pc")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/formation_ctrl/cmake" TYPE FILE FILES
-    "/home/andrew/wei_research_ws/build/formation_gaz_sim/catkin_generated/installspace/formation_ctrlConfig.cmake"
-    "/home/andrew/wei_research_ws/build/formation_gaz_sim/catkin_generated/installspace/formation_ctrlConfig-version.cmake"
+    "/home/weiggen/wei_research_ws/build/formation_gaz_sim/catkin_generated/installspace/formation_ctrlConfig.cmake"
+    "/home/weiggen/wei_research_ws/build/formation_gaz_sim/catkin_generated/installspace/formation_ctrlConfig-version.cmake"
     )
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/formation_ctrl" TYPE FILE FILES "/home/andrew/wei_research_ws/src/formation_gaz_sim/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/formation_ctrl" TYPE FILE FILES "/home/weiggen/wei_research_ws/src/formation_gaz_sim/package.xml")
 endif()
 

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/andrew/wei_research_ws/devel/lib/formation_ctrl/formation_cbf"
-  "/home/andrew/wei_research_ws/devel/lib/formation_ctrl/formation_cbf.pdb"
+  "/home/weiggen/wei_research_ws/devel/lib/formation_ctrl/formation_cbf"
+  "/home/weiggen/wei_research_ws/devel/lib/formation_ctrl/formation_cbf.pdb"
   "CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o"
   "CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o.d"
 )

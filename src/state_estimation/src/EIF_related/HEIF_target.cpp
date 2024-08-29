@@ -20,9 +20,12 @@ void HEIF_target::setTargetEstData(std::vector<EIF_data> est_Data)
     weight.resize(fusionNum);
 }
 
+double HEIF_target::getEta_ij(){return eta_ij;}
+
 void HEIF_target::TargetEstDataCI()
 {
 	double trace_sum = 0.0;
+	double eta_ij = 0.0;
 
 	//////////////////////////// X_hat, P_hat ////////////////////////////
     for(int i=0; i<fusionNum; i++)
@@ -30,8 +33,8 @@ void HEIF_target::TargetEstDataCI()
 	for(int i=0; i<fusionNum; i++)
 	{
 		weight[i] = 1/est_data[i].P_hat.trace()/trace_sum;
-		weightedOmega_hat += weight[i]*est_data[i].P_hat.inverse();
-		weightedXi_hat += weight[i]*(est_data[i].P_hat.inverse()*est_data[i].X_hat);
+		weightedOmega_hat += weight[i]* est_data[i].P_hat.inverse();
+		weightedXi_hat    += weight[i]*(est_data[i].P_hat.inverse()*est_data[i].X_hat);
 	}
 	//////////////////////////// s, y ////////////////////////////
 	for(int i=0; i<fusionNum; i++)
@@ -43,14 +46,15 @@ void HEIF_target::TargetEstDataCI()
 			weight[i] = est_data[i].s.trace()/trace_sum;
 			weightedS += weight[i]*est_data[i].s;
 			weightedY += weight[i]*est_data[i].y;
+			eta_ij	  = weight[fusionNum];
 		}
 	}
 }
 
 void HEIF_target::CI_combination()
 {
-	fusedP = (weightedOmega_hat + weightedS).inverse();
-	fusedX = fusedP*(weightedXi_hat + weightedY);
+	fusedP = (weightedOmega_hat + weightedS).inverse();	// posterior p ( weightedS = p_breve.inverse() )
+	fusedX = fusedP*(weightedXi_hat + weightedY);		// posterior x
 
 	est_X.push_back(fusedX);
 	est_P.push_back(fusedP);

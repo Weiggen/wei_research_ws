@@ -20,12 +20,12 @@ Camera::Camera(ros::NodeHandle &nh_, bool gimbal)
         nh = nh_;
         jointState_sub = nh.subscribe<sensor_msgs::JointState>("gimbal/joint_states", 5, &Camera::jointState_cb, this);
 
-        fx_ = 1029.477219320806;
-        fy_ = 1029.477219320806;
-        cx_ = 960.5;
-        cy_ = 540.5;
+        fx_ = 343.15907310693535;
+        fy_ = 343.15907310693535;
+        cx_ = 320.5;
+        cy_ = 240.5;
 
-        t_b2c << 0.041, 0, -0.162;
+        t_b2c << -0.041 ,0, -0.162;
         R_b2m << 1, 0, 0,
                 0, -1, 0,
                 0, 0, -1;

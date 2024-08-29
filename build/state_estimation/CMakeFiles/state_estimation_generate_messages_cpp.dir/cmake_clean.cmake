@@ -1,7 +1,8 @@
 file(REMOVE_RECURSE
-  "/home/andrew/wei_research_ws/devel/include/state_estimation/EIFpairStamped.h"
-  "/home/andrew/wei_research_ws/devel/include/state_estimation/Int32MultiArrayStamped.h"
-  "/home/andrew/wei_research_ws/devel/include/state_estimation/Plot.h"
+  "/home/weiggen/wei_research_ws/devel/include/state_estimation/EIFpairStamped.h"
+  "/home/weiggen/wei_research_ws/devel/include/state_estimation/Int32MultiArrayStamped.h"
+  "/home/weiggen/wei_research_ws/devel/include/state_estimation/Plot.h"
+  "/home/weiggen/wei_research_ws/devel/include/state_estimation/densityGradient.h"
   "CMakeFiles/state_estimation_generate_messages_cpp"
 )
 

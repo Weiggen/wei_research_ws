@@ -1,8 +1,8 @@
-prefix=/home/andrew/wei_research_ws/devel
+prefix=/home/weiggen/wei_research_ws/devel
 
 Name: voronoi_cbsa
 Description: Description of voronoi_cbsa
 Version: 0.0.0
-Cflags: -I/home/andrew/wei_research_ws/devel/include -I/home/andrew/wei_research_ws/src/voronoi_cbsa/include
+Cflags: -I/home/weiggen/wei_research_ws/devel/include -I/home/weiggen/wei_research_ws/src/voronoi_cbsa/include
 Libs: -L${prefix}/lib -lVoronoi_Based_CBSA
 Requires: roscpp rospy std_msgs message_runtime

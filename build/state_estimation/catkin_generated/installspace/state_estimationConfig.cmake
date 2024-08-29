@@ -67,14 +67,14 @@ set(state_estimation_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(state_estimation_SOURCE_PREFIX /home/andrew/wei_research_ws/src/state_estimation)
-  set(state_estimation_DEVEL_PREFIX /home/andrew/wei_research_ws/devel)
+  set(state_estimation_SOURCE_PREFIX /home/weiggen/wei_research_ws/src/state_estimation)
+  set(state_estimation_DEVEL_PREFIX /home/weiggen/wei_research_ws/devel)
   set(state_estimation_INSTALL_PREFIX "")
   set(state_estimation_PREFIX ${state_estimation_DEVEL_PREFIX})
 else()
   set(state_estimation_SOURCE_PREFIX "")
   set(state_estimation_DEVEL_PREFIX "")
-  set(state_estimation_INSTALL_PREFIX /home/andrew/wei_research_ws/install)
+  set(state_estimation_INSTALL_PREFIX /home/weiggen/wei_research_ws/install)
   set(state_estimation_PREFIX ${state_estimation_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/andrew/wei_research_ws/install/lib;/home/andrew/wei_research_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/weiggen/wei_research_ws/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -4,9 +4,9 @@
     <!-- launches Gazebo environment and 2x: MAVROS, PX4 SITL, and spawns vehicle -->
     <!-- vehicle model and world -->
     <arg name="est" default="ekf2"/>
-    <arg name="vehicle" default="typhoon_h480"/>
-    <arg name="name" default="typhoon_h480"/>
-    <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/typhoon_h480.world"/>
+    <arg name="vehicle" default="iris"/>
+    <arg name="name" default="iris"/>
+    <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/hitl_iris.world"/>
     <!-- gazebo configs -->
     <arg name="gui" default="true"/>
     <arg name="debug" default="false"/>

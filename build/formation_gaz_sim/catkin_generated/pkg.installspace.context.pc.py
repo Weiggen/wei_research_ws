@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "formation_ctrl"
-PROJECT_SPACE_DIR = "/home/andrew/wei_research_ws/install"
+PROJECT_SPACE_DIR = "/home/weiggen/wei_research_ws/install"
 PROJECT_VERSION = "0.0.0"

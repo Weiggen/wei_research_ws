@@ -7,8 +7,10 @@
 # new environment variables
 
 # modified environment variables
-export LD_LIBRARY_PATH='/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu:/home/andrew/PX4-Autopilot/build/px4_sitl_default/build_gazebo-classic'
-export PKG_CONFIG_PATH='/opt/ros/noetic/lib/pkgconfig'
-export PWD='/home/andrew/wei_research_ws/build'
-export PYTHONPATH='/opt/ros/noetic/lib/python3/dist-packages'
-export ROS_PACKAGE_PATH='/home/andrew/wei_research_ws/src:/opt/ros/noetic/share'
+export CMAKE_PREFIX_PATH="/home/weiggen/wei_research_ws/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/weiggen/wei_research_ws/devel/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/weiggen/wei_research_ws/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PWD='/home/weiggen/wei_research_ws/build'
+export PYTHONPATH="/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages:$PYTHONPATH"
+export ROSLISP_PACKAGE_DIRECTORIES='/home/weiggen/wei_research_ws/devel/share/common-lisp'
+export ROS_PACKAGE_PATH='/home/weiggen/wei_research_ws/src:/opt/ros/noetic/share'

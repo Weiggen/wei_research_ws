@@ -67,14 +67,14 @@ set(formation_ctrl_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(formation_ctrl_SOURCE_PREFIX /home/andrew/wei_research_ws/src/formation_gaz_sim)
-  set(formation_ctrl_DEVEL_PREFIX /home/andrew/wei_research_ws/devel)
+  set(formation_ctrl_SOURCE_PREFIX /home/weiggen/wei_research_ws/src/formation_gaz_sim)
+  set(formation_ctrl_DEVEL_PREFIX /home/weiggen/wei_research_ws/devel)
   set(formation_ctrl_INSTALL_PREFIX "")
   set(formation_ctrl_PREFIX ${formation_ctrl_DEVEL_PREFIX})
 else()
   set(formation_ctrl_SOURCE_PREFIX "")
   set(formation_ctrl_DEVEL_PREFIX "")
-  set(formation_ctrl_INSTALL_PREFIX /home/andrew/wei_research_ws/install)
+  set(formation_ctrl_INSTALL_PREFIX /home/weiggen/wei_research_ws/install)
   set(formation_ctrl_PREFIX ${formation_ctrl_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/andrew/wei_research_ws/install/lib;/home/andrew/wei_research_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/weiggen/wei_research_ws/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -67,14 +67,14 @@ set(voronoi_cbsa_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(voronoi_cbsa_SOURCE_PREFIX /home/andrew/wei_research_ws/src/voronoi_cbsa)
-  set(voronoi_cbsa_DEVEL_PREFIX /home/andrew/wei_research_ws/devel)
+  set(voronoi_cbsa_SOURCE_PREFIX /home/weiggen/wei_research_ws/src/voronoi_cbsa)
+  set(voronoi_cbsa_DEVEL_PREFIX /home/weiggen/wei_research_ws/devel)
   set(voronoi_cbsa_INSTALL_PREFIX "")
   set(voronoi_cbsa_PREFIX ${voronoi_cbsa_DEVEL_PREFIX})
 else()
   set(voronoi_cbsa_SOURCE_PREFIX "")
   set(voronoi_cbsa_DEVEL_PREFIX "")
-  set(voronoi_cbsa_INSTALL_PREFIX /home/andrew/wei_research_ws/install)
+  set(voronoi_cbsa_INSTALL_PREFIX /home/weiggen/wei_research_ws/install)
   set(voronoi_cbsa_PREFIX ${voronoi_cbsa_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(voronoi_cbsa_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/andrew/wei_research_ws/devel/include;/home/andrew/wei_research_ws/src/voronoi_cbsa/include " STREQUAL " ")
+if(NOT "/home/weiggen/wei_research_ws/devel/include;/home/weiggen/wei_research_ws/src/voronoi_cbsa/include " STREQUAL " ")
   set(voronoi_cbsa_INCLUDE_DIRS "")
-  set(_include_dirs "/home/andrew/wei_research_ws/devel/include;/home/andrew/wei_research_ws/src/voronoi_cbsa/include")
+  set(_include_dirs "/home/weiggen/wei_research_ws/devel/include;/home/weiggen/wei_research_ws/src/voronoi_cbsa/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/andrew/wei_research_ws/devel/include;/home/andrew/wei_research_ws/
         message(FATAL_ERROR "Project 'voronoi_cbsa' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'voronoi_cbsa' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/andrew/wei_research_ws/src/voronoi_cbsa/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'voronoi_cbsa' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/weiggen/wei_research_ws/src/voronoi_cbsa/${idir}'.  ${_report}")
     endif()
     _list_append_unique(voronoi_cbsa_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/andrew/wei_research_ws/devel/lib;/home/andrew/wei_research_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/weiggen/wei_research_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

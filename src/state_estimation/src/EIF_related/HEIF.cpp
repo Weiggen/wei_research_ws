@@ -18,9 +18,13 @@ void HEIF::initialize()
 
 void HEIF::CI_combination()
 {
-	fusedP = (weightedOmega_hat + weightedS).inverse();
-	fusedX = fusedP*(weightedXi_hat + weightedY);
+	fusedP = (weightedOmega_hat + weightedS).inverse(); // posterior p ( weightedS = p_breve.inverse() )
+	fusedX = fusedP*(weightedXi_hat + weightedY);		// posterior x
 }
 
 Eigen::MatrixXd HEIF::getFusedCov(){return fusedP;}
 Eigen::VectorXd HEIF::getFusedState(){return fusedX;}
+
+Eigen::MatrixXd HEIF::getWeightedS(){return weightedS;}
+Eigen::VectorXd HEIF::getWeightedY(){return weightedY;}
+Eigen::VectorXd HEIF::getWeightedXi_hat(){return weightedXi_hat;}

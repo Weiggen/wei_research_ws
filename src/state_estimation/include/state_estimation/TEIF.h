@@ -1,5 +1,6 @@
 #include "EIF.h"
 #include "Camera.h"
+#include "MathLib.h"
 
 class target_EIF : public EIF
 {
@@ -10,6 +11,7 @@ private:
     
 
     Camera cam;
+    MathLib mathLib;
     double X;
     double Y;
     double Z;
@@ -33,6 +35,11 @@ public:
     void setFusionPairs(Eigen::MatrixXd fusedP, Eigen::VectorXd fusedX, double time);
     void setEstAcc(Eigen::Vector3d acc);
     void setCamera(Camera camera);
+
+    Eigen::MatrixXd getGradientDensityFnc(Eigen::MatrixXd fusedP, 
+                                    Eigen::MatrixXd weightedS, Eigen::VectorXd weightedY,
+                                    Eigen::VectorXd weightedXi_hat,
+                                    double eta_ij);
 
     EIF_data getTgtData();
     EIF_data getSelfData();

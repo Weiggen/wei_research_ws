@@ -1,4 +1,4 @@
-prefix=/home/andrew/wei_research_ws/devel
+prefix=/home/weiggen/wei_research_ws/devel
 
 Name: formation_ctrl
 Description: Description of formation_ctrl

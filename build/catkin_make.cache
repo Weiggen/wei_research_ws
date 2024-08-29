@@ -1,2 +1,2 @@
-formation_gaz_sim:state_estimation:voronoi_cbsa:yolov7-ros
--DCATKIN_DEVEL_PREFIX=/home/andrew/wei_research_ws/devel -DCMAKE_INSTALL_PREFIX=/home/andrew/wei_research_ws/install -G Unix Makefiles
+Yolov8_ros/yolov8_ros:Yolov8_ros/yolov8_ros_msgs:formation_gaz_sim:state_estimation:voronoi_cbsa
+-DCATKIN_DEVEL_PREFIX=/home/weiggen/wei_research_ws/devel -DCMAKE_INSTALL_PREFIX=/home/weiggen/wei_research_ws/install -G Unix Makefiles

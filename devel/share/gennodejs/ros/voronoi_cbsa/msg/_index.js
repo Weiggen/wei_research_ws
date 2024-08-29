@@ -1,30 +1,30 @@
 
 "use strict";
 
-let ValidSensors = require('./ValidSensors.js');
-let Sensor = require('./Sensor.js');
-let Weight = require('./Weight.js');
-let VoteList = require('./VoteList.js');
-let NeighborInfoArray = require('./NeighborInfoArray.js');
-let ExchangeDataArray = require('./ExchangeDataArray.js');
-let SensorArray = require('./SensorArray.js');
 let ExchangeData = require('./ExchangeData.js');
-let WeightArray = require('./WeightArray.js');
-let TargetInfo = require('./TargetInfo.js');
+let Weight = require('./Weight.js');
+let SensorArray = require('./SensorArray.js');
+let ValidSensors = require('./ValidSensors.js');
 let NeighborInfo = require('./NeighborInfo.js');
 let TargetInfoArray = require('./TargetInfoArray.js');
+let NeighborInfoArray = require('./NeighborInfoArray.js');
+let Sensor = require('./Sensor.js');
+let TargetInfo = require('./TargetInfo.js');
+let WeightArray = require('./WeightArray.js');
+let VoteList = require('./VoteList.js');
+let ExchangeDataArray = require('./ExchangeDataArray.js');
 
 module.exports = {
-  ValidSensors: ValidSensors,
-  Sensor: Sensor,
-  Weight: Weight,
-  VoteList: VoteList,
-  NeighborInfoArray: NeighborInfoArray,
-  ExchangeDataArray: ExchangeDataArray,
-  SensorArray: SensorArray,
   ExchangeData: ExchangeData,
-  WeightArray: WeightArray,
-  TargetInfo: TargetInfo,
+  Weight: Weight,
+  SensorArray: SensorArray,
+  ValidSensors: ValidSensors,
   NeighborInfo: NeighborInfo,
   TargetInfoArray: TargetInfoArray,
+  NeighborInfoArray: NeighborInfoArray,
+  Sensor: Sensor,
+  TargetInfo: TargetInfo,
+  WeightArray: WeightArray,
+  VoteList: VoteList,
+  ExchangeDataArray: ExchangeDataArray,
 };

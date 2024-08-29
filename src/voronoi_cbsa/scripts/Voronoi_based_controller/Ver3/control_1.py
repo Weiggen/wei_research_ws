@@ -647,7 +647,7 @@ class PTZCamera():
             x = (x_coords*grid_size[0] - pos_self[0]) # q-p_i (x direction)
             y = (y_coords*grid_size[1] - pos_self[1]) # q-p_i (y direction)
             
-            ### the partial derivative of camera model w.r.t. p_i
+            ### the partial derivative of camera model w.r.t. p_i .  (f_prime)
             if type == 'x':
                 gradient = ((pos_self[0] - x_coords*grid_size[0])*np.exp(-((dist - self.camera_range)**2)/(2*(self.camera_variance**2)))\
                             *(self.camera_range - dist)/((self.camera_variance**2)*dist))
@@ -995,7 +995,7 @@ if __name__ == "__main__":
         # df = pd.DataFrame.from_dict(plt_dict) 
         # df.to_csv (r"~/wei_research_ws/src/voronoi_cbsa/result/"+str(id)+".csv", index=False, header=True)
 
-        save_path = "/home/andrew/wei_research_ws/src/voronoi_cbsa/result/"
+        save_path = "~/wei_research_ws/src/voronoi_cbsa/result/"
         isExist = os.path.exists(save_path)
         rospy.logwarn(str(id) + ": " + str(cnt))
         if not isExist:
