@@ -25,7 +25,6 @@ double HEIF_target::getEta_ij(){return eta_ij;}
 void HEIF_target::TargetEstDataCI()
 {
 	double trace_sum = 0.0;
-	double eta_ij = 0.0;
 
 	//////////////////////////// X_hat, P_hat ////////////////////////////
     for(int i=0; i<fusionNum; i++)
@@ -49,6 +48,13 @@ void HEIF_target::TargetEstDataCI()
 			eta_ij	  = weight[fusionNum];
 		}
 	}
+	// std::cout << "FusionNum:"<< fusionNum << std::endl;
+	// std::cout << "trace_sum:" << trace_sum <<std::endl;
+	// for (int i = 0; i < fusionNum; ++i){
+	// 	std::cout << "agent_:" << i << "s:" << est_data[i].s <<std::endl;
+	// 	std::cout << "weight:" << std::endl;
+	// 	std::cout << "agent_" << i << ":" << weight[i] << std::endl;
+	// }
 }
 
 void HEIF_target::CI_combination()

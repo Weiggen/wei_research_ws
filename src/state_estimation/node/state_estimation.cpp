@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 
 	MAV mav(nh);
 	EIFpairs_ros eif_ros(nh, vehicle, ID, mavNum);
-	Camera cam(nh, true);
+	Camera cam(nh, false);
 	GT_measurement gt_m(nh, ID, 4);
 	gt_m.setRosRate(rosRate);
 	MAV_eigen mav_eigen;
@@ -189,7 +189,7 @@ int main(int argc, char **argv)
 		std::vector<EIF_data> allTgtEIFData;
 		allTgtEIFData = eif_ros.get_curr_fusing_data(eif_ros.rbs2Tgt_EIFPairs, 0.05);
 		// if(gt_m.ifCameraMeasure())
-			allTgtEIFData.push_back(teif.getTgtData());
+		allTgtEIFData.push_back(teif.getTgtData());
 		theif.setTargetEstData(allTgtEIFData);
 		theif.process();
 		// if(gt_m.ifCameraMeasure())
@@ -208,10 +208,8 @@ int main(int argc, char **argv)
 		Eigen::MatrixXd gradient_M(2, 240*240);
 		gradient_M.setZero();
 		gradient_M = teif.getGradientDensityFnc(theif.getFusedCov(), theif.getWeightedS(), theif.getWeightedY(), theif.getWeightedXi_hat(), theif.getEta_ij());
-		// std::cout << "gradient_M:\n" << gradient_M << std::endl;
-		// state_estimation::densityGradient gradient_ros;
-		// gradient_ros = eigen2densityGradient(gradient_M);
-		// eif_ros.densityGradient_pub.publish(gradient_ros);		
+		// std::cout << "ros_g:\n" << eigen2densityGradient(gradient_M) << "\n";
+		eif_ros.densityGradient_pub.publish(eigen2densityGradient(gradient_M));		
 
 		std::cout << "TEIF:\n";
 		eif_ros.tgtState_Plot_pub.publish(compare(gt_m.getGTs_eigen()[0], theif.getFusedState() , theif.getFusedCov(), gt_m.getGTorientation(ID)));

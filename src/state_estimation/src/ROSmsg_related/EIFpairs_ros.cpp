@@ -118,12 +118,20 @@ state_estimation::densityGradient eigen2densityGradient(Eigen::MatrixXd M){
 	// For coverageCtrl
 	state_estimation::densityGradient ros_g;
 	size_t n = M.cols();
+	ros_g.gradient_x.resize(n);
+    ros_g.gradient_y.resize(n);
 	for (size_t i = 0; i < n; ++i){
 		ros_g.gradient_x[i] = M(0, i);
 	}
 	for (size_t i = 0; i < n; ++i){
 		ros_g.gradient_y[i] = M(1, i);
 	}
+	// for (size_t i = 0; i < n; ++i){
+	// 	ros_g.gradient_x[i] = 0;
+	// }
+	// for (size_t i = 0; i < n; ++i){
+	// 	ros_g.gradient_y[i] = 1;
+	// }
 	return ros_g;
 }
 
