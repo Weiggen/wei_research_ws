@@ -3,7 +3,7 @@ import rospy
 from geometry_msgs.msg import Pose, Point, PoseStamped, TwistStamped
 from mavros_msgs.msg import State
 from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeRequest, CommandTOL
-from voronoi_cbsa.msg import ExchangeData, ExchangeDataArray, TargetInfoArray, SensorArray, Sensor, ValidSensors, WeightArray, Weight
+from voronoi_cbsa.msg import ExchangeData, ExchangeDataArray, TargetInfoArray, SensorArray, Sensor, ValidSensors, WeightArray, Weight, densityGradient
 from std_msgs.msg import Int16, Int32, Bool, Float32MultiArray, Int16MultiArray, Float32, Float64, Float64MultiArray, String
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
@@ -144,6 +144,9 @@ class PTZCamera():
             
         self.event_density          = {}
         self.event_density_buffer   = {}
+
+        # self.event_density_gradient = []
+        self.event_density_gradient = [np.zeros(self.size), np.zeros(self.size)]
         
         self.neighbors              = []
         self.neighbors_buffer       = {}
@@ -167,6 +170,7 @@ class PTZCamera():
         rospy.Subscriber("local/neighbor_info", ExchangeDataArray, self.NeighborCallback)
         rospy.Subscriber("local/target", TargetInfoArray, self.TargetCallback)        
         rospy.Subscriber("/iris_"+str(self.id)+"/mavros/local_position/pose", PoseStamped, self.AgentPosCallback)
+        rospy.Subscriber("/iris_"+str(self.id)+"/densityGradient", densityGradient, self.DensityGradientCallback)
 
         self.pub_pos                = rospy.Publisher("local/position", Point, queue_size=10)
         self.pub_exchange_data      = rospy.Publisher("local/exchange_data",ExchangeData, queue_size=10)
@@ -241,6 +245,21 @@ class PTZCamera():
     def AgentPosCallback(self, msg):
         self.agent_ready = True
         self.pos = np.array([msg.pose.position.x, msg.pose.position.y])
+
+    def DensityGradientCallback(self, msg):
+        self.agent_ready = True
+        self.event_density_gradient = [np.zeros(self.size), np.zeros(self.size)]
+        gradient_x_array = np.array(msg.gradient_x).reshape(self.size[0], self.size[1])
+        gradient_y_array = np.array(msg.gradient_y).reshape(self.size[0], self.size[1])
+        gradient_x_array = np.nan_to_num(gradient_x_array, nan=0.0)
+        gradient_y_array = np.nan_to_num(gradient_y_array, nan=0.0)
+        self.event_density_gradient[0] += gradient_x_array
+        self.event_density_gradient[1] += gradient_y_array
+        # rospy.loginfo("Size of self.event_density_gradient[0]: {}".format(self.event_density_gradient[0].shape))
+        # rospy.loginfo("Size of self.event_density_gradient[1]: {}".format(self.event_density_gradient[1].shape))
+    
+        # rospy.loginfo("msg.gradient_x: \n{}".format(np.array(msg.gradient_x)[:3]))
+        # rospy.loginfo("self.event_density_gradient[0]: \n{}".format(self.event_density_gradient[0][:3, :3]))
 
     def PublishInfo(self):
         # publish position
@@ -576,6 +595,7 @@ class PTZCamera():
         u_v = np.array([0., 0.])     
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
         sensor_gradient = [np.zeros(self.size), np.zeros(self.size)]
+        event_gradient = [np.zeros(self.size), np.zeros(self.size)]
         
         for event in self.targets.keys():
             for role in self.valid_sensors.keys():
@@ -584,8 +604,14 @@ class PTZCamera():
                 
                 if self.valid_sensors[role] and role in self.targets[event][5]:
                     
-                    sensor_gradient[0] = self.ComputeGradient(role, event, 'x')
+                    sensor_gradient[0] = self.ComputeGradient(role, event, 'x') 
                     sensor_gradient[1] = self.ComputeGradient(role, event, 'y')
+                    event_gradient[0] = self.ComputeDensityGradient('camera', event, 'x')
+                    event_gradient[1] = self.ComputeDensityGradient('camera', event, 'y')
+                    # rospy.loginfo("size of event_gradient[0]: {}".format(event_gradient[0].shape))
+                    # rospy.loginfo("size of event_gradient[1]: {}".format(event_gradient[1].shape))
+                    # rospy.loginfo("event_gradient[0]: {}".format(event_gradient[0]))
+                    # rospy.loginfo("event_gradient[1]: {}".format(event_gradient[1]))
                                         
                     perspective_gradient_x = self.ComputeGradient('camera', event, 'perspective_x')
                     perspective_gradient_y = self.ComputeGradient('camera', event, 'perspective_y')
@@ -602,8 +628,8 @@ class PTZCamera():
                                     perspective_gradient_y *= (1 + self.w_coop*coop_quality)
                     
                     if role == 'camera':
-                        u_v[0] += self.sensor_weight[role][event]*np.sum(perspective_gradient_x * self.event_density[event])
-                        u_v[1] += self.sensor_weight[role][event]*np.sum(perspective_gradient_y * self.event_density[event])                                        
+                        u_v[0] += self.sensor_weight[role][event]*np.sum(perspective_gradient_x * self.event_density[event]) # ctrl signal for heading
+                        u_v[1] += self.sensor_weight[role][event]*np.sum(perspective_gradient_y * self.event_density[event]) # ctrl signal for heading
                                 
                     total_gradient[0] = sensor_gradient[0]
                     total_gradient[1] = sensor_gradient[1]
@@ -626,10 +652,12 @@ class PTZCamera():
 
                 total_gradient[0] *= self.event_density[event]
                 total_gradient[1] *= self.event_density[event]
+                total_gradient[0] += event_gradient[0]*(f)
+                total_gradient[1] += event_gradient[1]*(f)
+                rospy.loginfo("ddd".format(event_gradient[0]*(f)))
                 
                 tmp_x = self.sensor_weight[role][event]*np.sum(total_gradient[0]) # add (5*) here
-                tmp_y = self.sensor_weight[role][event]*np.sum(total_gradient[1]) # add (5*) here
-
+                tmp_y = self.sensor_weight[role][event]*np.sum(total_gradient[1])
 
                 u_p[0] = u_p[0] + tmp_x if not np.isnan(tmp_x) else u_p[0]
                 u_p[1] = u_p[1] + tmp_y if not np.isnan(tmp_y) else u_p[1] 
@@ -647,10 +675,10 @@ class PTZCamera():
             x = (x_coords*grid_size[0] - pos_self[0]) # q-p_i (x direction)
             y = (y_coords*grid_size[1] - pos_self[1]) # q-p_i (y direction)
             
-            ### the partial derivative of camera model w.r.t. p_i .  (f_prime)
+            ## the partial derivative of camera model w.r.t. p_i. (f_prime)
             if type == 'x':
                 gradient = ((pos_self[0] - x_coords*grid_size[0])*np.exp(-((dist - self.camera_range)**2)/(2*(self.camera_variance**2)))\
-                            *(self.camera_range - dist)/((self.camera_variance**2)*dist))
+                            *(self.camera_range - dist)/((self.camera_variance**2)*dist)) # ( \partial f^1(||q-p_i) ) \ ( \partial ||q-p_i|| )
                 
                 per_quality = (1/(1-np.cos(self.angle_of_view)))*((x*self.perspective[0] + y*self.perspective[1])/dist - np.cos(self.angle_of_view))
                 gradient[per_quality < 0] = 0
@@ -668,12 +696,12 @@ class PTZCamera():
                 
             elif type == 'perspective_x':    
                 
-                gradient = x/(dist)*(1-np.cos(self.angle_of_view))
+                gradient = x/(dist)*(1-np.cos(self.angle_of_view)) # (22)
                 gradient = np.where(self.sensor_voronoi[role][event] == self.id, gradient, 0)
             
             elif type == 'perspective_y':    
                
-                gradient = y/(dist)*(1-np.cos(self.angle_of_view))
+                gradient = y/(dist)*(1-np.cos(self.angle_of_view)) # (22)
                 gradient = np.where(self.sensor_voronoi[role][event] == self.id, gradient, 0)
             
             gradient[np.isnan(gradient)] = 0
@@ -706,14 +734,37 @@ class PTZCamera():
                 
         return gradient
     
-    def ComputeEventGradient(self, target, event, type):
+    def ComputeDensityGradient(self, role, event, type):
         x_coords, y_coords = np.meshgrid(np.arange(self.size[0]), np.arange(self.size[1]), indexing='ij')
-        pos_self    = self.pos              # x_{R_i}   the pose of the agent
-        grid_size   = self.grid_size
-        gradient    = np.zeros(self.size)
-        pos_target  = target[0]             # hat_x     the pose of target after correction
-        breve_p     = target[1]             # breve_p   the covariance of target's pose
-        
+        pos_self = self.pos
+        grid_size = self.grid_size
+        gradient = np.zeros(self.size)
+        density_gradient_x = np.zeros(self.size)
+        density_gradient_y = np.zeros(self.size)
+        dist = np.sqrt((pos_self[0] - x_coords*grid_size[0])**2 + (pos_self[1] - y_coords*grid_size[1])**2) # ||q-p_i||
+        x = (x_coords*grid_size[0] - pos_self[0]) # q-p_i (x direction)
+        y = (y_coords*grid_size[1] - pos_self[1]) # q-p_i (y direction)
+
+        # rospy.loginfo("size of density_gradient_y: {}".format(density_gradient_x.shape))
+        # rospy.loginfo("size of density_gradient_y: {}".format(density_gradient_y.shape))
+        # rospy.loginfo("size of self.event_density_gradient[0]: {}".format(self.event_density_gradient[0].shape))
+        # rospy.loginfo("size of self.event_density_gradient[1]: {}".format(self.event_density_gradient[1].shape))
+        # rospy.loginfo("self.event_density_gradient[0]: {}".format(self.event_density_gradient[0]))
+        # rospy.loginfo("self.event_density_gradient[1]: {}".format(self.event_density_gradient[1]))
+
+        density_gradient_x += self.event_density_gradient[0]
+        density_gradient_y += self.event_density_gradient[1]
+
+        per_quality = (1/(1-np.cos(self.angle_of_view)))*((x*self.perspective[0] + y*self.perspective[1])/dist - np.cos(self.angle_of_view))
+        if role == 'camera':
+            if type == 'x':
+                density_gradient_x[per_quality < 0] = 0 # behind the agent.
+                gradient = np.where(self.sensor_voronoi[role][event] == self.id, density_gradient_x, 0) # out of the agent's Voronoi cell
+        if role == 'camera':
+            if type == 'y':
+                density_gradient_y[per_quality < 0] = 0
+                gradient = np.where(self.sensor_voronoi[role][event] == self.id, density_gradient_y, 0)
+
         return gradient
     
     def ComputeSelfQuality(self, role, event):
@@ -735,12 +786,12 @@ class PTZCamera():
             
         elif role == 'camera':
             dist = np.sqrt((pos_self[0] - x_coords*grid_size[0])**2 + (pos_self[1] - y_coords*grid_size[1])**2)-self.camera_range
-            self_quality = np.exp(-(dist**2)/(2*self.camera_variance**2))
+            self_quality = np.exp(-(dist**2)/(2*self.camera_variance**2)) # q_res
             
             dist = np.sqrt((pos_self[0] - x_coords*grid_size[0])**2 + (pos_self[1] - y_coords*grid_size[1])**2)
             x = (x_coords*grid_size[0] - pos_self[0])
             y = (y_coords*grid_size[1] - pos_self[1])
-            per_quality = (1/(1-np.cos(self.angle_of_view)))*((x*self.perspective[0] + y*self.perspective[1])/dist - np.cos(self.angle_of_view))
+            per_quality = (1/(1-np.cos(self.angle_of_view)))*((x*self.perspective[0] + y*self.perspective[1])/dist - np.cos(self.angle_of_view)) # \hat{q}_pers
             self_quality[per_quality < 0] = 0
                     
             self_quality = np.where(self_territory > -1, 0, self_quality)
@@ -979,7 +1030,7 @@ if __name__ == "__main__":
     
     while not rospy.is_shutdown() and not kill and not failure:
         UAV_self.Update()
-        rospy.loginfo("Updating...")
+        # rospy.loginfo("Updating...")
             
         frame.append(cnt)
         score.append(UAV_self.total_score)
@@ -988,16 +1039,16 @@ if __name__ == "__main__":
         cnt += 1
         
         plt_dict = {'frame_id'              : frame,
-                str(id)+"'s score"      : score,
-                "pos_x"                 : pos_x,
-                "pos_y"                 : pos_y}
+                    str(id)+"'s score"      : score,
+                    "pos_x"                 : pos_x,
+                    "pos_y"                 : pos_y}
             
         # df = pd.DataFrame.from_dict(plt_dict) 
         # df.to_csv (r"~/wei_research_ws/src/voronoi_cbsa/result/"+str(id)+".csv", index=False, header=True)
 
         save_path = "~/wei_research_ws/src/voronoi_cbsa/result/"
         isExist = os.path.exists(save_path)
-        rospy.logwarn(str(id) + ": " + str(cnt))
+        # rospy.logwarn(str(id) + ": " + str(cnt))
         if not isExist:
             os.makedirs(save_path)
             
@@ -1021,4 +1072,4 @@ if __name__ == "__main__":
     #     os.makedirs(save_path)
         
     # df = pd.DataFrame.from_dict(plt_dict) 
-    # df.to_csv (save_path + str(id) + ".csv", index=False, header=True)
+    # df.to_csv (save_path + str(id) + ".csv", index=False, header=True)global_event

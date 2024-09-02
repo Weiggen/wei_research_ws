@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/VoteList.js"
   "/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/Weight.js"
   "/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/WeightArray.js"
+  "/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/densityGradient.js"
   "CMakeFiles/voronoi_cbsa_generate_messages_nodejs"
 )
 

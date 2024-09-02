@@ -78,26 +78,27 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_re
 voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ValidSensors.h
 voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/Weight.h
 voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/WeightArray.h
+voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/densityGradient.h
 
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from voronoi_cbsa/ExchangeData.msg"
 	cd /home/weiggen/wei_research_ws/src/voronoi_cbsa && /home/weiggen/wei_research_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa -e /opt/ros/noetic/share/gencpp/cmake/..
 
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from voronoi_cbsa/ExchangeDataArray.msg"
 	cd /home/weiggen/wei_research_ws/src/voronoi_cbsa && /home/weiggen/wei_research_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa -e /opt/ros/noetic/share/gencpp/cmake/..
@@ -113,9 +114,9 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_re
 
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/NeighborInfoArray.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from voronoi_cbsa/NeighborInfoArray.msg"
@@ -136,8 +137,8 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_re
 
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfo.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfo.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfo.h: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfo.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfo.h: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfo.h: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfo.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating C++ code from voronoi_cbsa/TargetInfo.msg"
@@ -145,9 +146,9 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_re
 
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
-/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/TargetInfoArray.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating C++ code from voronoi_cbsa/TargetInfoArray.msg"
@@ -178,6 +179,13 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_re
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating C++ code from voronoi_cbsa/WeightArray.msg"
 	cd /home/weiggen/wei_research_ws/src/voronoi_cbsa && /home/weiggen/wei_research_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/densityGradient.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/densityGradient.h: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/densityGradient.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/densityGradient.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/densityGradient.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating C++ code from voronoi_cbsa/densityGradient.msg"
+	cd /home/weiggen/wei_research_ws/src/voronoi_cbsa && /home/weiggen/wei_research_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/densityGradient.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa -e /opt/ros/noetic/share/gencpp/cmake/..
+
 voronoi_cbsa_generate_messages_cpp: voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp
 voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeData.h
 voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/ExchangeDataArray.h
@@ -191,6 +199,7 @@ voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/
 voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/VoteList.h
 voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/Weight.h
 voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/WeightArray.h
+voronoi_cbsa_generate_messages_cpp: /home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/densityGradient.h
 voronoi_cbsa_generate_messages_cpp: voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_cpp.dir/build.make
 .PHONY : voronoi_cbsa_generate_messages_cpp
 

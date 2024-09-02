@@ -12,6 +12,7 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_Weight.py"
   "/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_WeightArray.py"
   "/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/__init__.py"
+  "/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_densityGradient.py"
   "CMakeFiles/voronoi_cbsa_generate_messages_py"
 )
 

@@ -64,6 +64,7 @@ add_message_files(
     ValidSensors.msg
     Weight.msg
     WeightArray.msg
+    densityGradient.msg
     )
 
 ## Generate services in the 'srv' folder

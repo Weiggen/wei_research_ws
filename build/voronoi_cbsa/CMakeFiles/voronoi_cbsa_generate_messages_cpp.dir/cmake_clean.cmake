@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/VoteList.h"
   "/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/Weight.h"
   "/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/WeightArray.h"
+  "/home/weiggen/wei_research_ws/devel/include/voronoi_cbsa/densityGradient.h"
   "CMakeFiles/voronoi_cbsa_generate_messages_cpp"
 )
 

@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/share/common-lisp/ros/voronoi_cbsa/msg/VoteList.lisp"
   "/home/weiggen/wei_research_ws/devel/share/common-lisp/ros/voronoi_cbsa/msg/Weight.lisp"
   "/home/weiggen/wei_research_ws/devel/share/common-lisp/ros/voronoi_cbsa/msg/WeightArray.lisp"
+  "/home/weiggen/wei_research_ws/devel/share/common-lisp/ros/voronoi_cbsa/msg/densityGradient.lisp"
   "CMakeFiles/voronoi_cbsa_generate_messages_lisp"
 )
 

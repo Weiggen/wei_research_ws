@@ -3,6 +3,7 @@
 
 (defsystem "voronoi_cbsa-msg"
   :depends-on (:roslisp-msg-protocol :roslisp-utils :geometry_msgs-msg
+               :std_msgs-msg
 )
   :components ((:file "_package")
     (:file "ExchangeData" :depends-on ("_package_ExchangeData"))
@@ -29,4 +30,6 @@
     (:file "_package_Weight" :depends-on ("_package"))
     (:file "WeightArray" :depends-on ("_package_WeightArray"))
     (:file "_package_WeightArray" :depends-on ("_package"))
+    (:file "densityGradient" :depends-on ("_package_densityGradient"))
+    (:file "_package_densityGradient" :depends-on ("_package"))
   ))

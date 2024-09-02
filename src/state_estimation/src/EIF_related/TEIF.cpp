@@ -263,9 +263,7 @@ Eigen::MatrixXd target_EIF::getGradientDensityFnc(Eigen::MatrixXd fusedP, Eigen:
 	// 		}
 	// 	}
 	// }
-	// std::cout << "gradient_weightedY:" << gradient_weightedY << std::endl;
 	// std::cout << "gradient_x_breve:" << gradient_x_breve << std::endl;
-	// std::cout << "gradient_x_hat:" << gradient_x_hat << std::endl;
 
 	// Create meshgrid. --- //
 	Eigen::Vector2d grid_size(0.1, 0.1);

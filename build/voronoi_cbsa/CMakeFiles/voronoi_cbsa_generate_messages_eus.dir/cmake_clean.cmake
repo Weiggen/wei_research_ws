@@ -12,6 +12,7 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/VoteList.l"
   "/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/Weight.l"
   "/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/WeightArray.l"
+  "/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/densityGradient.l"
   "CMakeFiles/voronoi_cbsa_generate_messages_eus"
 )
 

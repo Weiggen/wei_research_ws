@@ -3,6 +3,7 @@
 
 let ExchangeData = require('./ExchangeData.js');
 let Weight = require('./Weight.js');
+let densityGradient = require('./densityGradient.js');
 let SensorArray = require('./SensorArray.js');
 let ValidSensors = require('./ValidSensors.js');
 let NeighborInfo = require('./NeighborInfo.js');
@@ -17,6 +18,7 @@ let ExchangeDataArray = require('./ExchangeDataArray.js');
 module.exports = {
   ExchangeData: ExchangeData,
   Weight: Weight,
+  densityGradient: densityGradient,
   SensorArray: SensorArray,
   ValidSensors: ValidSensors,
   NeighborInfo: NeighborInfo,

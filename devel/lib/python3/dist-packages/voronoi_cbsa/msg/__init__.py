@@ -10,3 +10,4 @@ from ._ValidSensors import *
 from ._VoteList import *
 from ._Weight import *
 from ._WeightArray import *
+from ._densityGradient import *

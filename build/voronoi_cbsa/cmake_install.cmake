@@ -56,6 +56,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ValidSensors.msg"
     "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg"
     "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+    "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/densityGradient.msg"
     )
 endif()
 
