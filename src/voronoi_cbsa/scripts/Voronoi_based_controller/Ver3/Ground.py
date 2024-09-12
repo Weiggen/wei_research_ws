@@ -29,6 +29,7 @@ def TargetPosCallback(msg):
     global target_positions
     position = np.array((msg.pose.position.x, msg.pose.position.y))
     target_positions[0] = position
+    # print("target_positions[0]: {}\n".format(target_positions[0])) # value
 
 def TargetCovCallback(msg):
     global target_covariances
@@ -72,10 +73,10 @@ if __name__ == "__main__":
     # # target 1 設定在(18,5), target 2 設定在(18,18), 1是standard deviation, 10是weights
     # targets = [[random_pos((18,5)), 1, 10, RandomUnitVector(), ['camera', 'manipulator']],
     #            [random_pos((18,18)), 1, 10, RandomUnitVector(), ['camera', 'smoke_detector']]]
-    targets = [[target_positions[0], target_covariances[0], 10, RandomUnitVector(), ['camera']]]
     
     while not rospy.is_shutdown():
-            
+        
+        targets = [[target_positions[0], target_covariances[0], 10, RandomUnitVector(), ['camera']]]
         grid_size = rospy.get_param("/grid_size", 0.1)
         tmp = []
 

@@ -18,6 +18,7 @@ from scipy.stats import multivariate_normal
 import itertools
 import math
 import _thread
+import tf.transformations as tf
 
 class CMD:
     def __init__(self, id):
@@ -49,7 +50,7 @@ class CMD:
         if self.arming_client(arm_cmd).success:
             rospy.loginfo(f"UAV_{self.ID} armed switch successfully")
         else:
-            rospy.loginfo(f"UAV_{self.ID} failed to arm")
+            rospy.logwarn(f"UAV_{self.ID} failed to arm")
             
     def setMode(self, mode_CMD):
         offb_set_mode = SetModeRequest()
@@ -105,6 +106,7 @@ class PTZCamera():
         # Setting up agent's general parameters
         self.id                 = general_properties['id']
         self.pos                = general_properties['position']
+        # self.pos_z              = Float32
         self.valid_sensors      = general_properties['valid_sensor']
         self.max_speed          = general_properties['max_speed']
         self.sensor_qualities   = {}
@@ -168,16 +170,18 @@ class PTZCamera():
     def RosInit(self):
 
         rospy.Subscriber("local/neighbor_info", ExchangeDataArray, self.NeighborCallback)
-        rospy.Subscriber("local/target", TargetInfoArray, self.TargetCallback)        
+        rospy.Subscriber("local/target", TargetInfoArray, self.TargetCallback)      
+        # rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)  
         rospy.Subscriber("/iris_"+str(self.id)+"/mavros/local_position/pose", PoseStamped, self.AgentPosCallback)
         rospy.Subscriber("/iris_"+str(self.id)+"/densityGradient", densityGradient, self.DensityGradientCallback)
 
         self.pub_pos                = rospy.Publisher("local/position", Point, queue_size=10)
         self.pub_exchange_data      = rospy.Publisher("local/exchange_data",ExchangeData, queue_size=10)
-        # self.pub_utility            = rospy.Publisher("/iris_"+str(self.id)+"/utility", Float64, queue_size=10)
+        self.pub_utility            = rospy.Publisher("/iris_"+str(self.id)+"/utility", Float64, queue_size=10)
 
         self.pub_vel_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_velocity/cmd_vel", TwistStamped, queue_size=10)       
-
+        self.pub_pos_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_position/local", PoseStamped, queue_size=10)       
+        
         self.pub_sensor_weight      = rospy.Publisher("visualize/sensor_weights", WeightArray, queue_size=10)
         self.pub_total_score        = rospy.Publisher("visualize/total_score", Float64, queue_size=10)
         self.pub_sensor_scores      = rospy.Publisher("visualize/sensor_scores", SensorArray, queue_size=10)
@@ -245,6 +249,12 @@ class PTZCamera():
     def AgentPosCallback(self, msg):
         self.agent_ready = True
         self.pos = np.array([msg.pose.position.x, msg.pose.position.y])
+        q_current = [msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w]
+        euler = tf.euler_from_quaternion(q_current)
+        yaw = euler[2] # rad
+        # print("euler yaw_"+str(self.id)+": {}".format(yaw))
+        self.heading_vec = [math.cos(yaw), math.sin(yaw)] # [v_x, v_y]
+        # print("heading vector_"+str(self.id)+": {}".format(self.heading_vec))        
 
     def DensityGradientCallback(self, msg):
         self.agent_ready = True
@@ -257,7 +267,6 @@ class PTZCamera():
         self.event_density_gradient[1] += gradient_y_array
         # rospy.loginfo("Size of self.event_density_gradient[0]: {}".format(self.event_density_gradient[0].shape))
         # rospy.loginfo("Size of self.event_density_gradient[1]: {}".format(self.event_density_gradient[1].shape))
-    
         # rospy.loginfo("msg.gradient_x: \n{}".format(np.array(msg.gradient_x)[:3]))
         # rospy.loginfo("self.event_density_gradient[0]: \n{}".format(self.event_density_gradient[0][:3, :3]))
 
@@ -344,10 +353,11 @@ class PTZCamera():
         pose.position.x = self.pos[0]
         pose.position.y = self.pos[1]
         pose.orientation.x = self.perspective[0]
-        pose.orientation.y = self.perspective[1]        
+        pose.orientation.y = self.perspective[1]
+        # print("pose agent_"+str(self.id)+":\n{}".format(pose))
         
         self.pub_pose.publish(pose)
-        
+
         # publish sensor graphs
         for sensor in self.valid_sensors.keys():
             if self.valid_sensors[sensor] and sensor in self.neighbors.keys():
@@ -449,17 +459,27 @@ class PTZCamera():
                     self.UpdateSensorVoronoi(role = role, event = event)
                         
             u_p, u_v = self.ComputeControlSignal()
+            # print("u_p"+str(self.id)+": {}".format(u_p))
             self.UpdatePosition(u_p)
+
+            if self.valid_sensors['camera']:
+                self.UpdatePerspective(u_v)
 
             twistStamped_msg = TwistStamped()
             twistStamped_msg.header.stamp = rospy.Time.now()
             twistStamped_msg.twist.linear.x = u_p[0]
             twistStamped_msg.twist.linear.y = u_p[1]
             twistStamped_msg.twist.linear.z = 0
+            # twistStamped_msg.twist.angular.z = self.yaw_rate
             self.pub_vel_cmd.publish(twistStamped_msg)
+
+            # Fix the height of agent            
+            poseStamped_msg = PoseStamped()
+            poseStamped_msg.pose.position.z = 3
+            self.pub_pos_cmd.publish(poseStamped_msg)
             
-            if self.valid_sensors['camera']:
-                self.UpdatePerspective(u_v)
+            # if self.valid_sensors['camera']:
+            #     self.UpdatePerspective(u_v)
             
             self.ComputeUtility()    
             self.PublishInfo()
@@ -485,6 +505,7 @@ class PTZCamera():
         
         try:
             turning = math.acos((u_v @ self.perspective.T)/np.linalg.norm(u_v))
+            # print("theta command"+str(self.id)+": \n{}".format(turning))
             if  turning > 15/180*np.pi:
                 u_v *= (15/180*np.pi)/turning
         except:
@@ -498,6 +519,10 @@ class PTZCamera():
         
         if self.pos[1] + self.perspective[1] < 0 or self.pos[1] + self.perspective[1] > 24:
            self.perspective[1] *= -1 
+
+        # k_yaw = 0.5
+        # self.yaw_rate = k_yaw*(turning)
+        # print("yaw_rate"+str(self.id)+": \n{}".format(self.yaw_rate))
            
     def UpdateSensorVoronoi(self, role, event):
         x_coords, y_coords = np.meshgrid(np.arange(self.size[0]), np.arange(self.size[1]), indexing='ij')
@@ -588,14 +613,19 @@ class PTZCamera():
 
                     self.total_score += self.sensor_weight[role][event]*np.sum(tmp)
                 self.sensor_scores[role][event] = np.sum(quality)
-        # self.pub_utility.publish(self.total_score)
+        self.pub_utility.publish(self.total_score)
                     
     def ComputeControlSignal(self):
         u_p = np.array([0., 0.])  
-        u_v = np.array([0., 0.])     
+        u_v = np.array([0., 0.])
+        k_1 = 0
+        k_2 = 0.00000001
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
         sensor_gradient = [np.zeros(self.size), np.zeros(self.size)]
         event_gradient = [np.zeros(self.size), np.zeros(self.size)]
+        # rospy.loginfo("aaa:{}".format(self.cooperation))
+        f = np.zeros(self.size)
+        # print("Init f size: {}".format(f.shape))
         
         for event in self.targets.keys():
             for role in self.valid_sensors.keys():
@@ -604,14 +634,15 @@ class PTZCamera():
                 
                 if self.valid_sensors[role] and role in self.targets[event][5]:
                     
-                    sensor_gradient[0] = self.ComputeGradient(role, event, 'x') 
-                    sensor_gradient[1] = self.ComputeGradient(role, event, 'y')
-                    event_gradient[0] = self.ComputeDensityGradient('camera', event, 'x')
+                    sensor_gradient[0] = self.ComputeGradient(role, event, 'x') # f'
+                    sensor_gradient[1] = self.ComputeGradient(role, event, 'y') # f'
+                    event_gradient[0] = self.ComputeDensityGradient('camera', event, 'x') # the partial derivate of L_\phi
                     event_gradient[1] = self.ComputeDensityGradient('camera', event, 'y')
+
                     # rospy.loginfo("size of event_gradient[0]: {}".format(event_gradient[0].shape))
                     # rospy.loginfo("size of event_gradient[1]: {}".format(event_gradient[1].shape))
-                    # rospy.loginfo("event_gradient[0]: {}".format(event_gradient[0]))
-                    # rospy.loginfo("event_gradient[1]: {}".format(event_gradient[1]))
+                    # print("event_gradient[0]: {}".format(event_gradient[0]))
+                    # print("event_gradient[1]: {}".format(event_gradient[1]))
                                         
                     perspective_gradient_x = self.ComputeGradient('camera', event, 'perspective_x')
                     perspective_gradient_y = self.ComputeGradient('camera', event, 'perspective_y')
@@ -652,15 +683,25 @@ class PTZCamera():
 
                 total_gradient[0] *= self.event_density[event]
                 total_gradient[1] *= self.event_density[event]
-                total_gradient[0] += event_gradient[0]*(f)
-                total_gradient[1] += event_gradient[1]*(f)
-                rospy.loginfo("ddd".format(event_gradient[0]*(f)))
+                # print("f size: {}".format(f.shape))
+                # print("f: {}".format(f))
+                # event_gradient[0] *= f
+                # event_gradient[1] *= f
+                event_gradient[0] *= 1
+                event_gradient[1] *= 1
+                # rospy.loginfo("ccc: {}".format(event_gradient[0]))
                 
-                tmp_x = self.sensor_weight[role][event]*np.sum(total_gradient[0]) # add (5*) here
-                tmp_y = self.sensor_weight[role][event]*np.sum(total_gradient[1])
+                tmp_x = k_1*self.sensor_weight[role][event]*np.sum(total_gradient[0])
+                tmp_y = k_1*self.sensor_weight[role][event]*np.sum(total_gradient[1])
 
-                u_p[0] = u_p[0] + tmp_x if not np.isnan(tmp_x) else u_p[0]
-                u_p[1] = u_p[1] + tmp_y if not np.isnan(tmp_y) else u_p[1] 
+                tmp_x_1 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[0])
+                tmp_y_1 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[1])
+
+                # u_p[0] = u_p[0] + (tmp_x if not np.isnan(tmp_x) else 0) + (tmp_x_1 if not np.isnan(tmp_x_1) else 0)
+                # u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0) + (tmp_y_1 if not np.isnan(tmp_y_1) else 0)
+                u_p[0] = u_p[0] + tmp_x + tmp_x_1
+                u_p[1] = u_p[1] + tmp_y + tmp_y_1
+                print("u_p"+str(self.id)+": {}\n".format(u_p))
         
         return u_p, u_v
               
@@ -760,8 +801,7 @@ class PTZCamera():
             if type == 'x':
                 density_gradient_x[per_quality < 0] = 0 # behind the agent.
                 gradient = np.where(self.sensor_voronoi[role][event] == self.id, density_gradient_x, 0) # out of the agent's Voronoi cell
-        if role == 'camera':
-            if type == 'y':
+            elif type == 'y':
                 density_gradient_y[per_quality < 0] = 0
                 gradient = np.where(self.sensor_voronoi[role][event] == self.id, density_gradient_y, 0)
 
@@ -967,7 +1007,7 @@ if __name__ == "__main__":
     pos_y                   = rospy.get_param("~pos_y", default=0)
     init_position           = np.array([pos_x, pos_y])#(np.random.random((1,2))*3)[0]# + 9#
     max_speed               = rospy.get_param("~max_speed", default=1)
-    camera_valid            = rospy.get_param("~camera", default=0)
+    camera_valid            = rospy.get_param("~camera", default=1)
     manipulator_valid       = rospy.get_param("~manipulator", default=0)
     smoke_detector_valid    = rospy.get_param("~smoke_detector", default=0)
     valid_sensor            = {'camera'         : camera_valid,
@@ -1072,4 +1112,4 @@ if __name__ == "__main__":
     #     os.makedirs(save_path)
         
     # df = pd.DataFrame.from_dict(plt_dict) 
-    # df.to_csv (save_path + str(id) + ".csv", index=False, header=True)global_event
+    # df.to_csv (save_path + str(id) + ".csv", index=False, header=True)global_eventelf.cooperation

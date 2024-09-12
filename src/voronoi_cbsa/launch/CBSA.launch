@@ -41,7 +41,7 @@
         <arg name="perspective_x"   value="1"     />
         <arg name="perspective_y"   value="1"     />
         <arg name="angle_of_view"   value="10"    />
-        <arg name="desired_range"   value="4"     />
+        <arg name="desired_range"   value="3"     />
         <arg name="camera_variance" value="2"     />
 
         <arg name="arm_length"      value="1"     />
@@ -63,7 +63,7 @@
         <arg name="perspective_x"   value="1"     />
         <arg name="perspective_y"   value="1"     />
         <arg name="angle_of_view"   value="10"    />
-        <arg name="desired_range"   value="4"     />
+        <arg name="desired_range"   value="3"     />
         <arg name="camera_variance" value="2"     />
 
         <arg name="arm_length"      value="1"     />
@@ -78,14 +78,14 @@
         <arg name="id"              value="3"     /> 
         <!-- <arg name="position_x"      value="0"     />
         <arg name="position_y"      value="0"     /> -->
-        <arg name="camera"          value="0"     />
-        <arg name="manipulator"     value="1"     />
-        <arg name="smoke_detector"  value="1"     />
+        <arg name="camera"          value="1"     />
+        <arg name="manipulator"     value="0"     />
+        <arg name="smoke_detector"  value="0"     />
 
         <arg name="perspective_x"   value="1"     />
         <arg name="perspective_y"   value="1"     />
         <arg name="angle_of_view"   value="10"    />
-        <arg name="desired_range"   value="4"     />
+        <arg name="desired_range"   value="3"     />
         <arg name="camera_variance" value="2"     />
 
         <arg name="arm_length"      value="1"     />
