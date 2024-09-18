@@ -252,8 +252,7 @@ class PTZCamera():
         q_current = [msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w]
         euler = tf.euler_from_quaternion(q_current)
         yaw = euler[2] # rad
-        # print("euler yaw_"+str(self.id)+": {}".format(yaw))
-        self.heading_vec = [math.cos(yaw), math.sin(yaw)] # [v_x, v_y]
+        self.perspective = [math.cos(yaw), math.sin(yaw)] # [v_x, v_y]
         # print("heading vector_"+str(self.id)+": {}".format(self.heading_vec))        
 
     def DensityGradientCallback(self, msg):
@@ -459,7 +458,6 @@ class PTZCamera():
                     self.UpdateSensorVoronoi(role = role, event = event)
                         
             u_p, u_v = self.ComputeControlSignal()
-            # print("u_p"+str(self.id)+": {}".format(u_p))
             self.UpdatePosition(u_p)
 
             if self.valid_sensors['camera']:
@@ -470,7 +468,7 @@ class PTZCamera():
             twistStamped_msg.twist.linear.x = u_p[0]
             twistStamped_msg.twist.linear.y = u_p[1]
             twistStamped_msg.twist.linear.z = 0
-            # twistStamped_msg.twist.angular.z = self.yaw_rate
+            twistStamped_msg.twist.angular.z = self.yaw_rate
             self.pub_vel_cmd.publish(twistStamped_msg)
 
             # Fix the height of agent            
@@ -503,13 +501,17 @@ class PTZCamera():
                 
     def UpdatePerspective(self, u_v):
         
+        yaw_c = math.acos(self.perspective[0])
+        print("yaw_c:{}".format(yaw_c))
+
         try:
             turning = math.acos((u_v @ self.perspective.T)/np.linalg.norm(u_v))
-            # print("theta command"+str(self.id)+": \n{}".format(turning))
+            print("u_v, "+str(self.id)+": \n{}".format(u_v))
             if  turning > 15/180*np.pi:
                 u_v *= (15/180*np.pi)/turning
         except:
             u_v = np.array([0., 0.])
+            turning = 0.0
             
         self.perspective += self.K_v*u_v*self.step
         self.perspective /= self.Norm(self.perspective)
@@ -520,9 +522,10 @@ class PTZCamera():
         if self.pos[1] + self.perspective[1] < 0 or self.pos[1] + self.perspective[1] > 24:
            self.perspective[1] *= -1 
 
-        # k_yaw = 0.5
-        # self.yaw_rate = k_yaw*(turning)
-        # print("yaw_rate"+str(self.id)+": \n{}".format(self.yaw_rate))
+        yaw_d = math.acos(self.perspective[0])
+        print("yaw_d:{}".format(yaw_d))
+        k_yaw = 1
+        self.yaw_rate = k_yaw*(yaw_d-yaw_c)
            
     def UpdateSensorVoronoi(self, role, event):
         x_coords, y_coords = np.meshgrid(np.arange(self.size[0]), np.arange(self.size[1]), indexing='ij')
@@ -623,9 +626,7 @@ class PTZCamera():
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
         sensor_gradient = [np.zeros(self.size), np.zeros(self.size)]
         event_gradient = [np.zeros(self.size), np.zeros(self.size)]
-        # rospy.loginfo("aaa:{}".format(self.cooperation))
         f = np.zeros(self.size)
-        # print("Init f size: {}".format(f.shape))
         
         for event in self.targets.keys():
             for role in self.valid_sensors.keys():
@@ -638,11 +639,6 @@ class PTZCamera():
                     sensor_gradient[1] = self.ComputeGradient(role, event, 'y') # f'
                     event_gradient[0] = self.ComputeDensityGradient('camera', event, 'x') # the partial derivate of L_\phi
                     event_gradient[1] = self.ComputeDensityGradient('camera', event, 'y')
-
-                    # rospy.loginfo("size of event_gradient[0]: {}".format(event_gradient[0].shape))
-                    # rospy.loginfo("size of event_gradient[1]: {}".format(event_gradient[1].shape))
-                    # print("event_gradient[0]: {}".format(event_gradient[0]))
-                    # print("event_gradient[1]: {}".format(event_gradient[1]))
                                         
                     perspective_gradient_x = self.ComputeGradient('camera', event, 'perspective_x')
                     perspective_gradient_y = self.ComputeGradient('camera', event, 'perspective_y')
@@ -683,13 +679,10 @@ class PTZCamera():
 
                 total_gradient[0] *= self.event_density[event]
                 total_gradient[1] *= self.event_density[event]
-                # print("f size: {}".format(f.shape))
-                # print("f: {}".format(f))
                 # event_gradient[0] *= f
                 # event_gradient[1] *= f
                 event_gradient[0] *= 1
                 event_gradient[1] *= 1
-                # rospy.loginfo("ccc: {}".format(event_gradient[0]))
                 
                 tmp_x = k_1*self.sensor_weight[role][event]*np.sum(total_gradient[0])
                 tmp_y = k_1*self.sensor_weight[role][event]*np.sum(total_gradient[1])
@@ -701,7 +694,7 @@ class PTZCamera():
                 # u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0) + (tmp_y_1 if not np.isnan(tmp_y_1) else 0)
                 u_p[0] = u_p[0] + tmp_x + tmp_x_1
                 u_p[1] = u_p[1] + tmp_y + tmp_y_1
-                print("u_p"+str(self.id)+": {}\n".format(u_p))
+                print("tmp_x"+str(self.id)+": {}\n".format(tmp_x))
         
         return u_p, u_v
               

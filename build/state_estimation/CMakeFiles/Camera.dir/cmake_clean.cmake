@@ -2,7 +2,6 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/lib/libCamera.pdb"
   "/home/weiggen/wei_research_ws/devel/lib/libCamera.so"
   "CMakeFiles/Camera.dir/src/Camera.cpp.o"
-  "CMakeFiles/Camera.dir/src/Camera.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -2,7 +2,6 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/lib/libVelocity_cbf.pdb"
   "/home/weiggen/wei_research_ws/devel/lib/libVelocity_cbf.so"
   "CMakeFiles/Velocity_cbf.dir/src/Velocity_cbf.cpp.o"
-  "CMakeFiles/Velocity_cbf.dir/src/Velocity_cbf.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

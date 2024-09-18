@@ -2,9 +2,7 @@ file(REMOVE_RECURSE
   "/home/weiggen/wei_research_ws/devel/lib/formation_ctrl/keyboard_ctrl"
   "/home/weiggen/wei_research_ws/devel/lib/formation_ctrl/keyboard_ctrl.pdb"
   "CMakeFiles/keyboard_ctrl.dir/node/keyboard_ctrl_node.cpp.o"
-  "CMakeFiles/keyboard_ctrl.dir/node/keyboard_ctrl_node.cpp.o.d"
   "CMakeFiles/keyboard_ctrl.dir/src/getch.cpp.o"
-  "CMakeFiles/keyboard_ctrl.dir/src/getch.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

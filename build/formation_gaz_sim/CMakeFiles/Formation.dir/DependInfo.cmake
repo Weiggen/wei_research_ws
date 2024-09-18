@@ -1,14 +1,34 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/Formation.cpp" "/home/weiggen/wei_research_ws/build/formation_gaz_sim/CMakeFiles/Formation.dir/src/Formation.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
+
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_CXX
+  "Formation_EXPORTS"
+  "ROSCONSOLE_BACKEND_LOG4CXX"
+  "ROS_BUILD_SHARED_LIBS=1"
+  "ROS_PACKAGE_NAME=\"formation_ctrl\""
   )
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/Formation.cpp" "formation_gaz_sim/CMakeFiles/Formation.dir/src/Formation.cpp.o" "gcc" "formation_gaz_sim/CMakeFiles/Formation.dir/src/Formation.cpp.o.d"
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/home/weiggen/wei_research_ws/src/formation_gaz_sim/include"
+  "/home/weiggen/wei_research_ws/devel/include"
+  "/home/weiggen/wei_research_ws/src/state_estimation/include"
+  "/opt/ros/noetic/include"
+  "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
+  "/usr/include/opencv4"
+  "/usr/include/eigen3"
+  "/usr/include/pcl-1.10"
+  "/usr/include/vtk-7.1"
+  "/usr/include/freetype2"
+  "/home/weiggen/wei_research_ws/src/formation_gaz_sim/include/formation_ctrl"
   )
 
 # Targets to which this target links.
