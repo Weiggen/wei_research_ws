@@ -251,9 +251,9 @@ class PTZCamera():
         self.pos = np.array([msg.pose.position.x, msg.pose.position.y])
         q_current = [msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w]
         euler = tf.euler_from_quaternion(q_current)
-        yaw = euler[2] # rad
-        self.perspective = [math.cos(yaw), math.sin(yaw)] # [v_x, v_y]
-        # print("heading vector_"+str(self.id)+": {}".format(self.heading_vec))        
+        self.yaw = euler[2] # rad
+        self.perspective = [math.cos(self.yaw), math.sin(self.yaw)] # [v_x, v_y]
+        # print("heading vector_"+str(self.id)+": \n{}\n".format(self.perspective))
 
     def DensityGradientCallback(self, msg):
         self.agent_ready = True
@@ -473,7 +473,7 @@ class PTZCamera():
 
             # Fix the height of agent            
             poseStamped_msg = PoseStamped()
-            poseStamped_msg.pose.position.z = 3
+            poseStamped_msg.pose.position.z = 2.5
             self.pub_pos_cmd.publish(poseStamped_msg)
             
             # if self.valid_sensors['camera']:
@@ -501,12 +501,12 @@ class PTZCamera():
                 
     def UpdatePerspective(self, u_v):
         
-        yaw_c = math.acos(self.perspective[0])
-        print("yaw_c:{}".format(yaw_c))
-
+        # yaw_c = math.atan2(self.perspective[1], self.perspective[0])
+        # print("yaw_current"+str(self.id)+":{}\n".format(yaw_c))
+        yaw_c = self.yaw
+        
         try:
             turning = math.acos((u_v @ self.perspective.T)/np.linalg.norm(u_v))
-            print("u_v, "+str(self.id)+": \n{}".format(u_v))
             if  turning > 15/180*np.pi:
                 u_v *= (15/180*np.pi)/turning
         except:
@@ -522,10 +522,14 @@ class PTZCamera():
         if self.pos[1] + self.perspective[1] < 0 or self.pos[1] + self.perspective[1] > 24:
            self.perspective[1] *= -1 
 
-        yaw_d = math.acos(self.perspective[0])
-        print("yaw_d:{}".format(yaw_d))
-        k_yaw = 1
-        self.yaw_rate = k_yaw*(yaw_d-yaw_c)
+        # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
+        # print("yaw_desired"+str(self.id)+":{}\n".format(yaw_d))
+
+        u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
+        print("u_yaw"+str(self.id)+":{}\n".format(u_yaw))
+
+        k_yaw = 0.01
+        self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
         x_coords, y_coords = np.meshgrid(np.arange(self.size[0]), np.arange(self.size[1]), indexing='ij')
@@ -621,8 +625,8 @@ class PTZCamera():
     def ComputeControlSignal(self):
         u_p = np.array([0., 0.])  
         u_v = np.array([0., 0.])
-        k_1 = 0
-        k_2 = 0.00000001
+        k_1 = 1
+        k_2 = 0.00000002
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
         sensor_gradient = [np.zeros(self.size), np.zeros(self.size)]
         event_gradient = [np.zeros(self.size), np.zeros(self.size)]
@@ -679,22 +683,25 @@ class PTZCamera():
 
                 total_gradient[0] *= self.event_density[event]
                 total_gradient[1] *= self.event_density[event]
-                # event_gradient[0] *= f
-                # event_gradient[1] *= f
-                event_gradient[0] *= 1
-                event_gradient[1] *= 1
+                event_gradient[0] *= f
+                event_gradient[1] *= f
+                # event_gradient[0] *= 1
+                # event_gradient[1] *= 1
                 
                 tmp_x = k_1*self.sensor_weight[role][event]*np.sum(total_gradient[0])
                 tmp_y = k_1*self.sensor_weight[role][event]*np.sum(total_gradient[1])
 
-                tmp_x_1 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[0])
-                tmp_y_1 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[1])
+                tmp_x_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[0])
+                tmp_y_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[1])
 
-                # u_p[0] = u_p[0] + (tmp_x if not np.isnan(tmp_x) else 0) + (tmp_x_1 if not np.isnan(tmp_x_1) else 0)
-                # u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0) + (tmp_y_1 if not np.isnan(tmp_y_1) else 0)
-                u_p[0] = u_p[0] + tmp_x + tmp_x_1
-                u_p[1] = u_p[1] + tmp_y + tmp_y_1
-                print("tmp_x"+str(self.id)+": {}\n".format(tmp_x))
+                u_p[0] = u_p[0] + (tmp_x if not np.isnan(tmp_x) else 0) + (tmp_x_2 if not np.isnan(tmp_x_2) else 0)
+                u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0) + (tmp_y_2 if not np.isnan(tmp_y_2) else 0)
+                # u_p[0] = u_p[0] + tmp_x + tmp_x_2
+                # u_p[1] = u_p[1] + tmp_y + tmp_y_2
+                # print("tmp_x"+str(self.id)+": {}\n".format(tmp_x))
+                # print("tmp_y"+str(self.id)+": {}\n".format(tmp_y))
+                # print("tmp_x_2"+str(self.id)+": {}\n".format(tmp_x_2))
+                # print("tmp_y_2"+str(self.id)+": {}\n".format(tmp_y_2))
         
         return u_p, u_v
               

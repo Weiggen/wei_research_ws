@@ -71,48 +71,48 @@ void target_EIF::computeCorrPairs()
 	self.s.setZero();
 	self.y.setZero();
 
-	if(T.z != T.pre_z && T.z(2) >= 0.0 && T.z(2) <= 12.0)
-	{
+	// if(T.z != T.pre_z && T.z(2) >= 0.0 && T.z(2) <= 12.0)
+	// {
 
-		R_b2c = cam.R_B2C();
+	R_b2c = cam.R_B2C();
 
-		Eigen::Matrix3d R_w2c = R_b2c*Mav_eigen_self.R_w2b; ///////////////// rotation problem
-		Eigen::Vector3d r_qc_c = R_w2c*(T.X_hat.segment(0, 3) - self.X_hat.segment(0, 3)); 
+	Eigen::Matrix3d R_w2c = R_b2c*Mav_eigen_self.R_w2b; ///////////////// rotation problem
+	Eigen::Vector3d r_qc_c = R_w2c*(T.X_hat.segment(0, 3) - self.X_hat.segment(0, 3)); 
 
-		X = r_qc_c(0)/r_qc_c(2);
-		Y = r_qc_c(1)/r_qc_c(2);
-		Z = r_qc_c(2);
+	X = r_qc_c(0)/r_qc_c(2);
+	Y = r_qc_c(1)/r_qc_c(2);
+	Z = r_qc_c(2);
 
-		T.h(0) = cam.fx()*X + cam.cx();
-		T.h(1) = cam.fy()*Y + cam.cy();
-		T.h(2) = Z;
-		self.z = T.z;
-		self.h = T.h;
+	T.h(0) = cam.fx()*X + cam.cx();
+	T.h(1) = cam.fy()*Y + cam.cy();
+	T.h(2) = Z;
+	self.z = T.z;
+	self.h = T.h;
 
-		T.H(0, 0) = (cam.fx()/Z)*(R_w2c(0, 0) - R_w2c(2, 0)*X);
-		T.H(0, 1) = (cam.fx()/Z)*(R_w2c(0, 1) - R_w2c(2, 1)*X);
-		T.H(0, 2) = (cam.fx()/Z)*(R_w2c(0, 2) - R_w2c(2, 2)*X);
-		T.H(1, 0) = (cam.fy()/Z)*(R_w2c(1, 0) - R_w2c(2, 0)*Y);
-		T.H(1, 1) = (cam.fy()/Z)*(R_w2c(1, 1) - R_w2c(2, 1)*Y);
-		T.H(1, 2) = (cam.fy()/Z)*(R_w2c(1, 2) - R_w2c(2, 2)*Y);
-		T.H(2, 0) = R_w2c(2, 0);
-		T.H(2, 1) = R_w2c(2, 1);
-		T.H(2, 2) = R_w2c(2, 2);
+	T.H(0, 0) = (cam.fx()/Z)*(R_w2c(0, 0) - R_w2c(2, 0)*X);
+	T.H(0, 1) = (cam.fx()/Z)*(R_w2c(0, 1) - R_w2c(2, 1)*X);
+	T.H(0, 2) = (cam.fx()/Z)*(R_w2c(0, 2) - R_w2c(2, 2)*X);
+	T.H(1, 0) = (cam.fy()/Z)*(R_w2c(1, 0) - R_w2c(2, 0)*Y);
+	T.H(1, 1) = (cam.fy()/Z)*(R_w2c(1, 1) - R_w2c(2, 1)*Y);
+	T.H(1, 2) = (cam.fy()/Z)*(R_w2c(1, 2) - R_w2c(2, 2)*Y);
+	T.H(2, 0) = R_w2c(2, 0);
+	T.H(2, 1) = R_w2c(2, 1);
+	T.H(2, 2) = R_w2c(2, 2);
 
-		self.H = -T.H;
-		// T.H    = the partial derivate of the measurement model w.r.t. target pose
-		// self.H = the partial derivate of the measurement w.r.t. agent pose
+	self.H = -T.H;
+	// T.H    = the partial derivate of the measurement model w.r.t. target pose
+	// self.H = the partial derivate of the measurement w.r.t. agent pose
 
-		R_tilde = R + self.H*self.P_hat*self.H.transpose();
-		R_bar = R + T.H*T.P_hat*T.H.transpose();
+	R_tilde = R + self.H*self.P_hat*self.H.transpose();
+	R_bar = R + T.H*T.P_hat*T.H.transpose();
 
-		T.s = T.H.transpose()*R_tilde.inverse()*T.H;
-		T.y = T.H.transpose()*R_tilde.inverse()*(T.z - T.h + T.H*T.X_hat);
+	T.s = T.H.transpose()*R_tilde.inverse()*T.H;
+	T.y = T.H.transpose()*R_tilde.inverse()*(T.z - T.h + T.H*T.X_hat);
 
-		self.s = self.H.transpose()*R_bar.inverse()*self.H;
-		self.y = self.H.transpose()*R_bar.inverse()*(self.z - self.h + self.H*self.X_hat);
+	self.s = self.H.transpose()*R_bar.inverse()*self.H;
+	self.y = self.H.transpose()*R_bar.inverse()*(self.z - self.h + self.H*self.X_hat);
 
-	}
+	// }
 	// T.P = (T.P_hat.inverse() + T.s).inverse();
 	// T.X = T.P*(T.P_hat.inverse()*T.X_hat + T.y);
 	T.P = T.s.inverse();
@@ -319,6 +319,8 @@ Eigen::MatrixXd target_EIF::getGradientDensityFnc(Eigen::MatrixXd fusedP, Eigen:
 	multi_vector_result1 = mathLib.TensorContraction(D_Lphi_p_breve, gradient_pBreve);
 	multi_vector_result2 = gradient_x_hat_2D.transpose()*D_Lphi_x_hat;
 	Eigen::MatrixXd gradient2(2, size[0]*size[1]);
+	std::cout << "multi_vector_result1:\n" << multi_vector_result1(1, 120) << "\n \n";
+	std::cout << "multi_vector_result2:\n" << multi_vector_result2(1, 120) << "\n \n";
 	gradient2 = multi_vector_result1 + multi_vector_result2;// (7)
 
 	return gradient2;
