@@ -106,7 +106,7 @@ class PTZCamera():
         # Setting up agent's general parameters
         self.id                 = general_properties['id']
         self.pos                = general_properties['position']
-        # self.pos_z              = Float32
+        self.pos_z              = Float32
         self.valid_sensors      = general_properties['valid_sensor']
         self.max_speed          = general_properties['max_speed']
         self.sensor_qualities   = {}
@@ -249,6 +249,7 @@ class PTZCamera():
     def AgentPosCallback(self, msg):
         self.agent_ready = True
         self.pos = np.array([msg.pose.position.x, msg.pose.position.y])
+        self.pos_z = msg.pose.position.z
         q_current = [msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w]
         euler = tf.euler_from_quaternion(q_current)
         self.yaw = euler[2] # rad
@@ -353,7 +354,6 @@ class PTZCamera():
         pose.position.y = self.pos[1]
         pose.orientation.x = self.perspective[0]
         pose.orientation.y = self.perspective[1]
-        # print("pose agent_"+str(self.id)+":\n{}".format(pose))
         
         self.pub_pose.publish(pose)
 
@@ -467,14 +467,14 @@ class PTZCamera():
             twistStamped_msg.header.stamp = rospy.Time.now()
             twistStamped_msg.twist.linear.x = u_p[0]
             twistStamped_msg.twist.linear.y = u_p[1]
-            twistStamped_msg.twist.linear.z = 0
+            twistStamped_msg.twist.linear.z = self.u_h
             twistStamped_msg.twist.angular.z = self.yaw_rate
             self.pub_vel_cmd.publish(twistStamped_msg)
 
-            # Fix the height of agent            
-            poseStamped_msg = PoseStamped()
-            poseStamped_msg.pose.position.z = 2.5
-            self.pub_pos_cmd.publish(poseStamped_msg)
+            # # Fix the height of agent            
+            # poseStamped_msg = PoseStamped()
+            # poseStamped_msg.pose.position.z = 2.5
+            # self.pub_pos_cmd.publish(poseStamped_msg)
             
             # if self.valid_sensors['camera']:
             #     self.UpdatePerspective(u_v)
@@ -485,6 +485,16 @@ class PTZCamera():
     def UpdatePosition(self, u_p):
         u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
         self.u_p = u_p
+
+        # Height
+        k_h = 1
+        tolerance = 1
+        if self.pos_z < 2.5 - tolerance :
+            self.u_h = k_h*(2.5 - self.pos_z)
+        elif self.pos_z > 2.5 + tolerance:
+            self.u_h = k_h*(2.5 - self.pos_z)
+        else :
+            self.u_h = 0
         # u_avoid = np.array([0., 0.])
           
         # self.pos += self.K_p * ((1 - self.avoid_weight)*u_p + self.avoid_weight*u_avoid) * self.step if not np.isnan(u_p)[0] else self.pos
@@ -523,12 +533,8 @@ class PTZCamera():
            self.perspective[1] *= -1 
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
-        # print("yaw_desired"+str(self.id)+":{}\n".format(yaw_d))
-
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
-        print("u_yaw"+str(self.id)+":{}\n".format(u_yaw))
-
-        k_yaw = 0.01
+        k_yaw = 1
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
