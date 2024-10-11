@@ -92,7 +92,7 @@
             <arg name="z" value="0"/>
             <arg name="R" value="0"/>
             <arg name="P" value="0"/>
-            <arg name="Y" value="4.71"/>
+            <arg name="Y" value="-1.57"/>
             <!-- <arg name="name" value="$(arg name)2"/> -->
             <arg name="vehicle" value="$(arg vehicle)"/>
             <arg name="mavlink_udp_port" value="14562"/>
