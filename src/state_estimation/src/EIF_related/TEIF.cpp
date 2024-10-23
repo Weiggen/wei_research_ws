@@ -71,7 +71,7 @@ void target_EIF::computeCorrPairs()
 	self.s.setZero();
 	self.y.setZero();
 
-	if(T.z != T.pre_z && T.z(2) >= 0.0 && T.z(2) <= 12.0)
+	if(T.z != T.pre_z && T.z(2) >= 0.0 && T.z(2) <= 10.0)
 	{
 
 		R_b2c = cam.R_B2C();

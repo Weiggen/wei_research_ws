@@ -90,7 +90,8 @@ class PTZCamera():
 
         self.K_p            = K_p
         self.K_v            = K_v
-        self.u_p            = np.array([0.,0.])
+        self.u_p            = np.array([0., 0.])
+        self.u_v            = np.array([0., 0.])
         self.step           = step
         self.cooperation    = coop 
         self.sensor_balance = balance
@@ -177,6 +178,7 @@ class PTZCamera():
         # rospy.Subscriber("/iris_"+str(self.id)+"/mavros/local_position/pose", PoseStamped, self.AgentPosCallback)
         rospy.Subscriber("/gazebo/model_states", ModelStates, self.AgentPosCallback)
         rospy.Subscriber("/iris_"+str(self.id)+"/densityGradient", densityGradient, self.DensityGradientCallback)
+        rospy.Subscriber("/iris_"+str(self.id)+"/heading_cmd", Float64MultiArray, self.HeadingCmdCallback)
 
         self.pub_pos                = rospy.Publisher("local/position", Point, queue_size=10)
         self.pub_exchange_data      = rospy.Publisher("local/exchange_data",ExchangeData, queue_size=10)
@@ -184,7 +186,8 @@ class PTZCamera():
 
         self.pub_vel_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_velocity/cmd_vel", TwistStamped, queue_size=10)       
         self.pub_pos_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_position/local", PoseStamped, queue_size=10)       
-        
+        self.pub_heading_cmd        = rospy.Publisher("/iris_"+str(self.id)+"/heading_cmd", Float64MultiArray, queue_size=10)
+
         self.pub_sensor_weight      = rospy.Publisher("visualize/sensor_weights", WeightArray, queue_size=10)
         self.pub_total_score        = rospy.Publisher("visualize/total_score", Float64, queue_size=10)
         self.pub_sensor_scores      = rospy.Publisher("visualize/sensor_scores", SensorArray, queue_size=10)
@@ -197,6 +200,10 @@ class PTZCamera():
             if self.valid_sensors[sensor]:
                 self.pub_sensor_graphs[sensor] = rospy.Publisher("visualize/"+sensor+"_neighbor", Int16MultiArray, queue_size = 10)
         
+    def HeadingCmdCallback(self, msg):
+        if len(msg.data) == 2:
+            self.u_v = np.array(msg.data)
+
     def NeighborCallback(self, msg):
         self.neighbors_buffer = {}
         
@@ -474,6 +481,9 @@ class PTZCamera():
 
             if self.valid_sensors['camera']:
                 self.UpdatePerspective(u_v)
+                array_msg = Float64MultiArray()
+                array_msg.data = u_v.tolist()
+                self.pub_heading_cmd.publish(array_msg)
 
             twistStamped_msg = TwistStamped()
             twistStamped_msg.header.stamp = rospy.Time.now()
@@ -490,7 +500,10 @@ class PTZCamera():
             self.PublishInfo()
             
     def UpdatePosition(self, u_p):
-        u_p = self.max_speed*(u_p/np.linalg.norm(u_p)) # Normalize
+        # u_p = self.max_speed*(u_p/np.linalg.norm(u_p)) # Normalize
+        if np.linalg.norm(u_p) > self.max_speed:
+            u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
+
         if self.pos[0] < 0 or self.pos[0] > self.map_size[0]:
             self.u_p[0] = 0
         else :
@@ -541,7 +554,8 @@ class PTZCamera():
             if  turning > 15/180*np.pi:
                 u_v *= (15/180*np.pi)/turning
         except:
-            u_v = np.array([0., 0.])
+            # u_v = np.array([0., 0.])
+            u_v = self.u_v
             turning = 0.0
             
         self.perspective += self.K_v*u_v*self.step
@@ -555,7 +569,7 @@ class PTZCamera():
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
-        k_yaw = 1
+        k_yaw = 0.2
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
