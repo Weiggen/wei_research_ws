@@ -118,6 +118,9 @@ int main(int argc, char **argv)
         //keyboard control
         int c = getch();
         //ROS_INFO("C: %d",c);
+
+        tf::Quaternion q = tf::createQuaternionFromYaw(desired_yaw);
+
         //update desired pose
         if (c != 0) 
         {
@@ -131,10 +134,14 @@ int main(int argc, char **argv)
                 case 67:    // key CW(->)
                     desired_yaw -= 0.03;
                     bound_yaw(&desired_yaw); 
+                    q = tf::createQuaternionFromYaw(desired_yaw);
+                    tf::quaternionTFToMsg(q, desired_pose.pose.orientation);
                     break;
                 case 68:    // key CCW(<-)
                     desired_yaw += 0.03;
                     bound_yaw(&desired_yaw); 
+                    q = tf::createQuaternionFromYaw(desired_yaw);
+                    tf::quaternionTFToMsg(q, desired_pose.pose.orientation);
                     break;
                 case 119:    // key foward(w)
                     desired_pose.pose.position.y += move_step;
@@ -163,7 +170,7 @@ int main(int argc, char **argv)
                 case 111:
                     desired_pose.pose.position.x = 0;
                     desired_pose.pose.position.y = 0;
-                    desired_pose.pose.position.z = 8;
+                    desired_pose.pose.position.z = 2;
                     break;
                 case 107:   // key kill(k)
                     return 0;
@@ -176,6 +183,7 @@ int main(int argc, char **argv)
             trajectory_time += 0.01;
             desired_pose.pose.position.x = current_x + 2*cos(trajectory_time);
             desired_pose.pose.position.y = current_y + 2*sin(trajectory_time);
+            desired_pose.pose.orientation.z = desired_yaw;
         }
 
         desired_pose_pub.publish(desired_pose);

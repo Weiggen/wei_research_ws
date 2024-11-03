@@ -19,7 +19,7 @@ add_custom_target(voronoi_cbsa_generate_messages ALL)
 
 get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" "voronoi_cbsa/Weight:geometry_msgs/Point:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor:voronoi_cbsa/WeightArray"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg" "voronoi_cbsa/Weight:std_msgs/Float64MultiArray:voronoi_cbsa/SensorArray:geometry_msgs/Point:voronoi_cbsa/Sensor:std_msgs/MultiArrayDimension:voronoi_cbsa/WeightArray:std_msgs/MultiArrayLayout"
 )
 
 get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/VoteList.msg" NAME_WE)
@@ -34,22 +34,22 @@ add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" "voronoi_cbsa/NeighborInfo:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor:geometry_msgs/Point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg" "voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor:voronoi_cbsa/NeighborInfo:geometry_msgs/Point"
 )
 
 get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" "voronoi_cbsa/Weight:geometry_msgs/Point:voronoi_cbsa/ExchangeData:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor:voronoi_cbsa/WeightArray"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg" "voronoi_cbsa/Weight:std_msgs/Float64MultiArray:voronoi_cbsa/ExchangeData:voronoi_cbsa/SensorArray:geometry_msgs/Point:voronoi_cbsa/Sensor:std_msgs/MultiArrayDimension:voronoi_cbsa/WeightArray:std_msgs/MultiArrayLayout"
 )
 
 get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" "geometry_msgs/Twist:geometry_msgs/Vector3:geometry_msgs/Point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg" "geometry_msgs/Vector3:geometry_msgs/Twist:geometry_msgs/Point"
 )
 
 get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" NAME_WE)
 add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" "geometry_msgs/Twist:geometry_msgs/Vector3:geometry_msgs/Point:voronoi_cbsa/TargetInfo"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "voronoi_cbsa" "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg" "geometry_msgs/Vector3:voronoi_cbsa/TargetInfo:geometry_msgs/Twist:geometry_msgs/Point"
 )
 
 get_filename_component(_filename "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg" NAME_WE)
@@ -91,7 +91,7 @@ add_custom_target(_voronoi_cbsa_generate_messages_check_deps_${_filename}
 _generate_msg_cpp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
@@ -109,25 +109,25 @@ _generate_msg_cpp(voronoi_cbsa
 _generate_msg_cpp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_cpp(voronoi_cbsa
@@ -220,7 +220,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_cpp)
 _generate_msg_eus(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
@@ -238,25 +238,25 @@ _generate_msg_eus(voronoi_cbsa
 _generate_msg_eus(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_eus(voronoi_cbsa
@@ -349,7 +349,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_eus)
 _generate_msg_lisp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
@@ -367,25 +367,25 @@ _generate_msg_lisp(voronoi_cbsa
 _generate_msg_lisp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_lisp(voronoi_cbsa
@@ -478,7 +478,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_lisp
 _generate_msg_nodejs(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
@@ -496,25 +496,25 @@ _generate_msg_nodejs(voronoi_cbsa
 _generate_msg_nodejs(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_nodejs(voronoi_cbsa
@@ -607,7 +607,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS voronoi_cbsa_generate_messages_node
 _generate_msg_py(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
@@ -625,25 +625,25 @@ _generate_msg_py(voronoi_cbsa
 _generate_msg_py(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg"
+  "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Float64MultiArray.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayDimension.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/MultiArrayLayout.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
   "/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa
 )
 _generate_msg_py(voronoi_cbsa
@@ -743,6 +743,9 @@ endif()
 if(TARGET geometry_msgs_generate_messages_cpp)
   add_dependencies(voronoi_cbsa_generate_messages_cpp geometry_msgs_generate_messages_cpp)
 endif()
+if(TARGET std_msgs_generate_messages_cpp)
+  add_dependencies(voronoi_cbsa_generate_messages_cpp std_msgs_generate_messages_cpp)
+endif()
 
 if(geneus_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/voronoi_cbsa)
   # install generated code
@@ -753,6 +756,9 @@ if(geneus_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/vo
 endif()
 if(TARGET geometry_msgs_generate_messages_eus)
   add_dependencies(voronoi_cbsa_generate_messages_eus geometry_msgs_generate_messages_eus)
+endif()
+if(TARGET std_msgs_generate_messages_eus)
+  add_dependencies(voronoi_cbsa_generate_messages_eus std_msgs_generate_messages_eus)
 endif()
 
 if(genlisp_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/voronoi_cbsa)
@@ -765,6 +771,9 @@ endif()
 if(TARGET geometry_msgs_generate_messages_lisp)
   add_dependencies(voronoi_cbsa_generate_messages_lisp geometry_msgs_generate_messages_lisp)
 endif()
+if(TARGET std_msgs_generate_messages_lisp)
+  add_dependencies(voronoi_cbsa_generate_messages_lisp std_msgs_generate_messages_lisp)
+endif()
 
 if(gennodejs_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/voronoi_cbsa)
   # install generated code
@@ -775,6 +784,9 @@ if(gennodejs_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_D
 endif()
 if(TARGET geometry_msgs_generate_messages_nodejs)
   add_dependencies(voronoi_cbsa_generate_messages_nodejs geometry_msgs_generate_messages_nodejs)
+endif()
+if(TARGET std_msgs_generate_messages_nodejs)
+  add_dependencies(voronoi_cbsa_generate_messages_nodejs std_msgs_generate_messages_nodejs)
 endif()
 
 if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voronoi_cbsa)
@@ -787,4 +799,7 @@ if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/voro
 endif()
 if(TARGET geometry_msgs_generate_messages_py)
   add_dependencies(voronoi_cbsa_generate_messages_py geometry_msgs_generate_messages_py)
+endif()
+if(TARGET std_msgs_generate_messages_py)
+  add_dependencies(voronoi_cbsa_generate_messages_py std_msgs_generate_messages_py)
 endif()

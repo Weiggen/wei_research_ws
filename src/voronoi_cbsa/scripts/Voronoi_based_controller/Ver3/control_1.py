@@ -2,9 +2,9 @@
 import rospy
 from geometry_msgs.msg import Pose, Point, PoseStamped, TwistStamped
 from mavros_msgs.msg import State
-from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeRequest, CommandTOL
+from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeRequest, CommandTOL, CommandTOLRequest
 from voronoi_cbsa.msg import ExchangeData, ExchangeDataArray, TargetInfoArray, SensorArray, Sensor, ValidSensors, WeightArray, Weight, densityGradient
-from std_msgs.msg import Int16, Int32, Bool, Float32MultiArray, Int16MultiArray, Float32, Float64, Float64MultiArray, String
+from std_msgs.msg import Int16, Int32, Bool, Float32MultiArray, Int16MultiArray, Float32, Float64, Float64MultiArray, String, MultiArrayDimension
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from gazebo_msgs.msg import ModelStates, LinkStates
@@ -33,6 +33,7 @@ class CMD:
         self.arming_client = rospy.ServiceProxy("/iris_"+str(id)+"/mavros/cmd/arming", CommandBool)
         self.set_mode_client = rospy.ServiceProxy("/iris_"+str(id)+"/mavros/set_mode", SetMode)
         self.takeoff_client = rospy.ServiceProxy("/iris_"+str(id)+"/mavros/cmd/takeoff", CommandTOL)
+        # self.local_pos_pub = rospy.Publisher("/iris_"+str(id)+"/mavros/setpoint_position/local", PoseStamped, queue_size=10)
         
         self.arm_cmd_sub = rospy.Subscriber("/formation/all_uav_arm", Bool, self.arm_cmd_cb)
         self.mode_cmd_sub = rospy.Subscriber("/formation/all_uav_mode", Int32, self.mode_cmd_cb)
@@ -63,6 +64,11 @@ class CMD:
             offb_set_mode.custom_mode = "AUTO.LAND"
         elif mode_CMD == 3:
             offb_set_mode.custom_mode = "OFFBOARD"
+            # pose = PoseStamped()
+            # pose.pose.position.x = 0
+            # pose.pose.position.y = 0
+            # pose.pose.position.z = 2.5
+            # self.local_pos_pub.publish(pose)
         elif mode_CMD == 5:
             if not self.vision_tracking:
                 rospy.loginfo("Tracking by vision")
@@ -230,11 +236,14 @@ class PTZCamera():
             
             for score in neighbor.sensor_scores.weights:
                 sensor_scores[score.type][score.event_id] = score.score
+
+            u_p = np.array(neighbor.vel_cmd.data)
                     
             self.neighbors_buffer[neighbor.id] = {"position":   pos, "role": role, "operation_range": neighbor.operation_range,
                                                   "approx_param": neighbor.approx_param, "smoke_variance": neighbor.smoke_variance,
                                                   "camera_range": neighbor.camera_range, "angle_of_view": neighbor.angle_of_view,
-                                                  "camera_variance": neighbor.camera_variance, "weights": weights, "sensor_scores": sensor_scores}
+                                                  "camera_variance": neighbor.camera_variance, "weights": weights, "sensor_scores": sensor_scores,
+                                                  "vel_cmd": u_p}
     
     def TargetCallback(self, msg):
         self.target_ready = True
@@ -344,13 +353,15 @@ class PTZCamera():
                 weight.score    = self.sensor_scores[i][event]
                 scores_arr.weights.append(weight)
                 
-                
         data.operation_range    = self.operation_range
         data.approx_param       = self.approx_param
         data.smoke_variance     = self.smoke_variance
         data.camera_range       = self.camera_range
         data.angle_of_view      = self.angle_of_view
         data.camera_variance    = self.camera_variance
+
+        data.vel_cmd            = Float64MultiArray(data=self.u_p)
+        data.vel_cmd.data       = self.u_p
         
         data.sensor_scores  = scores_arr
         data.weights        = weight_arr
@@ -448,7 +459,7 @@ class PTZCamera():
     def Update(self):
         if self.target_ready and self.agent_ready:
             self.neighbors          = self.neighbors_buffer.copy()                      
-            self.targets            = self.target_buffer.copy()   
+            self.targets            = self.target_buffer.copy()
                 
             self.total_score    = 0
             self.sensor_scores = {}
@@ -501,23 +512,28 @@ class PTZCamera():
             
     def UpdatePosition(self, u_p):
         # u_p = self.max_speed*(u_p/np.linalg.norm(u_p)) # Normalize
+
+        # if self.pos[0] < 0 or self.pos[0] > self.map_size[0]:
+        #     self.u_p[0] = 0
+        # else :
+        #     self.u_p[0] = u_p[0]
+
+        # if self.pos[1] < 0 or self.pos[1] > self.map_size[1]:
+        #     self.u_p[1] = 0
+        # else :
+        #     self.u_p[1] = u_p[1]
+        ###########################################################
+
         if np.linalg.norm(u_p) > self.max_speed:
             u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
 
-        if self.pos[0] < 0 or self.pos[0] > self.map_size[0]:
-            self.u_p[0] = 0
-        else :
-            self.u_p[0] = u_p[0]
-
-        if self.pos[1] < 0 or self.pos[1] > self.map_size[1]:
-            self.u_p[1] = 0
-        else :
-            self.u_p[1] = u_p[1]
+        self.u_p = u_p
 
         # Height
         k_h = 1
         tolerance = 1
-        ideal_z = 2.5
+        ideal_z = 4.5
+
         if self.pos_z < ideal_z - tolerance :
             self.u_h = k_h*(ideal_z - self.pos_z)
         elif self.pos_z > ideal_z + tolerance:

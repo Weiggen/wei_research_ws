@@ -305,9 +305,9 @@ def plot_combined_RMSE_v(RMSE_v1, label1, RMSE_v2, label2):
     plt.grid(True)
     plt.show()
 
-def plot_combine_det_p( det_p, det_p2, dataset_label, dataset_label2):
+def plot_combine_det_p( det_p, det_p2, det_p3, dataset_label, dataset_label2, dataset_label3):
     plt.figure(figsize = (10,6))
-    min_length = min(len(det_p), len(det_p2))
+    min_length = min(len(det_p), len(det_p2), len(det_p3))
     timeStamps = list(range(min_length))  # Creating a list from 0 to min_length
 
 
@@ -315,46 +315,55 @@ def plot_combine_det_p( det_p, det_p2, dataset_label, dataset_label2):
     # Cut the RMSE lists to match the new timestamps if necessary
     det_p = det_p[:min_length]
     det_p2 = det_p2[:min_length]
+    det_p3 = det_p3[:min_length]
 
     average = sum(det_p)/len(det_p)
-    average2 = sum(det_p2)/len(det_p2)  
+    average2 = sum(det_p2)/len(det_p2)
+    average3 = sum(det_p3)/len(det_p3)
     # print(average)
-    plt.scatter(timeStamps, det_p, label=f'trace(p) for {dataset_label}',color='orange')
-    plt.axhline(y=average, color='r', linestyle='--',label=f'Average trace(p): {average}')
+    plt.scatter(timeStamps, det_p, label=f'det(p) for {dataset_label}',color='orange')
+    plt.axhline(y=average, color='r', linestyle='--',label=f'Average det(p): {average}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='red')
-    plt.scatter(timeStamps, det_p2, label=f'trace(p) for {dataset_label2}',color='blue')
-    plt.axhline(y=average2, color='g', linestyle='--',label=f'Average trace(p): {average2}')
+    plt.scatter(timeStamps, det_p2, label=f'det(p) for {dataset_label2}',color='cyan')
+    plt.axhline(y=average2, color='blue', linestyle='--',label=f'Average det(p): {average2}')
+
+    plt.scatter(timeStamps, det_p3, label=f'det(p) for {dataset_label3}',color='pink')
+    plt.axhline(y=average3, color='magenta', linestyle='--',label=f'Average det(p): {average3}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average2}', color='red')    
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
-    plt.title(f'target_trace(p)  (all uavs use gps)')
+    plt.title(f'target_det(p)')
     plt.legend()
     plt.grid(True)
     plt.show()
-def plotFromTwoBags(file1, file2, topic, label1, label2):
+def plotFromThreeBags(file1, file2, file3, topic, label1, label2, label3):
     # Open both bag files
     bag1 = rosbag.Bag(file1)
     bag2 = rosbag.Bag(file2)
+    bag3 = rosbag.Bag(file3)
 
     # Extract data from both bags
     _, _, _, _, _,p1 = extract_data(bag1, topic)
     _, _, _, _, _,p2 = extract_data(bag2, topic)
+    _, _, _, _, _,p3 = extract_data(bag3, topic)
 
     # Close the bag files
     bag1.close()
     bag2.close()
+    bag3.close()
 
     # Plot combined RMSE for position from both bags with normalized time steps
     # plot_combined_RMSE_p(RMSE_p1, label1, RMSE_p2, label2)
     # plot_combined_RMSE_v(RMSE_v1, label1, RMSE_v2, label2)
-    plot_combine_det_p( p1, p2, label1, label2)
-folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
+    plot_combine_det_p( p1, p2, p3, label1, label2, label3)
+folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/result1025/'
 
-file1 = folder + '1023fix_uv_2.bag'
-file2 = folder + '1022alpha20.bag'
-# file2 = folder + 'lidar.bag'
+file1 = folder + 'case1.bag'
+file2 = folder + 'case2.bag'
+file3 = folder + 'case3.bag'
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
+bag3 = rosbag.Bag(file3)
 topic = '/iris_1/THEIF/Plot'
-plotFromTwoBags(file1, file2, topic, '1023fix_uv_2', '1022alpha20')
+plotFromThreeBags(file1, file2, file3, topic, 'case1', 'case2', 'case3')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')

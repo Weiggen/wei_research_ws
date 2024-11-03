@@ -12,11 +12,13 @@
 ;;//! \htmlinclude ExchangeData.msg.html
 (if (not (find-package "GEOMETRY_MSGS"))
   (ros::roseus-add-msgs "geometry_msgs"))
+(if (not (find-package "STD_MSGS"))
+  (ros::roseus-add-msgs "std_msgs"))
 
 
 (defclass voronoi_cbsa::ExchangeData
   :super ros::object
-  :slots (_id _position _role _weights _sensor_scores _operation_range _approx_param _smoke_variance _camera_range _angle_of_view _camera_variance ))
+  :slots (_id _position _role _weights _sensor_scores _operation_range _approx_param _smoke_variance _camera_range _angle_of_view _camera_variance _vel_cmd ))
 
 (defmethod voronoi_cbsa::ExchangeData
   (:init
@@ -32,6 +34,7 @@
     ((:camera_range __camera_range) 0.0)
     ((:angle_of_view __angle_of_view) 0.0)
     ((:camera_variance __camera_variance) 0.0)
+    ((:vel_cmd __vel_cmd) (instance std_msgs::Float64MultiArray :init))
     )
    (send-super :init)
    (setq _id (round __id))
@@ -45,6 +48,7 @@
    (setq _camera_range (float __camera_range))
    (setq _angle_of_view (float __angle_of_view))
    (setq _camera_variance (float __camera_variance))
+   (setq _vel_cmd __vel_cmd)
    self)
   (:id
    (&optional __id)
@@ -95,6 +99,13 @@
   (:camera_variance
    (&optional __camera_variance)
    (if __camera_variance (setq _camera_variance __camera_variance)) _camera_variance)
+  (:vel_cmd
+   (&rest __vel_cmd)
+   (if (keywordp (car __vel_cmd))
+       (send* _vel_cmd __vel_cmd)
+     (progn
+       (if __vel_cmd (setq _vel_cmd (car __vel_cmd)))
+       _vel_cmd)))
   (:serialization-length
    ()
    (+
@@ -120,6 +131,8 @@
     8
     ;; float64 _camera_variance
     8
+    ;; std_msgs/Float64MultiArray _vel_cmd
+    (send _vel_cmd :serialization-length)
     ))
   (:serialize
    (&optional strm)
@@ -157,6 +170,8 @@
        (sys::poke _angle_of_view (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _camera_variance
        (sys::poke _camera_variance (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; std_msgs/Float64MultiArray _vel_cmd
+       (send _vel_cmd :serialize s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
@@ -193,11 +208,13 @@
      (setq _angle_of_view (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _camera_variance
      (setq _camera_variance (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; std_msgs/Float64MultiArray _vel_cmd
+     (send _vel_cmd :deserialize buf ptr-) (incf ptr- (send _vel_cmd :serialization-length))
    ;;
    self)
   )
 
-(setf (get voronoi_cbsa::ExchangeData :md5sum-) "77f411baa5b1143c9a101ed6a3425781")
+(setf (get voronoi_cbsa::ExchangeData :md5sum-) "e52bf14ec783bb82fb5c904ea32cc70b")
 (setf (get voronoi_cbsa::ExchangeData :datatype-) "voronoi_cbsa/ExchangeData")
 (setf (get voronoi_cbsa::ExchangeData :definition-)
       "int64               id
@@ -211,7 +228,7 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+std_msgs/Float64MultiArray vel_cmd
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -235,10 +252,53 @@ MSG: voronoi_cbsa/Weight
 string  type
 int16   event_id
 float64 score
+================================================================================
+MSG: std_msgs/Float64MultiArray
+# Please look at the MultiArrayLayout message definition for
+# documentation on all multiarrays.
+
+MultiArrayLayout  layout        # specification of data layout
+float64[]         data          # array of data
+
+
+================================================================================
+MSG: std_msgs/MultiArrayLayout
+# The multiarray declares a generic multi-dimensional array of a
+# particular data type.  Dimensions are ordered from outer most
+# to inner most.
+
+MultiArrayDimension[] dim # Array of dimension properties
+uint32 data_offset        # padding elements at front of data
+
+# Accessors should ALWAYS be written in terms of dimension stride
+# and specified outer-most dimension first.
+# 
+# multiarray(i,j,k) = data[data_offset + dim_stride[1]*i + dim_stride[2]*j + k]
+#
+# A standard, 3-channel 640x480 image with interleaved color channels
+# would be specified as:
+#
+# dim[0].label  = \"height\"
+# dim[0].size   = 480
+# dim[0].stride = 3*640*480 = 921600  (note dim[0] stride is just size of image)
+# dim[1].label  = \"width\"
+# dim[1].size   = 640
+# dim[1].stride = 3*640 = 1920
+# dim[2].label  = \"channel\"
+# dim[2].size   = 3
+# dim[2].stride = 3
+#
+# multiarray(i,j,k) refers to the ith row, jth column, and kth channel.
+
+================================================================================
+MSG: std_msgs/MultiArrayDimension
+string label   # label of given dimension
+uint32 size    # size of given dimension (in type units)
+uint32 stride  # stride of given dimension
 ")
 
 
 
-(provide :voronoi_cbsa/ExchangeData "77f411baa5b1143c9a101ed6a3425781")
+(provide :voronoi_cbsa/ExchangeData "e52bf14ec783bb82fb5c904ea32cc70b")
 
 

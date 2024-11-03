@@ -13,6 +13,7 @@ const _finder = _ros_msg_utils.Find;
 const _getByteLength = _ros_msg_utils.getByteLength;
 let SensorArray = require('./SensorArray.js');
 let WeightArray = require('./WeightArray.js');
+let std_msgs = _finder('std_msgs');
 let geometry_msgs = _finder('geometry_msgs');
 
 //-----------------------------------------------------------
@@ -32,6 +33,7 @@ class ExchangeData {
       this.camera_range = null;
       this.angle_of_view = null;
       this.camera_variance = null;
+      this.vel_cmd = null;
     }
     else {
       if (initObj.hasOwnProperty('id')) {
@@ -100,6 +102,12 @@ class ExchangeData {
       else {
         this.camera_variance = 0.0;
       }
+      if (initObj.hasOwnProperty('vel_cmd')) {
+        this.vel_cmd = initObj.vel_cmd
+      }
+      else {
+        this.vel_cmd = new std_msgs.msg.Float64MultiArray();
+      }
     }
   }
 
@@ -127,6 +135,8 @@ class ExchangeData {
     bufferOffset = _serializer.float64(obj.angle_of_view, buffer, bufferOffset);
     // Serialize message field [camera_variance]
     bufferOffset = _serializer.float64(obj.camera_variance, buffer, bufferOffset);
+    // Serialize message field [vel_cmd]
+    bufferOffset = std_msgs.msg.Float64MultiArray.serialize(obj.vel_cmd, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -156,6 +166,8 @@ class ExchangeData {
     data.angle_of_view = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [camera_variance]
     data.camera_variance = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [vel_cmd]
+    data.vel_cmd = std_msgs.msg.Float64MultiArray.deserialize(buffer, bufferOffset);
     return data;
   }
 
@@ -164,6 +176,7 @@ class ExchangeData {
     length += SensorArray.getMessageSize(object.role);
     length += WeightArray.getMessageSize(object.weights);
     length += WeightArray.getMessageSize(object.sensor_scores);
+    length += std_msgs.msg.Float64MultiArray.getMessageSize(object.vel_cmd);
     return length + 80;
   }
 
@@ -174,7 +187,7 @@ class ExchangeData {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '77f411baa5b1143c9a101ed6a3425781';
+    return 'e52bf14ec783bb82fb5c904ea32cc70b';
   }
 
   static messageDefinition() {
@@ -191,7 +204,7 @@ class ExchangeData {
     float64             camera_range
     float64             angle_of_view
     float64             camera_variance
-    
+    std_msgs/Float64MultiArray vel_cmd
     
     ================================================================================
     MSG: geometry_msgs/Point
@@ -215,6 +228,49 @@ class ExchangeData {
     string  type
     int16   event_id
     float64 score
+    ================================================================================
+    MSG: std_msgs/Float64MultiArray
+    # Please look at the MultiArrayLayout message definition for
+    # documentation on all multiarrays.
+    
+    MultiArrayLayout  layout        # specification of data layout
+    float64[]         data          # array of data
+    
+    
+    ================================================================================
+    MSG: std_msgs/MultiArrayLayout
+    # The multiarray declares a generic multi-dimensional array of a
+    # particular data type.  Dimensions are ordered from outer most
+    # to inner most.
+    
+    MultiArrayDimension[] dim # Array of dimension properties
+    uint32 data_offset        # padding elements at front of data
+    
+    # Accessors should ALWAYS be written in terms of dimension stride
+    # and specified outer-most dimension first.
+    # 
+    # multiarray(i,j,k) = data[data_offset + dim_stride[1]*i + dim_stride[2]*j + k]
+    #
+    # A standard, 3-channel 640x480 image with interleaved color channels
+    # would be specified as:
+    #
+    # dim[0].label  = "height"
+    # dim[0].size   = 480
+    # dim[0].stride = 3*640*480 = 921600  (note dim[0] stride is just size of image)
+    # dim[1].label  = "width"
+    # dim[1].size   = 640
+    # dim[1].stride = 3*640 = 1920
+    # dim[2].label  = "channel"
+    # dim[2].size   = 3
+    # dim[2].stride = 3
+    #
+    # multiarray(i,j,k) refers to the ith row, jth column, and kth channel.
+    
+    ================================================================================
+    MSG: std_msgs/MultiArrayDimension
+    string label   # label of given dimension
+    uint32 size    # size of given dimension (in type units)
+    uint32 stride  # stride of given dimension
     `;
   }
 
@@ -299,6 +355,13 @@ class ExchangeData {
     }
     else {
       resolved.camera_variance = 0.0
+    }
+
+    if (msg.vel_cmd !== undefined) {
+      resolved.vel_cmd = std_msgs.msg.Float64MultiArray.Resolve(msg.vel_cmd)
+    }
+    else {
+      resolved.vel_cmd = new std_msgs.msg.Float64MultiArray()
     }
 
     return resolved;

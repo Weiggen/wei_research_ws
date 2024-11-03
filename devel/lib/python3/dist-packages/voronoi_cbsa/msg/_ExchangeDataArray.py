@@ -7,10 +7,11 @@ import genpy
 import struct
 
 import geometry_msgs.msg
+import std_msgs.msg
 import voronoi_cbsa.msg
 
 class ExchangeDataArray(genpy.Message):
-  _md5sum = "d040e661939b9707099a5ae103d30bfd"
+  _md5sum = "123206d5e1536f22170e5c5739052f99"
   _type = "voronoi_cbsa/ExchangeDataArray"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """ExchangeData[] data
@@ -27,7 +28,7 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+std_msgs/Float64MultiArray vel_cmd
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -50,7 +51,50 @@ Weight[] weights
 MSG: voronoi_cbsa/Weight
 string  type
 int16   event_id
-float64 score"""
+float64 score
+================================================================================
+MSG: std_msgs/Float64MultiArray
+# Please look at the MultiArrayLayout message definition for
+# documentation on all multiarrays.
+
+MultiArrayLayout  layout        # specification of data layout
+float64[]         data          # array of data
+
+
+================================================================================
+MSG: std_msgs/MultiArrayLayout
+# The multiarray declares a generic multi-dimensional array of a
+# particular data type.  Dimensions are ordered from outer most
+# to inner most.
+
+MultiArrayDimension[] dim # Array of dimension properties
+uint32 data_offset        # padding elements at front of data
+
+# Accessors should ALWAYS be written in terms of dimension stride
+# and specified outer-most dimension first.
+# 
+# multiarray(i,j,k) = data[data_offset + dim_stride[1]*i + dim_stride[2]*j + k]
+#
+# A standard, 3-channel 640x480 image with interleaved color channels
+# would be specified as:
+#
+# dim[0].label  = "height"
+# dim[0].size   = 480
+# dim[0].stride = 3*640*480 = 921600  (note dim[0] stride is just size of image)
+# dim[1].label  = "width"
+# dim[1].size   = 640
+# dim[1].stride = 3*640 = 1920
+# dim[2].label  = "channel"
+# dim[2].size   = 3
+# dim[2].stride = 3
+#
+# multiarray(i,j,k) refers to the ith row, jth column, and kth channel.
+
+================================================================================
+MSG: std_msgs/MultiArrayDimension
+string label   # label of given dimension
+uint32 size    # size of given dimension (in type units)
+uint32 stride  # stride of given dimension"""
   __slots__ = ['data']
   _slot_types = ['voronoi_cbsa/ExchangeData[]']
 
@@ -134,6 +178,25 @@ float64 score"""
           buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
         _x = val1
         buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+        _v5 = val1.vel_cmd
+        _v6 = _v5.layout
+        length = len(_v6.dim)
+        buff.write(_struct_I.pack(length))
+        for val4 in _v6.dim:
+          _x = val4.label
+          length = len(_x)
+          if python3 or type(_x) == unicode:
+            _x = _x.encode('utf-8')
+            length = len(_x)
+          buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+          _x = val4
+          buff.write(_get_struct_2I().pack(_x.size, _x.stride))
+        _x = _v6.data_offset
+        buff.write(_get_struct_I().pack(_x))
+        length = len(_v5.data)
+        buff.write(_struct_I.pack(length))
+        pattern = '<%sd'%length
+        buff.write(struct.Struct(pattern).pack(*_v5.data))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -157,16 +220,16 @@ float64 score"""
         start = end
         end += 8
         (val1.id,) = _get_struct_q().unpack(str[start:end])
-        _v5 = val1.position
-        _x = _v5
+        _v7 = val1.position
+        _x = _v7
         start = end
         end += 24
         (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-        _v6 = val1.role
+        _v8 = val1.role
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v6.sensors = []
+        _v8.sensors = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Sensor()
           start = end
@@ -181,12 +244,12 @@ float64 score"""
           start = end
           end += 8
           (val3.score,) = _get_struct_d().unpack(str[start:end])
-          _v6.sensors.append(val3)
-        _v7 = val1.weights
+          _v8.sensors.append(val3)
+        _v9 = val1.weights
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v7.weights = []
+        _v9.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -202,12 +265,12 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v7.weights.append(val3)
-        _v8 = val1.sensor_scores
+          _v9.weights.append(val3)
+        _v10 = val1.sensor_scores
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v8.weights = []
+        _v10.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -223,11 +286,44 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v8.weights.append(val3)
+          _v10.weights.append(val3)
         _x = val1
         start = end
         end += 48
         (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+        _v11 = val1.vel_cmd
+        _v12 = _v11.layout
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        _v12.dim = []
+        for i in range(0, length):
+          val4 = std_msgs.msg.MultiArrayDimension()
+          start = end
+          end += 4
+          (length,) = _struct_I.unpack(str[start:end])
+          start = end
+          end += length
+          if python3:
+            val4.label = str[start:end].decode('utf-8', 'rosmsg')
+          else:
+            val4.label = str[start:end]
+          _x = val4
+          start = end
+          end += 8
+          (_x.size, _x.stride,) = _get_struct_2I().unpack(str[start:end])
+          _v12.dim.append(val4)
+        start = end
+        end += 4
+        (_v12.data_offset,) = _get_struct_I().unpack(str[start:end])
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        pattern = '<%sd'%length
+        start = end
+        s = struct.Struct(pattern)
+        end += s.size
+        _v11.data = s.unpack(str[start:end])
         self.data.append(val1)
       return self
     except struct.error as e:
@@ -246,13 +342,13 @@ float64 score"""
       for val1 in self.data:
         _x = val1.id
         buff.write(_get_struct_q().pack(_x))
-        _v9 = val1.position
-        _x = _v9
+        _v13 = val1.position
+        _x = _v13
         buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
-        _v10 = val1.role
-        length = len(_v10.sensors)
+        _v14 = val1.role
+        length = len(_v14.sensors)
         buff.write(_struct_I.pack(length))
-        for val3 in _v10.sensors:
+        for val3 in _v14.sensors:
           _x = val3.type
           length = len(_x)
           if python3 or type(_x) == unicode:
@@ -261,10 +357,10 @@ float64 score"""
           buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
           _x = val3.score
           buff.write(_get_struct_d().pack(_x))
-        _v11 = val1.weights
-        length = len(_v11.weights)
+        _v15 = val1.weights
+        length = len(_v15.weights)
         buff.write(_struct_I.pack(length))
-        for val3 in _v11.weights:
+        for val3 in _v15.weights:
           _x = val3.type
           length = len(_x)
           if python3 or type(_x) == unicode:
@@ -273,10 +369,10 @@ float64 score"""
           buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
           _x = val3
           buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
-        _v12 = val1.sensor_scores
-        length = len(_v12.weights)
+        _v16 = val1.sensor_scores
+        length = len(_v16.weights)
         buff.write(_struct_I.pack(length))
-        for val3 in _v12.weights:
+        for val3 in _v16.weights:
           _x = val3.type
           length = len(_x)
           if python3 or type(_x) == unicode:
@@ -287,6 +383,25 @@ float64 score"""
           buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
         _x = val1
         buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+        _v17 = val1.vel_cmd
+        _v18 = _v17.layout
+        length = len(_v18.dim)
+        buff.write(_struct_I.pack(length))
+        for val4 in _v18.dim:
+          _x = val4.label
+          length = len(_x)
+          if python3 or type(_x) == unicode:
+            _x = _x.encode('utf-8')
+            length = len(_x)
+          buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+          _x = val4
+          buff.write(_get_struct_2I().pack(_x.size, _x.stride))
+        _x = _v18.data_offset
+        buff.write(_get_struct_I().pack(_x))
+        length = len(_v17.data)
+        buff.write(_struct_I.pack(length))
+        pattern = '<%sd'%length
+        buff.write(_v17.data.tostring())
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -311,16 +426,16 @@ float64 score"""
         start = end
         end += 8
         (val1.id,) = _get_struct_q().unpack(str[start:end])
-        _v13 = val1.position
-        _x = _v13
+        _v19 = val1.position
+        _x = _v19
         start = end
         end += 24
         (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-        _v14 = val1.role
+        _v20 = val1.role
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v14.sensors = []
+        _v20.sensors = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Sensor()
           start = end
@@ -335,12 +450,12 @@ float64 score"""
           start = end
           end += 8
           (val3.score,) = _get_struct_d().unpack(str[start:end])
-          _v14.sensors.append(val3)
-        _v15 = val1.weights
+          _v20.sensors.append(val3)
+        _v21 = val1.weights
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v15.weights = []
+        _v21.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -356,12 +471,12 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v15.weights.append(val3)
-        _v16 = val1.sensor_scores
+          _v21.weights.append(val3)
+        _v22 = val1.sensor_scores
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v16.weights = []
+        _v22.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -377,11 +492,44 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v16.weights.append(val3)
+          _v22.weights.append(val3)
         _x = val1
         start = end
         end += 48
         (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+        _v23 = val1.vel_cmd
+        _v24 = _v23.layout
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        _v24.dim = []
+        for i in range(0, length):
+          val4 = std_msgs.msg.MultiArrayDimension()
+          start = end
+          end += 4
+          (length,) = _struct_I.unpack(str[start:end])
+          start = end
+          end += length
+          if python3:
+            val4.label = str[start:end].decode('utf-8', 'rosmsg')
+          else:
+            val4.label = str[start:end]
+          _x = val4
+          start = end
+          end += 8
+          (_x.size, _x.stride,) = _get_struct_2I().unpack(str[start:end])
+          _v24.dim.append(val4)
+        start = end
+        end += 4
+        (_v24.data_offset,) = _get_struct_I().unpack(str[start:end])
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        pattern = '<%sd'%length
+        start = end
+        s = struct.Struct(pattern)
+        end += s.size
+        _v23.data = numpy.frombuffer(str[start:end], dtype=numpy.float64, count=length)
         self.data.append(val1)
       return self
     except struct.error as e:
@@ -391,6 +539,12 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
+_struct_2I = None
+def _get_struct_2I():
+    global _struct_2I
+    if _struct_2I is None:
+        _struct_2I = struct.Struct("<2I")
+    return _struct_2I
 _struct_3d = None
 def _get_struct_3d():
     global _struct_3d

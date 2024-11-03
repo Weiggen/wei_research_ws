@@ -9,4 +9,4 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+std_msgs/Float64MultiArray vel_cmd

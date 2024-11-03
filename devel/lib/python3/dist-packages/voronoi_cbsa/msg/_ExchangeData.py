@@ -7,10 +7,11 @@ import genpy
 import struct
 
 import geometry_msgs.msg
+import std_msgs.msg
 import voronoi_cbsa.msg
 
 class ExchangeData(genpy.Message):
-  _md5sum = "77f411baa5b1143c9a101ed6a3425781"
+  _md5sum = "e52bf14ec783bb82fb5c904ea32cc70b"
   _type = "voronoi_cbsa/ExchangeData"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """int64               id
@@ -24,7 +25,7 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+std_msgs/Float64MultiArray vel_cmd
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -47,9 +48,52 @@ Weight[] weights
 MSG: voronoi_cbsa/Weight
 string  type
 int16   event_id
-float64 score"""
-  __slots__ = ['id','position','role','weights','sensor_scores','operation_range','approx_param','smoke_variance','camera_range','angle_of_view','camera_variance']
-  _slot_types = ['int64','geometry_msgs/Point','voronoi_cbsa/SensorArray','voronoi_cbsa/WeightArray','voronoi_cbsa/WeightArray','float64','float64','float64','float64','float64','float64']
+float64 score
+================================================================================
+MSG: std_msgs/Float64MultiArray
+# Please look at the MultiArrayLayout message definition for
+# documentation on all multiarrays.
+
+MultiArrayLayout  layout        # specification of data layout
+float64[]         data          # array of data
+
+
+================================================================================
+MSG: std_msgs/MultiArrayLayout
+# The multiarray declares a generic multi-dimensional array of a
+# particular data type.  Dimensions are ordered from outer most
+# to inner most.
+
+MultiArrayDimension[] dim # Array of dimension properties
+uint32 data_offset        # padding elements at front of data
+
+# Accessors should ALWAYS be written in terms of dimension stride
+# and specified outer-most dimension first.
+# 
+# multiarray(i,j,k) = data[data_offset + dim_stride[1]*i + dim_stride[2]*j + k]
+#
+# A standard, 3-channel 640x480 image with interleaved color channels
+# would be specified as:
+#
+# dim[0].label  = "height"
+# dim[0].size   = 480
+# dim[0].stride = 3*640*480 = 921600  (note dim[0] stride is just size of image)
+# dim[1].label  = "width"
+# dim[1].size   = 640
+# dim[1].stride = 3*640 = 1920
+# dim[2].label  = "channel"
+# dim[2].size   = 3
+# dim[2].stride = 3
+#
+# multiarray(i,j,k) refers to the ith row, jth column, and kth channel.
+
+================================================================================
+MSG: std_msgs/MultiArrayDimension
+string label   # label of given dimension
+uint32 size    # size of given dimension (in type units)
+uint32 stride  # stride of given dimension"""
+  __slots__ = ['id','position','role','weights','sensor_scores','operation_range','approx_param','smoke_variance','camera_range','angle_of_view','camera_variance','vel_cmd']
+  _slot_types = ['int64','geometry_msgs/Point','voronoi_cbsa/SensorArray','voronoi_cbsa/WeightArray','voronoi_cbsa/WeightArray','float64','float64','float64','float64','float64','float64','std_msgs/Float64MultiArray']
 
   def __init__(self, *args, **kwds):
     """
@@ -59,7 +103,7 @@ float64 score"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       id,position,role,weights,sensor_scores,operation_range,approx_param,smoke_variance,camera_range,angle_of_view,camera_variance
+       id,position,role,weights,sensor_scores,operation_range,approx_param,smoke_variance,camera_range,angle_of_view,camera_variance,vel_cmd
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -90,6 +134,8 @@ float64 score"""
         self.angle_of_view = 0.
       if self.camera_variance is None:
         self.camera_variance = 0.
+      if self.vel_cmd is None:
+        self.vel_cmd = std_msgs.msg.Float64MultiArray()
     else:
       self.id = 0
       self.position = geometry_msgs.msg.Point()
@@ -102,6 +148,7 @@ float64 score"""
       self.camera_range = 0.
       self.angle_of_view = 0.
       self.camera_variance = 0.
+      self.vel_cmd = std_msgs.msg.Float64MultiArray()
 
   def _get_types(self):
     """
@@ -152,6 +199,23 @@ float64 score"""
         buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
       _x = self
       buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+      length = len(self.vel_cmd.layout.dim)
+      buff.write(_struct_I.pack(length))
+      for val1 in self.vel_cmd.layout.dim:
+        _x = val1.label
+        length = len(_x)
+        if python3 or type(_x) == unicode:
+          _x = _x.encode('utf-8')
+          length = len(_x)
+        buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+        _x = val1
+        buff.write(_get_struct_2I().pack(_x.size, _x.stride))
+      _x = self.vel_cmd.layout.data_offset
+      buff.write(_get_struct_I().pack(_x))
+      length = len(self.vel_cmd.data)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(struct.Struct(pattern).pack(*self.vel_cmd.data))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -171,6 +235,8 @@ float64 score"""
         self.weights = voronoi_cbsa.msg.WeightArray()
       if self.sensor_scores is None:
         self.sensor_scores = voronoi_cbsa.msg.WeightArray()
+      if self.vel_cmd is None:
+        self.vel_cmd = std_msgs.msg.Float64MultiArray()
       end = 0
       _x = self
       start = end
@@ -239,6 +305,37 @@ float64 score"""
       start = end
       end += 48
       (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      self.vel_cmd.layout.dim = []
+      for i in range(0, length):
+        val1 = std_msgs.msg.MultiArrayDimension()
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        start = end
+        end += length
+        if python3:
+          val1.label = str[start:end].decode('utf-8', 'rosmsg')
+        else:
+          val1.label = str[start:end]
+        _x = val1
+        start = end
+        end += 8
+        (_x.size, _x.stride,) = _get_struct_2I().unpack(str[start:end])
+        self.vel_cmd.layout.dim.append(val1)
+      start = end
+      end += 4
+      (self.vel_cmd.layout.data_offset,) = _get_struct_I().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.vel_cmd.data = s.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -288,6 +385,23 @@ float64 score"""
         buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
       _x = self
       buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+      length = len(self.vel_cmd.layout.dim)
+      buff.write(_struct_I.pack(length))
+      for val1 in self.vel_cmd.layout.dim:
+        _x = val1.label
+        length = len(_x)
+        if python3 or type(_x) == unicode:
+          _x = _x.encode('utf-8')
+          length = len(_x)
+        buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+        _x = val1
+        buff.write(_get_struct_2I().pack(_x.size, _x.stride))
+      _x = self.vel_cmd.layout.data_offset
+      buff.write(_get_struct_I().pack(_x))
+      length = len(self.vel_cmd.data)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(self.vel_cmd.data.tostring())
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -308,6 +422,8 @@ float64 score"""
         self.weights = voronoi_cbsa.msg.WeightArray()
       if self.sensor_scores is None:
         self.sensor_scores = voronoi_cbsa.msg.WeightArray()
+      if self.vel_cmd is None:
+        self.vel_cmd = std_msgs.msg.Float64MultiArray()
       end = 0
       _x = self
       start = end
@@ -376,6 +492,37 @@ float64 score"""
       start = end
       end += 48
       (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      self.vel_cmd.layout.dim = []
+      for i in range(0, length):
+        val1 = std_msgs.msg.MultiArrayDimension()
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        start = end
+        end += length
+        if python3:
+          val1.label = str[start:end].decode('utf-8', 'rosmsg')
+        else:
+          val1.label = str[start:end]
+        _x = val1
+        start = end
+        end += 8
+        (_x.size, _x.stride,) = _get_struct_2I().unpack(str[start:end])
+        self.vel_cmd.layout.dim.append(val1)
+      start = end
+      end += 4
+      (self.vel_cmd.layout.data_offset,) = _get_struct_I().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.vel_cmd.data = numpy.frombuffer(str[start:end], dtype=numpy.float64, count=length)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -384,6 +531,12 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
+_struct_2I = None
+def _get_struct_2I():
+    global _struct_2I
+    if _struct_2I is None:
+        _struct_2I = struct.Struct("<2I")
+    return _struct_2I
 _struct_6d = None
 def _get_struct_6d():
     global _struct_6d
