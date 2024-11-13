@@ -28,6 +28,7 @@ struct TargetInfo_
   TargetInfo_()
     : id(0)
     , position()
+    , height(0.0)
     , covariance()
     , weight(0.0)
     , velocity()
@@ -36,6 +37,7 @@ struct TargetInfo_
   TargetInfo_(const ContainerAllocator& _alloc)
     : id(0)
     , position(_alloc)
+    , height(0.0)
     , covariance(_alloc)
     , weight(0.0)
     , velocity(_alloc)
@@ -50,6 +52,9 @@ struct TargetInfo_
 
    typedef  ::geometry_msgs::Point_<ContainerAllocator>  _position_type;
   _position_type position;
+
+   typedef float _height_type;
+  _height_type height;
 
    typedef std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> _covariance_type;
   _covariance_type covariance;
@@ -94,6 +99,7 @@ bool operator==(const ::voronoi_cbsa::TargetInfo_<ContainerAllocator1> & lhs, co
 {
   return lhs.id == rhs.id &&
     lhs.position == rhs.position &&
+    lhs.height == rhs.height &&
     lhs.covariance == rhs.covariance &&
     lhs.weight == rhs.weight &&
     lhs.velocity == rhs.velocity &&
@@ -154,12 +160,12 @@ struct MD5Sum< ::voronoi_cbsa::TargetInfo_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "8e5d67de16a7bee7bcf3ce4bca33cda9";
+    return "a11d744703fb2fb21b1eb6c816c6cd6f";
   }
 
   static const char* value(const ::voronoi_cbsa::TargetInfo_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x8e5d67de16a7bee7ULL;
-  static const uint64_t static_value2 = 0xbcf3ce4bca33cda9ULL;
+  static const uint64_t static_value1 = 0xa11d744703fb2fb2ULL;
+  static const uint64_t static_value2 = 0x1b1eb6c816c6cd6fULL;
 };
 
 template<class ContainerAllocator>
@@ -180,6 +186,7 @@ struct Definition< ::voronoi_cbsa::TargetInfo_<ContainerAllocator> >
   {
     return "int64                   id\n"
 "geometry_msgs/Point     position\n"
+"float32                 height\n"
 "float64[]               covariance\n"
 "float32                 weight\n"
 "geometry_msgs/Twist     velocity\n"
@@ -229,6 +236,7 @@ namespace serialization
     {
       stream.next(m.id);
       stream.next(m.position);
+      stream.next(m.height);
       stream.next(m.covariance);
       stream.next(m.weight);
       stream.next(m.velocity);
@@ -256,6 +264,8 @@ struct Printer< ::voronoi_cbsa::TargetInfo_<ContainerAllocator> >
     s << indent << "position: ";
     s << std::endl;
     Printer< ::geometry_msgs::Point_<ContainerAllocator> >::stream(s, indent + "  ", v.position);
+    s << indent << "height: ";
+    Printer<float>::stream(s, indent + "  ", v.height);
     s << indent << "covariance[]" << std::endl;
     for (size_t i = 0; i < v.covariance.size(); ++i)
     {

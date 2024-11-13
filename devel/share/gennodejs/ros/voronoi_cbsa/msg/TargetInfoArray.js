@@ -71,7 +71,7 @@ class TargetInfoArray {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'ce21bcd346a571103ac03b5b6cfcd689';
+    return 'cb14593f2221c85378b0d6d6b83f5b15';
   }
 
   static messageDefinition() {
@@ -82,6 +82,7 @@ class TargetInfoArray {
     MSG: voronoi_cbsa/TargetInfo
     int64                   id
     geometry_msgs/Point     position
+    float32                 height
     float64[]               covariance
     float32                 weight
     geometry_msgs/Twist     velocity

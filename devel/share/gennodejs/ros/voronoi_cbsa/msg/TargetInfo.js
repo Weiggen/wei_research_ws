@@ -21,6 +21,7 @@ class TargetInfo {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.id = null;
       this.position = null;
+      this.height = null;
       this.covariance = null;
       this.weight = null;
       this.velocity = null;
@@ -38,6 +39,12 @@ class TargetInfo {
       }
       else {
         this.position = new geometry_msgs.msg.Point();
+      }
+      if (initObj.hasOwnProperty('height')) {
+        this.height = initObj.height
+      }
+      else {
+        this.height = 0.0;
       }
       if (initObj.hasOwnProperty('covariance')) {
         this.covariance = initObj.covariance
@@ -72,6 +79,8 @@ class TargetInfo {
     bufferOffset = _serializer.int64(obj.id, buffer, bufferOffset);
     // Serialize message field [position]
     bufferOffset = geometry_msgs.msg.Point.serialize(obj.position, buffer, bufferOffset);
+    // Serialize message field [height]
+    bufferOffset = _serializer.float32(obj.height, buffer, bufferOffset);
     // Serialize message field [covariance]
     bufferOffset = _arraySerializer.float64(obj.covariance, buffer, bufferOffset, null);
     // Serialize message field [weight]
@@ -91,6 +100,8 @@ class TargetInfo {
     data.id = _deserializer.int64(buffer, bufferOffset);
     // Deserialize message field [position]
     data.position = geometry_msgs.msg.Point.deserialize(buffer, bufferOffset);
+    // Deserialize message field [height]
+    data.height = _deserializer.float32(buffer, bufferOffset);
     // Deserialize message field [covariance]
     data.covariance = _arrayDeserializer.float64(buffer, bufferOffset, null)
     // Deserialize message field [weight]
@@ -108,7 +119,7 @@ class TargetInfo {
     object.required_sensor.forEach((val) => {
       length += 4 + _getByteLength(val);
     });
-    return length + 92;
+    return length + 96;
   }
 
   static datatype() {
@@ -118,7 +129,7 @@ class TargetInfo {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '8e5d67de16a7bee7bcf3ce4bca33cda9';
+    return 'a11d744703fb2fb21b1eb6c816c6cd6f';
   }
 
   static messageDefinition() {
@@ -126,6 +137,7 @@ class TargetInfo {
     return `
     int64                   id
     geometry_msgs/Point     position
+    float32                 height
     float64[]               covariance
     float32                 weight
     geometry_msgs/Twist     velocity
@@ -176,6 +188,13 @@ class TargetInfo {
     }
     else {
       resolved.position = new geometry_msgs.msg.Point()
+    }
+
+    if (msg.height !== undefined) {
+      resolved.height = msg.height;
+    }
+    else {
+      resolved.height = 0.0
     }
 
     if (msg.covariance !== undefined) {

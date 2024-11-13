@@ -8,6 +8,7 @@ from std_msgs.msg import Int16, Int32, Bool, Float32MultiArray, Int16MultiArray,
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from gazebo_msgs.msg import ModelStates, LinkStates
+from qpsolvers import solve_qp
 
 import numpy as np
 import pandas as pd
@@ -243,6 +244,7 @@ class PTZCamera():
             pos_x   = target.position.x
             pos_y   = target.position.y
             pos     = np.array([pos_x, pos_y])
+            height  = target.height
 
 #           std     = target.standard_deviation
             cov     = target.covariance
@@ -254,7 +256,7 @@ class PTZCamera():
             
             requirements = [target.required_sensor[i] for i in range(len(target.required_sensor))]
 
-            self.target_buffer[target.id] = [pos, cov, weight, vel, target.id, requirements]
+            self.target_buffer[target.id] = [pos, cov, weight, vel, target.id, requirements, height]
                 
     def AgentPosCallback(self, msg):
         # self.agent_ready = True
@@ -500,7 +502,7 @@ class PTZCamera():
             self.PublishInfo()
             
     def UpdatePosition(self, u_p):
-        # u_p = self.max_speed*(u_p/np.linalg.norm(u_p)) # Normalize
+        # Maximum Speed restriction
         if np.linalg.norm(u_p) > self.max_speed:
             u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
 
@@ -515,9 +517,14 @@ class PTZCamera():
             self.u_p[1] = u_p[1]
 
         # Height
+        target_heights = {}
+        for target in self.targets.keys():
+            target_heights[target] = self.targets[target][6]
+        if target_heights:
+            hightest = max(target_heights.values())
         k_h = 1
         tolerance = 1
-        ideal_z = 2.5
+        ideal_z = 2.5 + hightest
         if self.pos_z < ideal_z - tolerance :
             self.u_h = k_h*(ideal_z - self.pos_z)
         elif self.pos_z > ideal_z + tolerance:

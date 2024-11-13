@@ -49,7 +49,7 @@
         
         <arg name="smoke_variance"  value="4"     />
 
-        <arg name="max_speed"       value="3"     /> 
+        <arg name="max_speed"       value="0.8"     /> 
     </include>
 
     <include file="$(find voronoi_cbsa)/launch/spawn_agent.launch" >
@@ -71,7 +71,7 @@
         
         <arg name="smoke_variance"  value="4"     />
 
-        <arg name="max_speed"       value="3"     /> 
+        <arg name="max_speed"       value="0.8"     /> 
     </include>
 
     <include file="$(find voronoi_cbsa)/launch/spawn_agent.launch" >
@@ -93,7 +93,7 @@
         
         <arg name="smoke_variance"  value="4"     />
 
-        <arg name="max_speed"       value="3"     /> 
+        <arg name="max_speed"       value="0.8"     /> 
     </include>
 
     <!-- <include file="$(find voronoi_cbsa)/launch/spawn_agent.launch" >

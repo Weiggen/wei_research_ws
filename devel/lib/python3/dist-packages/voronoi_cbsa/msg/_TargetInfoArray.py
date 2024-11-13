@@ -10,7 +10,7 @@ import geometry_msgs.msg
 import voronoi_cbsa.msg
 
 class TargetInfoArray(genpy.Message):
-  _md5sum = "ce21bcd346a571103ac03b5b6cfcd689"
+  _md5sum = "cb14593f2221c85378b0d6d6b83f5b15"
   _type = "voronoi_cbsa/TargetInfoArray"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """TargetInfo[] targets
@@ -18,6 +18,7 @@ class TargetInfoArray(genpy.Message):
 MSG: voronoi_cbsa/TargetInfo
 int64                   id
 geometry_msgs/Point     position
+float32                 height
 float64[]               covariance
 float32                 weight
 geometry_msgs/Twist     velocity
@@ -92,6 +93,8 @@ float64 z"""
         _v1 = val1.position
         _x = _v1
         buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+        _x = val1.height
+        buff.write(_get_struct_f().pack(_x))
         length = len(val1.covariance)
         buff.write(_struct_I.pack(length))
         pattern = '<%sd'%length
@@ -141,6 +144,9 @@ float64 z"""
         start = end
         end += 24
         (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+        start = end
+        end += 4
+        (val1.height,) = _get_struct_f().unpack(str[start:end])
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
@@ -199,6 +205,8 @@ float64 z"""
         _v9 = val1.position
         _x = _v9
         buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+        _x = val1.height
+        buff.write(_get_struct_f().pack(_x))
         length = len(val1.covariance)
         buff.write(_struct_I.pack(length))
         pattern = '<%sd'%length
@@ -249,6 +257,9 @@ float64 z"""
         start = end
         end += 24
         (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+        start = end
+        end += 4
+        (val1.height,) = _get_struct_f().unpack(str[start:end])
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])

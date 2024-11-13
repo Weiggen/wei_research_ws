@@ -17,6 +17,11 @@
     :initarg :position
     :type geometry_msgs-msg:Point
     :initform (cl:make-instance 'geometry_msgs-msg:Point))
+   (height
+    :reader height
+    :initarg :height
+    :type cl:float
+    :initform 0.0)
    (covariance
     :reader covariance
     :initarg :covariance
@@ -57,6 +62,11 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader voronoi_cbsa-msg:position-val is deprecated.  Use voronoi_cbsa-msg:position instead.")
   (position m))
 
+(cl:ensure-generic-function 'height-val :lambda-list '(m))
+(cl:defmethod height-val ((m <TargetInfo>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader voronoi_cbsa-msg:height-val is deprecated.  Use voronoi_cbsa-msg:height instead.")
+  (height m))
+
 (cl:ensure-generic-function 'covariance-val :lambda-list '(m))
 (cl:defmethod covariance-val ((m <TargetInfo>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader voronoi_cbsa-msg:covariance-val is deprecated.  Use voronoi_cbsa-msg:covariance instead.")
@@ -89,6 +99,11 @@
     (cl:write-byte (cl:ldb (cl:byte 8 56) unsigned) ostream)
     )
   (roslisp-msg-protocol:serialize (cl:slot-value msg 'position) ostream)
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'height))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
   (cl:let ((__ros_arr_len (cl:length (cl:slot-value msg 'covariance))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) __ros_arr_len) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) __ros_arr_len) ostream)
@@ -136,6 +151,12 @@
       (cl:setf (cl:ldb (cl:byte 8 56) unsigned) (cl:read-byte istream))
       (cl:setf (cl:slot-value msg 'id) (cl:if (cl:< unsigned 9223372036854775808) unsigned (cl:- unsigned 18446744073709551616))))
   (roslisp-msg-protocol:deserialize (cl:slot-value msg 'position) istream)
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'height) (roslisp-utils:decode-single-float-bits bits)))
   (cl:let ((__ros_arr_len 0))
     (cl:setf (cl:ldb (cl:byte 8 0) __ros_arr_len) (cl:read-byte istream))
     (cl:setf (cl:ldb (cl:byte 8 8) __ros_arr_len) (cl:read-byte istream))
@@ -187,20 +208,21 @@
   "voronoi_cbsa/TargetInfo")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<TargetInfo>)))
   "Returns md5sum for a message object of type '<TargetInfo>"
-  "8e5d67de16a7bee7bcf3ce4bca33cda9")
+  "a11d744703fb2fb21b1eb6c816c6cd6f")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'TargetInfo)))
   "Returns md5sum for a message object of type 'TargetInfo"
-  "8e5d67de16a7bee7bcf3ce4bca33cda9")
+  "a11d744703fb2fb21b1eb6c816c6cd6f")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<TargetInfo>)))
   "Returns full string definition for message of type '<TargetInfo>"
-  (cl:format cl:nil "int64                   id~%geometry_msgs/Point     position~%float64[]               covariance~%float32                 weight~%geometry_msgs/Twist     velocity~%string[]                required_sensor~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: geometry_msgs/Twist~%# This expresses velocity in free space broken into its linear and angular parts.~%Vector3  linear~%Vector3  angular~%~%================================================================================~%MSG: geometry_msgs/Vector3~%# This represents a vector in free space. ~%# It is only meant to represent a direction. Therefore, it does not~%# make sense to apply a translation to it (e.g., when applying a ~%# generic rigid transformation to a Vector3, tf2 will only apply the~%# rotation). If you want your data to be translatable too, use the~%# geometry_msgs/Point message instead.~%~%float64 x~%float64 y~%float64 z~%~%"))
+  (cl:format cl:nil "int64                   id~%geometry_msgs/Point     position~%float32                 height~%float64[]               covariance~%float32                 weight~%geometry_msgs/Twist     velocity~%string[]                required_sensor~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: geometry_msgs/Twist~%# This expresses velocity in free space broken into its linear and angular parts.~%Vector3  linear~%Vector3  angular~%~%================================================================================~%MSG: geometry_msgs/Vector3~%# This represents a vector in free space. ~%# It is only meant to represent a direction. Therefore, it does not~%# make sense to apply a translation to it (e.g., when applying a ~%# generic rigid transformation to a Vector3, tf2 will only apply the~%# rotation). If you want your data to be translatable too, use the~%# geometry_msgs/Point message instead.~%~%float64 x~%float64 y~%float64 z~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'TargetInfo)))
   "Returns full string definition for message of type 'TargetInfo"
-  (cl:format cl:nil "int64                   id~%geometry_msgs/Point     position~%float64[]               covariance~%float32                 weight~%geometry_msgs/Twist     velocity~%string[]                required_sensor~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: geometry_msgs/Twist~%# This expresses velocity in free space broken into its linear and angular parts.~%Vector3  linear~%Vector3  angular~%~%================================================================================~%MSG: geometry_msgs/Vector3~%# This represents a vector in free space. ~%# It is only meant to represent a direction. Therefore, it does not~%# make sense to apply a translation to it (e.g., when applying a ~%# generic rigid transformation to a Vector3, tf2 will only apply the~%# rotation). If you want your data to be translatable too, use the~%# geometry_msgs/Point message instead.~%~%float64 x~%float64 y~%float64 z~%~%"))
+  (cl:format cl:nil "int64                   id~%geometry_msgs/Point     position~%float32                 height~%float64[]               covariance~%float32                 weight~%geometry_msgs/Twist     velocity~%string[]                required_sensor~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: geometry_msgs/Twist~%# This expresses velocity in free space broken into its linear and angular parts.~%Vector3  linear~%Vector3  angular~%~%================================================================================~%MSG: geometry_msgs/Vector3~%# This represents a vector in free space. ~%# It is only meant to represent a direction. Therefore, it does not~%# make sense to apply a translation to it (e.g., when applying a ~%# generic rigid transformation to a Vector3, tf2 will only apply the~%# rotation). If you want your data to be translatable too, use the~%# geometry_msgs/Point message instead.~%~%float64 x~%float64 y~%float64 z~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <TargetInfo>))
   (cl:+ 0
      8
      (roslisp-msg-protocol:serialization-length (cl:slot-value msg 'position))
+     4
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'covariance) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ 8)))
      4
      (roslisp-msg-protocol:serialization-length (cl:slot-value msg 'velocity))
@@ -211,6 +233,7 @@
   (cl:list 'TargetInfo
     (cl:cons ':id (id msg))
     (cl:cons ':position (position msg))
+    (cl:cons ':height (height msg))
     (cl:cons ':covariance (covariance msg))
     (cl:cons ':weight (weight msg))
     (cl:cons ':velocity (velocity msg))

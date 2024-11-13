@@ -70,11 +70,11 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_nodejs: /home/weiggen/wei
 
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from voronoi_cbsa/ExchangeData.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg
 
@@ -85,46 +85,46 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_nodejs: /home/weiggen/wei
 
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from voronoi_cbsa/NeighborInfo.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from voronoi_cbsa/NeighborInfoArray.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Javascript code from voronoi_cbsa/ExchangeDataArray.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfo.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfo.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfo.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfo.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfo.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfo.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Javascript code from voronoi_cbsa/TargetInfo.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
-/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
+/home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Javascript code from voronoi_cbsa/TargetInfoArray.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/gennodejs/ros/voronoi_cbsa/msg
 

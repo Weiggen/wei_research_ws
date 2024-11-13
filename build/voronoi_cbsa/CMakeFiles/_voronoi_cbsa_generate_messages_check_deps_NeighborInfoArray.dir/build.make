@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/weiggen/wei_research_ws/build
 include voronoi_cbsa/CMakeFiles/_voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray.dir/progress.make
 
 voronoi_cbsa/CMakeFiles/_voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray:
-	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py voronoi_cbsa /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg voronoi_cbsa/NeighborInfo:voronoi_cbsa/SensorArray:voronoi_cbsa/Sensor:geometry_msgs/Point
+	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py voronoi_cbsa /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg geometry_msgs/Point:voronoi_cbsa/NeighborInfo:voronoi_cbsa/Sensor:voronoi_cbsa/SensorArray
 
 _voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray: voronoi_cbsa/CMakeFiles/_voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray
 _voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray: voronoi_cbsa/CMakeFiles/_voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray.dir/build.make

@@ -140,14 +140,14 @@ std::vector<std::vector<std::vector<double>>> MathLib::T_resize(const std::vecto
 }
 
 Eigen::MatrixXd MathLib::TensorContraction(const std::vector<Eigen::Matrix2d>& multi_M, const std::vector<std::vector<std::vector<double>>>& T){
-    size_t n = multi_M.size();
+    size_t n = multi_M.size(); // < numbers of q >
     Eigen::MatrixXd M_prime(2, n);
     M_prime.setZero();
-    for (size_t g = 0; g < n; ++g){
-        for (size_t k = 0; k < 2; ++k){
-            for (size_t i = 0; i < 2; ++i){
-                for (size_t j = 0; j < 2; ++j){
-                    M_prime(k, g) += multi_M[g](i, j)*T[i][j][k];
+    for (size_t g = 0; g < n; ++g){     // < dimension of q (grid) >
+        for (size_t k = 0; k < 2; ++k){     // < dimension of state >
+            for (size_t i = 0; i < 2; ++i){     // < dimension of outside Summation, i >
+                for (size_t j = 0; j < 2; ++j){ // < dimension of inside Summation , j >
+                    M_prime(k, g) += multi_M[g](i, j)*T[i][j][k];  // include transpose process
                 }
             }
         }

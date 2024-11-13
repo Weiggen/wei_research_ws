@@ -123,12 +123,12 @@ struct MD5Sum< ::voronoi_cbsa::TargetInfoArray_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "ce21bcd346a571103ac03b5b6cfcd689";
+    return "cb14593f2221c85378b0d6d6b83f5b15";
   }
 
   static const char* value(const ::voronoi_cbsa::TargetInfoArray_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xce21bcd346a57110ULL;
-  static const uint64_t static_value2 = 0x3ac03b5b6cfcd689ULL;
+  static const uint64_t static_value1 = 0xcb14593f2221c853ULL;
+  static const uint64_t static_value2 = 0x78b0d6d6b83f5b15ULL;
 };
 
 template<class ContainerAllocator>
@@ -152,6 +152,7 @@ struct Definition< ::voronoi_cbsa::TargetInfoArray_<ContainerAllocator> >
 "MSG: voronoi_cbsa/TargetInfo\n"
 "int64                   id\n"
 "geometry_msgs/Point     position\n"
+"float32                 height\n"
 "float64[]               covariance\n"
 "float32                 weight\n"
 "geometry_msgs/Twist     velocity\n"

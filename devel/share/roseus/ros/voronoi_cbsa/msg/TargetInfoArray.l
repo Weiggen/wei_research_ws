@@ -61,7 +61,7 @@
    self)
   )
 
-(setf (get voronoi_cbsa::TargetInfoArray :md5sum-) "ce21bcd346a571103ac03b5b6cfcd689")
+(setf (get voronoi_cbsa::TargetInfoArray :md5sum-) "cb14593f2221c85378b0d6d6b83f5b15")
 (setf (get voronoi_cbsa::TargetInfoArray :datatype-) "voronoi_cbsa/TargetInfoArray")
 (setf (get voronoi_cbsa::TargetInfoArray :definition-)
       "TargetInfo[] targets
@@ -69,6 +69,7 @@
 MSG: voronoi_cbsa/TargetInfo
 int64                   id
 geometry_msgs/Point     position
+float32                 height
 float64[]               covariance
 float32                 weight
 geometry_msgs/Twist     velocity
@@ -102,6 +103,6 @@ float64 z
 
 
 
-(provide :voronoi_cbsa/TargetInfoArray "ce21bcd346a571103ac03b5b6cfcd689")
+(provide :voronoi_cbsa/TargetInfoArray "cb14593f2221c85378b0d6d6b83f5b15")
 
 

@@ -3,6 +3,8 @@
           ID
           POSITION-VAL
           POSITION
+          HEIGHT-VAL
+          HEIGHT
           COVARIANCE-VAL
           COVARIANCE
           WEIGHT-VAL

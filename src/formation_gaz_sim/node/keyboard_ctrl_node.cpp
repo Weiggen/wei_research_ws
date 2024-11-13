@@ -160,10 +160,10 @@ int main(int argc, char **argv)
                 case 112:    // key stop trajectory(p)
                     trajectory = false;
                     break;  
-                case 111:
+                case 111:    // (o)
                     desired_pose.pose.position.x = 0;
                     desired_pose.pose.position.y = 0;
-                    desired_pose.pose.position.z = 8;
+                    desired_pose.pose.position.z = 4;
                     break;
                 case 107:   // key kill(k)
                     return 0;
@@ -173,7 +173,7 @@ int main(int argc, char **argv)
         
         if(trajectory)
         {
-            trajectory_time += 0.01;
+            trajectory_time += 0.0025;
             desired_pose.pose.position.x = current_x + 2*cos(trajectory_time);
             desired_pose.pose.position.y = current_y + 2*sin(trajectory_time);
         }

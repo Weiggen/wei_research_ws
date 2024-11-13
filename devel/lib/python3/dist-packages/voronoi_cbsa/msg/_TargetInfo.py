@@ -9,11 +9,12 @@ import struct
 import geometry_msgs.msg
 
 class TargetInfo(genpy.Message):
-  _md5sum = "8e5d67de16a7bee7bcf3ce4bca33cda9"
+  _md5sum = "a11d744703fb2fb21b1eb6c816c6cd6f"
   _type = "voronoi_cbsa/TargetInfo"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """int64                   id
 geometry_msgs/Point     position
+float32                 height
 float64[]               covariance
 float32                 weight
 geometry_msgs/Twist     velocity
@@ -43,8 +44,8 @@ MSG: geometry_msgs/Vector3
 float64 x
 float64 y
 float64 z"""
-  __slots__ = ['id','position','covariance','weight','velocity','required_sensor']
-  _slot_types = ['int64','geometry_msgs/Point','float64[]','float32','geometry_msgs/Twist','string[]']
+  __slots__ = ['id','position','height','covariance','weight','velocity','required_sensor']
+  _slot_types = ['int64','geometry_msgs/Point','float32','float64[]','float32','geometry_msgs/Twist','string[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -54,7 +55,7 @@ float64 z"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       id,position,covariance,weight,velocity,required_sensor
+       id,position,height,covariance,weight,velocity,required_sensor
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -67,6 +68,8 @@ float64 z"""
         self.id = 0
       if self.position is None:
         self.position = geometry_msgs.msg.Point()
+      if self.height is None:
+        self.height = 0.
       if self.covariance is None:
         self.covariance = []
       if self.weight is None:
@@ -78,6 +81,7 @@ float64 z"""
     else:
       self.id = 0
       self.position = geometry_msgs.msg.Point()
+      self.height = 0.
       self.covariance = []
       self.weight = 0.
       self.velocity = geometry_msgs.msg.Twist()
@@ -96,7 +100,7 @@ float64 z"""
     """
     try:
       _x = self
-      buff.write(_get_struct_q3d().pack(_x.id, _x.position.x, _x.position.y, _x.position.z))
+      buff.write(_get_struct_q3df().pack(_x.id, _x.position.x, _x.position.y, _x.position.z, _x.height))
       length = len(self.covariance)
       buff.write(_struct_I.pack(length))
       pattern = '<%sd'%length
@@ -129,8 +133,8 @@ float64 z"""
       end = 0
       _x = self
       start = end
-      end += 32
-      (_x.id, _x.position.x, _x.position.y, _x.position.z,) = _get_struct_q3d().unpack(str[start:end])
+      end += 36
+      (_x.id, _x.position.x, _x.position.y, _x.position.z, _x.height,) = _get_struct_q3df().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -171,7 +175,7 @@ float64 z"""
     """
     try:
       _x = self
-      buff.write(_get_struct_q3d().pack(_x.id, _x.position.x, _x.position.y, _x.position.z))
+      buff.write(_get_struct_q3df().pack(_x.id, _x.position.x, _x.position.y, _x.position.z, _x.height))
       length = len(self.covariance)
       buff.write(_struct_I.pack(length))
       pattern = '<%sd'%length
@@ -205,8 +209,8 @@ float64 z"""
       end = 0
       _x = self
       start = end
-      end += 32
-      (_x.id, _x.position.x, _x.position.y, _x.position.z,) = _get_struct_q3d().unpack(str[start:end])
+      end += 36
+      (_x.id, _x.position.x, _x.position.y, _x.position.z, _x.height,) = _get_struct_q3df().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -248,9 +252,9 @@ def _get_struct_f6d():
     if _struct_f6d is None:
         _struct_f6d = struct.Struct("<f6d")
     return _struct_f6d
-_struct_q3d = None
-def _get_struct_q3d():
-    global _struct_q3d
-    if _struct_q3d is None:
-        _struct_q3d = struct.Struct("<q3d")
-    return _struct_q3d
+_struct_q3df = None
+def _get_struct_q3df():
+    global _struct_q3df
+    if _struct_q3df is None:
+        _struct_q3df = struct.Struct("<q3df")
+    return _struct_q3df

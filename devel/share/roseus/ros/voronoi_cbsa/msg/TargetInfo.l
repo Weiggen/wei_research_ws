@@ -16,13 +16,14 @@
 
 (defclass voronoi_cbsa::TargetInfo
   :super ros::object
-  :slots (_id _position _covariance _weight _velocity _required_sensor ))
+  :slots (_id _position _height _covariance _weight _velocity _required_sensor ))
 
 (defmethod voronoi_cbsa::TargetInfo
   (:init
    (&key
     ((:id __id) 0)
     ((:position __position) (instance geometry_msgs::Point :init))
+    ((:height __height) 0.0)
     ((:covariance __covariance) (make-array 0 :initial-element 0.0 :element-type :float))
     ((:weight __weight) 0.0)
     ((:velocity __velocity) (instance geometry_msgs::Twist :init))
@@ -31,6 +32,7 @@
    (send-super :init)
    (setq _id (round __id))
    (setq _position __position)
+   (setq _height (float __height))
    (setq _covariance __covariance)
    (setq _weight (float __weight))
    (setq _velocity __velocity)
@@ -46,6 +48,9 @@
      (progn
        (if __position (setq _position (car __position)))
        _position)))
+  (:height
+   (&optional __height)
+   (if __height (setq _height __height)) _height)
   (:covariance
    (&optional __covariance)
    (if __covariance (setq _covariance __covariance)) _covariance)
@@ -69,6 +74,8 @@
     8
     ;; geometry_msgs/Point _position
     (send _position :serialization-length)
+    ;; float32 _height
+    4
     ;; float64[] _covariance
     (* 8    (length _covariance)) 4
     ;; float32 _weight
@@ -96,6 +103,8 @@
               (write-long _id s)(write-long (if (>= _id 0) 0 #xffffffff) s)))
      ;; geometry_msgs/Point _position
        (send _position :serialize s)
+     ;; float32 _height
+       (sys::poke _height (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
      ;; float64[] _covariance
      (write-long (length _covariance) s)
      (dotimes (i (length _covariance))
@@ -128,6 +137,8 @@
                     (t (make-instance bignum :size 2 :bv (integer-vector b0 (ash b1 1)))))))
    ;; geometry_msgs/Point _position
      (send _position :deserialize buf ptr-) (incf ptr- (send _position :serialization-length))
+   ;; float32 _height
+     (setq _height (sys::peek buf ptr- :float)) (incf ptr- 4)
    ;; float64[] _covariance
    (let (n)
      (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4)
@@ -150,11 +161,12 @@
    self)
   )
 
-(setf (get voronoi_cbsa::TargetInfo :md5sum-) "8e5d67de16a7bee7bcf3ce4bca33cda9")
+(setf (get voronoi_cbsa::TargetInfo :md5sum-) "a11d744703fb2fb21b1eb6c816c6cd6f")
 (setf (get voronoi_cbsa::TargetInfo :datatype-) "voronoi_cbsa/TargetInfo")
 (setf (get voronoi_cbsa::TargetInfo :definition-)
       "int64                   id
 geometry_msgs/Point     position
+float32                 height
 float64[]               covariance
 float32                 weight
 geometry_msgs/Twist     velocity
@@ -188,6 +200,6 @@ float64 z
 
 
 
-(provide :voronoi_cbsa/TargetInfo "8e5d67de16a7bee7bcf3ce4bca33cda9")
+(provide :voronoi_cbsa/TargetInfo "a11d744703fb2fb21b1eb6c816c6cd6f")
 
 

@@ -13,10 +13,12 @@ from scipy.stats import multivariate_normal
 import itertools
 
 target_positions = {}
+target_heights = {}
 target_covariances = {}
 
 target_positions[0] = [0.0, 0.0]
 target_covariances[0] = [1, 0, 0, 1] # x, y 2D covariance
+target_heights[0] = 0
 
 def norm(arr):
     sum = 0
@@ -29,6 +31,7 @@ def TargetPosCallback(msg):
     global target_positions
     position = np.array((msg.pose.position.x, msg.pose.position.y))
     target_positions[0] = position
+    target_heights[0] = msg.pose.position.z
     # print("target_positions[0]: {}\n".format(target_positions[0])) # value
 
 def TargetCovCallback(msg):
@@ -76,7 +79,7 @@ if __name__ == "__main__":
     
     while not rospy.is_shutdown():
         
-        targets = [[target_positions[0], target_covariances[0], 10, RandomUnitVector(), ['camera']]]
+        targets = [[target_positions[0], target_covariances[0], 10, RandomUnitVector(), ['camera'], target_heights[0]]]
         grid_size = rospy.get_param("/grid_size", 0.1)
         tmp = []
 
@@ -89,6 +92,7 @@ if __name__ == "__main__":
             target_msg.id = i
             target_msg.position.x = pos[0]
             target_msg.position.y = pos[1]
+            target_msg.height = targets[i][5]
             target_msg.covariance = targets[i][1]
             target_msg.weight = targets[i][2]
             target_msg.velocity.linear.x = vel[0]
