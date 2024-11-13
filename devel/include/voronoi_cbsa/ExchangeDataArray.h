@@ -123,12 +123,12 @@ struct MD5Sum< ::voronoi_cbsa::ExchangeDataArray_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "d040e661939b9707099a5ae103d30bfd";
+    return "41bff580bcf96cc814b66961bea34a15";
   }
 
   static const char* value(const ::voronoi_cbsa::ExchangeDataArray_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xd040e661939b9707ULL;
-  static const uint64_t static_value2 = 0x099a5ae103d30bfdULL;
+  static const uint64_t static_value1 = 0x41bff580bcf96cc8ULL;
+  static const uint64_t static_value2 = 0x14b66961bea34a15ULL;
 };
 
 template<class ContainerAllocator>
@@ -161,7 +161,7 @@ struct Definition< ::voronoi_cbsa::ExchangeDataArray_<ContainerAllocator> >
 "float64             camera_range\n"
 "float64             angle_of_view\n"
 "float64             camera_variance\n"
-"\n"
+"geometry_msgs/Twist velocity\n"
 "\n"
 "================================================================================\n"
 "MSG: geometry_msgs/Point\n"
@@ -185,6 +185,24 @@ struct Definition< ::voronoi_cbsa::ExchangeDataArray_<ContainerAllocator> >
 "string  type\n"
 "int16   event_id\n"
 "float64 score\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Twist\n"
+"# This expresses velocity in free space broken into its linear and angular parts.\n"
+"Vector3  linear\n"
+"Vector3  angular\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Vector3\n"
+"# This represents a vector in free space. \n"
+"# It is only meant to represent a direction. Therefore, it does not\n"
+"# make sense to apply a translation to it (e.g., when applying a \n"
+"# generic rigid transformation to a Vector3, tf2 will only apply the\n"
+"# rotation). If you want your data to be translatable too, use the\n"
+"# geometry_msgs/Point message instead.\n"
+"\n"
+"float64 x\n"
+"float64 y\n"
+"float64 z\n"
 ;
   }
 

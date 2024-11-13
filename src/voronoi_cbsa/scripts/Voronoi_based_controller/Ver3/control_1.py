@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from geometry_msgs.msg import Pose, Point, PoseStamped, TwistStamped
+from geometry_msgs.msg import Pose, Point, PoseStamped, TwistStamped, Twist
 from mavros_msgs.msg import State
 from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeRequest, CommandTOL
 from voronoi_cbsa.msg import ExchangeData, ExchangeDataArray, TargetInfoArray, SensorArray, Sensor, ValidSensors, WeightArray, Weight, densityGradient
@@ -83,6 +83,65 @@ class CMD:
 
     def mode_CMD(self):
         return self.mode_cmd
+    
+# class CBFQPSolver:
+#     def __init__(self):
+#         self.ds = 0.3  # 安全距離
+#         self.alpha = 5  # CBF 參數
+#         self.dim = 2  # 2D平面
+
+#     def solve_qp(self, rel_positions, u_des):
+#         """
+#         解決CBF約束的QP問題
+#         Args:
+#             rel_positions: 包含相對位置信息的列表
+#             u_des: 期望的控制輸入 (numpy array [2,])
+#         Returns:
+#             u_star: 最優控制輸入 (numpy array [2,])
+#         """
+#         if not rel_positions:  # 如果沒有鄰居
+#             return u_des
+
+#         n_neighbors = len(rel_positions)
+#         n_vars = self.dim
+
+#         # 構建QP目標函數: min 1/2 x^T P x + q^T x
+#         P = 2.0 * np.eye(n_vars)
+#         q = -2.0 * u_des
+
+#         # 構建CBF約束: A_i u ≤ b_i
+#         A = np.zeros((n_neighbors, n_vars))
+#         b = np.zeros(n_neighbors)
+
+#         # 對每個鄰居構建約束
+#         for i, rel_data in enumerate(rel_positions.values()):
+#             rel_p = rel_data["rel_p"]
+#             rel_v = rel_data["velocity"]
+#             dist = np.linalg.norm(rel_p)
+            
+#             # CBF: h(x) = ||p1 - p2||^2 - ds^2
+#             h = dist**2 - self.ds**2
+            
+#             # 計算CBF的梯度: ∇h = 2(p1 - p2)
+#             grad_h = 2 * rel_p
+            
+#             # CBF約束: ḣ + αh ≥ 0
+#             # ḣ = ∇h^T(v1 - v2)
+#             A[i] = -grad_h
+#             b[i] = -self.alpha * h + np.dot(grad_h, rel_v)
+
+#         try:
+#             u_star = solve_qp(P, q, A, b, solver="osqp")
+            
+#             if u_star is None:
+#                 rospy.logwarn("QP solver failed, returning desired control")
+#                 return u_des
+                
+#             return u_star
+
+#         except Exception as e:
+#             rospy.logerr(f"Error in QP solver: {str(e)}")
+#             return u_des
 
 class PTZCamera():
     def __init__(self, map_size, grid_size, general_properties,
@@ -235,7 +294,8 @@ class PTZCamera():
             self.neighbors_buffer[neighbor.id] = {"position":   pos, "role": role, "operation_range": neighbor.operation_range,
                                                   "approx_param": neighbor.approx_param, "smoke_variance": neighbor.smoke_variance,
                                                   "camera_range": neighbor.camera_range, "angle_of_view": neighbor.angle_of_view,
-                                                  "camera_variance": neighbor.camera_variance, "weights": weights, "sensor_scores": sensor_scores}
+                                                  "camera_variance": neighbor.camera_variance, "weights": weights, "sensor_scores": sensor_scores,
+                                                  "velocity": neighbor.velocity}
     
     def TargetCallback(self, msg):
         self.target_ready = True
@@ -259,14 +319,6 @@ class PTZCamera():
             self.target_buffer[target.id] = [pos, cov, weight, vel, target.id, requirements, height]
                 
     def AgentPosCallback(self, msg):
-        # self.agent_ready = True
-        # self.pos = np.array([msg.pose.position.x, msg.pose.position.y])
-        # self.pos_z = msg.pose.position.z
-        # q_current = [msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w]
-        # euler = tf.euler_from_quaternion(q_current)
-        # self.yaw = euler[2] # rad
-        # self.perspective = [math.cos(self.yaw), math.sin(self.yaw)] # [v_x, v_y]
-        # # print("heading vector_"+str(self.id)+": \n{}\n".format(self.perspective))
         self.agent_ready = True
         index = msg.name.index("iris"+str(self.id))
         pose = msg.pose[index]
@@ -276,6 +328,8 @@ class PTZCamera():
         euler = tf.euler_from_quaternion(q_current)
         self.yaw = euler[2] # rad
         self.perspective = [math.cos(self.yaw), math.sin(self.yaw)] # [v_x, v_y]
+        self.velocity = Twist()
+        self.velocity = msg.twist[index]
 
     def DensityGradientCallback(self, msg):
         self.agent_ready = True
@@ -353,6 +407,7 @@ class PTZCamera():
         data.camera_range       = self.camera_range
         data.angle_of_view      = self.angle_of_view
         data.camera_variance    = self.camera_variance
+        data.velocity           = self.velocity
         
         data.sensor_scores  = scores_arr
         data.weights        = weight_arr
@@ -479,7 +534,9 @@ class PTZCamera():
                     self.UpdateSensorVoronoi(role = role, event = event)
                         
             u_p, u_v = self.ComputeControlSignal()
-            self.UpdatePosition(u_p)
+            u_star = u_p
+            # u_star = self.QP(u_p)
+            self.UpdatePosition(u_star)
 
             if self.valid_sensors['camera']:
                 self.UpdatePerspective(u_v)
@@ -1002,6 +1059,56 @@ class PTZCamera():
         #return np.ones(self.size)
 
         return event
+    
+    # def QP(self, u_p):
+    #     solver = CBFQPSolver()
+    #     rel_pose = {}
+    #     # rel_positions = []
+    #     # rel_velocitys = []
+    #     # distance = []
+    #     # for neighbor in self.neighbors.items():
+    #     #     for i in len(self.neighbors):
+    #     #         rel_positions[i] = self.pos-np.array(neighbor["position"])
+    #     #         vel_s = np.array([self.velocity.linear.x, self.velocity.linear.y])
+    #     #         twist = Twist()
+    #     #         twist = neighbor["velocity"]
+    #     #         vel_n = np.array([twist.linear.x, twist.linear.y])
+    #     #         rel_velocitys[i] = vel_s - vel_n
+    #     #         distance[i] = np.linalg.norm(rel_positions[i])
+    #     #         rel_pose[i] = {"relative_position": rel_positions[i], "relative_velocity": rel_velocitys[i], "distance": distance[i]}
+    #     # u_des = u_p
+    #     # u_star = solver.solve_qp(rel_pose, u_des)
+    #     for neighbor_id, neighbor in self.neighbors.items():
+    #         # 計算相對位置
+    #         rel_position = self.pos - np.array(neighbor["position"])
+            
+    #         # 計算相對速度
+    #         vel_self = np.array([self.velocity.linear.x, self.velocity.linear.y])
+    #         neighbor_twist = neighbor["velocity"]
+    #         vel_neighbor = np.array([neighbor_twist.linear.x, neighbor_twist.linear.y])
+    #         rel_velocity = vel_self - vel_neighbor
+            
+    #         # 計算距離
+    #         distance = np.linalg.norm(rel_position)
+            
+    #         # 存儲到 rel_pose 字典中
+    #         rel_pose[neighbor_id] = {
+    #             "rel_p": rel_position,
+    #             "velocity": rel_velocity,
+    #             "distance": distance
+    #         }
+        
+    #     # 如果沒有鄰居，直接返回期望控制
+    #     if not rel_pose:
+    #         return u_p
+            
+    #     # 求解 QP 問題
+    #     try:
+    #         u_star = solver.solve_qp(rel_pose, u_p)
+    #         return u_star
+    #     except Exception as e:
+    #         rospy.logerr(f"Error in QP solver: {str(e)}")
+    #         return u_p
 
     def Norm(self, arr):
 

@@ -71,7 +71,7 @@ class ExchangeDataArray {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'd040e661939b9707099a5ae103d30bfd';
+    return '41bff580bcf96cc814b66961bea34a15';
   }
 
   static messageDefinition() {
@@ -91,7 +91,7 @@ class ExchangeDataArray {
     float64             camera_range
     float64             angle_of_view
     float64             camera_variance
-    
+    geometry_msgs/Twist velocity
     
     ================================================================================
     MSG: geometry_msgs/Point
@@ -115,6 +115,24 @@ class ExchangeDataArray {
     string  type
     int16   event_id
     float64 score
+    ================================================================================
+    MSG: geometry_msgs/Twist
+    # This expresses velocity in free space broken into its linear and angular parts.
+    Vector3  linear
+    Vector3  angular
+    
+    ================================================================================
+    MSG: geometry_msgs/Vector3
+    # This represents a vector in free space. 
+    # It is only meant to represent a direction. Therefore, it does not
+    # make sense to apply a translation to it (e.g., when applying a 
+    # generic rigid transformation to a Vector3, tf2 will only apply the
+    # rotation). If you want your data to be translatable too, use the
+    # geometry_msgs/Point message instead.
+    
+    float64 x
+    float64 y
+    float64 z
     `;
   }
 

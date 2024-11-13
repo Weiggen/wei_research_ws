@@ -21,4 +21,6 @@
           ANGLE_OF_VIEW
           CAMERA_VARIANCE-VAL
           CAMERA_VARIANCE
+          VELOCITY-VAL
+          VELOCITY
 ))

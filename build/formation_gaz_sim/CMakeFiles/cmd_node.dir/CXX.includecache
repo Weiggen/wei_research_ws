@@ -38,6 +38,10 @@ tf/tf.h
 math.h
 -
 
+/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.cpp
+getch.h
+/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.h
+
 /opt/ros/noetic/include/geometry_msgs/Point.h
 string
 -

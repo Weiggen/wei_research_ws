@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/weiggen/wei_research_ws/build
 include Yolov8_ros/yolov8_ros_msgs/CMakeFiles/_yolov8_ros_msgs_generate_messages_check_deps_BoundingBoxes.dir/progress.make
 
 Yolov8_ros/yolov8_ros_msgs/CMakeFiles/_yolov8_ros_msgs_generate_messages_check_deps_BoundingBoxes:
-	cd /home/weiggen/wei_research_ws/build/Yolov8_ros/yolov8_ros_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py yolov8_ros_msgs /home/weiggen/wei_research_ws/src/Yolov8_ros/yolov8_ros_msgs/msg/BoundingBoxes.msg std_msgs/Header:yolov8_ros_msgs/BoundingBox
+	cd /home/weiggen/wei_research_ws/build/Yolov8_ros/yolov8_ros_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py yolov8_ros_msgs /home/weiggen/wei_research_ws/src/Yolov8_ros/yolov8_ros_msgs/msg/BoundingBoxes.msg yolov8_ros_msgs/BoundingBox:std_msgs/Header
 
 _yolov8_ros_msgs_generate_messages_check_deps_BoundingBoxes: Yolov8_ros/yolov8_ros_msgs/CMakeFiles/_yolov8_ros_msgs_generate_messages_check_deps_BoundingBoxes
 _yolov8_ros_msgs_generate_messages_check_deps_BoundingBoxes: Yolov8_ros/yolov8_ros_msgs/CMakeFiles/_yolov8_ros_msgs_generate_messages_check_deps_BoundingBoxes.dir/build.make

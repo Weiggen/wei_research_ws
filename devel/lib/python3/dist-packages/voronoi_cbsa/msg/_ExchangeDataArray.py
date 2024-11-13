@@ -10,7 +10,7 @@ import geometry_msgs.msg
 import voronoi_cbsa.msg
 
 class ExchangeDataArray(genpy.Message):
-  _md5sum = "d040e661939b9707099a5ae103d30bfd"
+  _md5sum = "41bff580bcf96cc814b66961bea34a15"
   _type = "voronoi_cbsa/ExchangeDataArray"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """ExchangeData[] data
@@ -27,7 +27,7 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+geometry_msgs/Twist velocity
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -50,7 +50,25 @@ Weight[] weights
 MSG: voronoi_cbsa/Weight
 string  type
 int16   event_id
-float64 score"""
+float64 score
+================================================================================
+MSG: geometry_msgs/Twist
+# This expresses velocity in free space broken into its linear and angular parts.
+Vector3  linear
+Vector3  angular
+
+================================================================================
+MSG: geometry_msgs/Vector3
+# This represents a vector in free space. 
+# It is only meant to represent a direction. Therefore, it does not
+# make sense to apply a translation to it (e.g., when applying a 
+# generic rigid transformation to a Vector3, tf2 will only apply the
+# rotation). If you want your data to be translatable too, use the
+# geometry_msgs/Point message instead.
+
+float64 x
+float64 y
+float64 z"""
   __slots__ = ['data']
   _slot_types = ['voronoi_cbsa/ExchangeData[]']
 
@@ -134,6 +152,13 @@ float64 score"""
           buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
         _x = val1
         buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+        _v5 = val1.velocity
+        _v6 = _v5.linear
+        _x = _v6
+        buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+        _v7 = _v5.angular
+        _x = _v7
+        buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -157,16 +182,16 @@ float64 score"""
         start = end
         end += 8
         (val1.id,) = _get_struct_q().unpack(str[start:end])
-        _v5 = val1.position
-        _x = _v5
+        _v8 = val1.position
+        _x = _v8
         start = end
         end += 24
         (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-        _v6 = val1.role
+        _v9 = val1.role
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v6.sensors = []
+        _v9.sensors = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Sensor()
           start = end
@@ -181,12 +206,12 @@ float64 score"""
           start = end
           end += 8
           (val3.score,) = _get_struct_d().unpack(str[start:end])
-          _v6.sensors.append(val3)
-        _v7 = val1.weights
+          _v9.sensors.append(val3)
+        _v10 = val1.weights
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v7.weights = []
+        _v10.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -202,12 +227,12 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v7.weights.append(val3)
-        _v8 = val1.sensor_scores
+          _v10.weights.append(val3)
+        _v11 = val1.sensor_scores
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v8.weights = []
+        _v11.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -223,11 +248,22 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v8.weights.append(val3)
+          _v11.weights.append(val3)
         _x = val1
         start = end
         end += 48
         (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+        _v12 = val1.velocity
+        _v13 = _v12.linear
+        _x = _v13
+        start = end
+        end += 24
+        (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+        _v14 = _v12.angular
+        _x = _v14
+        start = end
+        end += 24
+        (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
         self.data.append(val1)
       return self
     except struct.error as e:
@@ -246,13 +282,13 @@ float64 score"""
       for val1 in self.data:
         _x = val1.id
         buff.write(_get_struct_q().pack(_x))
-        _v9 = val1.position
-        _x = _v9
+        _v15 = val1.position
+        _x = _v15
         buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
-        _v10 = val1.role
-        length = len(_v10.sensors)
+        _v16 = val1.role
+        length = len(_v16.sensors)
         buff.write(_struct_I.pack(length))
-        for val3 in _v10.sensors:
+        for val3 in _v16.sensors:
           _x = val3.type
           length = len(_x)
           if python3 or type(_x) == unicode:
@@ -261,10 +297,10 @@ float64 score"""
           buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
           _x = val3.score
           buff.write(_get_struct_d().pack(_x))
-        _v11 = val1.weights
-        length = len(_v11.weights)
+        _v17 = val1.weights
+        length = len(_v17.weights)
         buff.write(_struct_I.pack(length))
-        for val3 in _v11.weights:
+        for val3 in _v17.weights:
           _x = val3.type
           length = len(_x)
           if python3 or type(_x) == unicode:
@@ -273,10 +309,10 @@ float64 score"""
           buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
           _x = val3
           buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
-        _v12 = val1.sensor_scores
-        length = len(_v12.weights)
+        _v18 = val1.sensor_scores
+        length = len(_v18.weights)
         buff.write(_struct_I.pack(length))
-        for val3 in _v12.weights:
+        for val3 in _v18.weights:
           _x = val3.type
           length = len(_x)
           if python3 or type(_x) == unicode:
@@ -287,6 +323,13 @@ float64 score"""
           buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
         _x = val1
         buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+        _v19 = val1.velocity
+        _v20 = _v19.linear
+        _x = _v20
+        buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+        _v21 = _v19.angular
+        _x = _v21
+        buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -311,16 +354,16 @@ float64 score"""
         start = end
         end += 8
         (val1.id,) = _get_struct_q().unpack(str[start:end])
-        _v13 = val1.position
-        _x = _v13
+        _v22 = val1.position
+        _x = _v22
         start = end
         end += 24
         (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-        _v14 = val1.role
+        _v23 = val1.role
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v14.sensors = []
+        _v23.sensors = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Sensor()
           start = end
@@ -335,12 +378,12 @@ float64 score"""
           start = end
           end += 8
           (val3.score,) = _get_struct_d().unpack(str[start:end])
-          _v14.sensors.append(val3)
-        _v15 = val1.weights
+          _v23.sensors.append(val3)
+        _v24 = val1.weights
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v15.weights = []
+        _v24.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -356,12 +399,12 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v15.weights.append(val3)
-        _v16 = val1.sensor_scores
+          _v24.weights.append(val3)
+        _v25 = val1.sensor_scores
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        _v16.weights = []
+        _v25.weights = []
         for i in range(0, length):
           val3 = voronoi_cbsa.msg.Weight()
           start = end
@@ -377,11 +420,22 @@ float64 score"""
           start = end
           end += 10
           (_x.event_id, _x.score,) = _get_struct_hd().unpack(str[start:end])
-          _v16.weights.append(val3)
+          _v25.weights.append(val3)
         _x = val1
         start = end
         end += 48
         (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+        _v26 = val1.velocity
+        _v27 = _v26.linear
+        _x = _v27
+        start = end
+        end += 24
+        (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+        _v28 = _v26.angular
+        _x = _v28
+        start = end
+        end += 24
+        (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
         self.data.append(val1)
       return self
     except struct.error as e:
