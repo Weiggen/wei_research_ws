@@ -71,10 +71,10 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_eus: /home/weiggen/wei_re
 
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
-/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
-/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
+/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeData.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from voronoi_cbsa/ExchangeData.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg
@@ -87,26 +87,26 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_eus: /home/weiggen/wei_re
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfo.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfo.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfo.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfo.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfo.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
+/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfo.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from voronoi_cbsa/NeighborInfo.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfoArray.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfoArray.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
-/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/NeighborInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from voronoi_cbsa/NeighborInfoArray.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg
-/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
-/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
+/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/ExchangeDataArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp code from voronoi_cbsa/ExchangeDataArray.msg"
@@ -124,8 +124,8 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_eus: /home/weiggen/wei_re
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/TargetInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/TargetInfoArray.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/TargetInfoArray.l: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
-/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/TargetInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
 /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/TargetInfoArray.l: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
+/home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg/TargetInfoArray.l: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating EusLisp code from voronoi_cbsa/TargetInfoArray.msg"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/share/roseus/ros/voronoi_cbsa/msg
 

@@ -576,7 +576,7 @@ class PTZCamera():
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
-        k_yaw = 0.2
+        k_yaw = 0.1
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
