@@ -19,6 +19,7 @@
 #include <voronoi_cbsa/SensorArray.h>
 #include <voronoi_cbsa/WeightArray.h>
 #include <voronoi_cbsa/WeightArray.h>
+#include <geometry_msgs/Point.h>
 
 namespace voronoi_cbsa
 {
@@ -38,7 +39,8 @@ struct ExchangeData_
     , smoke_variance(0.0)
     , camera_range(0.0)
     , angle_of_view(0.0)
-    , camera_variance(0.0)  {
+    , camera_variance(0.0)
+    , velocity()  {
     }
   ExchangeData_(const ContainerAllocator& _alloc)
     : id(0)
@@ -51,7 +53,8 @@ struct ExchangeData_
     , smoke_variance(0.0)
     , camera_range(0.0)
     , angle_of_view(0.0)
-    , camera_variance(0.0)  {
+    , camera_variance(0.0)
+    , velocity(_alloc)  {
   (void)_alloc;
     }
 
@@ -89,6 +92,9 @@ struct ExchangeData_
 
    typedef double _camera_variance_type;
   _camera_variance_type camera_variance;
+
+   typedef  ::geometry_msgs::Point_<ContainerAllocator>  _velocity_type;
+  _velocity_type velocity;
 
 
 
@@ -129,7 +135,8 @@ bool operator==(const ::voronoi_cbsa::ExchangeData_<ContainerAllocator1> & lhs, 
     lhs.smoke_variance == rhs.smoke_variance &&
     lhs.camera_range == rhs.camera_range &&
     lhs.angle_of_view == rhs.angle_of_view &&
-    lhs.camera_variance == rhs.camera_variance;
+    lhs.camera_variance == rhs.camera_variance &&
+    lhs.velocity == rhs.velocity;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -186,12 +193,12 @@ struct MD5Sum< ::voronoi_cbsa::ExchangeData_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "77f411baa5b1143c9a101ed6a3425781";
+    return "2f42667d1e0a184c7cc115f894849626";
   }
 
   static const char* value(const ::voronoi_cbsa::ExchangeData_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x77f411baa5b1143cULL;
-  static const uint64_t static_value2 = 0x9a101ed6a3425781ULL;
+  static const uint64_t static_value1 = 0x2f42667d1e0a184cULL;
+  static const uint64_t static_value2 = 0x7cc115f894849626ULL;
 };
 
 template<class ContainerAllocator>
@@ -221,7 +228,7 @@ struct Definition< ::voronoi_cbsa::ExchangeData_<ContainerAllocator> >
 "float64             camera_range\n"
 "float64             angle_of_view\n"
 "float64             camera_variance\n"
-"\n"
+"geometry_msgs/Point velocity\n"
 "\n"
 "================================================================================\n"
 "MSG: geometry_msgs/Point\n"
@@ -274,6 +281,7 @@ namespace serialization
       stream.next(m.camera_range);
       stream.next(m.angle_of_view);
       stream.next(m.camera_variance);
+      stream.next(m.velocity);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -318,6 +326,9 @@ struct Printer< ::voronoi_cbsa::ExchangeData_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.angle_of_view);
     s << indent << "camera_variance: ";
     Printer<double>::stream(s, indent + "  ", v.camera_variance);
+    s << indent << "velocity: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::Point_<ContainerAllocator> >::stream(s, indent + "  ", v.velocity);
   }
 };
 

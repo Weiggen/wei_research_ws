@@ -7,9 +7,9 @@ from datetime import datetime
 def process_rosbag(bag_file):
     # 創建空列表來存儲數據
     timestamps = []
-    h1_data = []
-    h2_data = []
-    h3_data = []
+    h1 = []
+    h2 = []
+    h3 = []
     H_data = []
 
     # 打開rosbag文件
@@ -30,31 +30,34 @@ def process_rosbag(bag_file):
             h2 = h2_msg.message.data
             h3 = h3_msg.message.data
 
-            # 存儲單獨的數據
-            h1_data.append(h1)
-            h2_data.append(h2)
-            h3_data.append(h3)
-
             # 計算總和 H
             H = h1 + h2 + h3
             H_data.append(H)
 
-    return timestamps, h1_data, h2_data, h3_data, H_data
+    # 將時間戳轉換為從0開始的相對時間
+    timestamps = np.array(timestamps)
+    timestamps = timestamps - timestamps[0]
+    
+    return timestamps, H_data
 
-def plot_data(timestamps, h1_data, h2_data, h3_data, H_data):
+def plot_comparison(bag_file1, bag_file2):
     # 創建圖表
     plt.figure(figsize=(12, 8))
 
-    # 繪製所有數據
-    plt.plot(timestamps, h1_data, label='h1', linewidth=2)
-    plt.plot(timestamps, h2_data, label='h2', linewidth=2)
-    plt.plot(timestamps, h3_data, label='h3', linewidth=2)
-    plt.plot(timestamps, H_data, label='H (Total)', linewidth=3, linestyle='--')
+    # 處理第一個bag檔案
+    timestamps1, H_data1 = process_rosbag(bag_file1)
+    
+    # 處理第二個bag檔案
+    timestamps2, H_data2 = process_rosbag(bag_file2)
+
+    # 繪製兩組H數據
+    plt.plot(timestamps1, H_data1, label='H (1221)', linewidth=2)
+    plt.plot(timestamps2, H_data2, label='H (Before)', linewidth=2, linestyle='--')
 
     # 設置圖表屬性
     plt.xlabel('Time (seconds)')
-    plt.ylabel('Value')
-    plt.title('ROS Bag Data Analysis')
+    plt.ylabel('H Value')
+    plt.title('Comparison of H Values from Two Bag Files')
     plt.legend()
     plt.grid(True)
 
@@ -62,18 +65,16 @@ def plot_data(timestamps, h1_data, h2_data, h3_data, H_data):
     plt.show()
 
 def main():
-    # 替換為您的rosbag文件路徑
-    bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/Dynamic_utilityfrom0_f.bag'
+    # 替換為您的兩個rosbag文件路徑
+    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/1221_D.bag'
+    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/Dynamic_utilityfrom0_f.bag'
 
     try:
-        # 處理數據
-        timestamps, h1_data, h2_data, h3_data, H_data = process_rosbag(bag_file)
-        
-        # 繪製圖表
-        plot_data(timestamps, h1_data, h2_data, h3_data, H_data)
+        # 繪製比較圖表
+        plot_comparison(bag_file1, bag_file2)
 
     except Exception as e:
-        print(f"Error processing bag file: {e}")
+        print(f"Error processing bag files: {e}")
 
 if __name__ == "__main__":
     main()

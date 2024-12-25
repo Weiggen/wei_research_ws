@@ -503,6 +503,8 @@ class PTZCamera():
             
     def UpdatePosition(self, u_p):
         # Maximum Speed restriction
+        k = 1.2
+        u_p = k*u_p
         if np.linalg.norm(u_p) > self.max_speed:
             u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
 
@@ -576,7 +578,7 @@ class PTZCamera():
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
-        k_yaw = 0.1
+        k_yaw = 0.1415
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
@@ -674,8 +676,10 @@ class PTZCamera():
     def ComputeControlSignal(self):
         u_p = np.array([0., 0.])  
         u_v = np.array([0., 0.])
-        k_1 = 0.2
-        k_2 = 0.0000000001
+        # k_1 = 0.2
+        # k_2 = 0.0000000001
+        k_1 = .255
+        k_2 = .00000000125
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
         sensor_gradient = [np.zeros(self.size), np.zeros(self.size)]
         event_gradient = [np.zeros(self.size), np.zeros(self.size)]

@@ -10,7 +10,7 @@ import geometry_msgs.msg
 import voronoi_cbsa.msg
 
 class ExchangeData(genpy.Message):
-  _md5sum = "77f411baa5b1143c9a101ed6a3425781"
+  _md5sum = "2f42667d1e0a184c7cc115f894849626"
   _type = "voronoi_cbsa/ExchangeData"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """int64               id
@@ -24,7 +24,7 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+geometry_msgs/Point velocity
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -48,8 +48,8 @@ MSG: voronoi_cbsa/Weight
 string  type
 int16   event_id
 float64 score"""
-  __slots__ = ['id','position','role','weights','sensor_scores','operation_range','approx_param','smoke_variance','camera_range','angle_of_view','camera_variance']
-  _slot_types = ['int64','geometry_msgs/Point','voronoi_cbsa/SensorArray','voronoi_cbsa/WeightArray','voronoi_cbsa/WeightArray','float64','float64','float64','float64','float64','float64']
+  __slots__ = ['id','position','role','weights','sensor_scores','operation_range','approx_param','smoke_variance','camera_range','angle_of_view','camera_variance','velocity']
+  _slot_types = ['int64','geometry_msgs/Point','voronoi_cbsa/SensorArray','voronoi_cbsa/WeightArray','voronoi_cbsa/WeightArray','float64','float64','float64','float64','float64','float64','geometry_msgs/Point']
 
   def __init__(self, *args, **kwds):
     """
@@ -59,7 +59,7 @@ float64 score"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       id,position,role,weights,sensor_scores,operation_range,approx_param,smoke_variance,camera_range,angle_of_view,camera_variance
+       id,position,role,weights,sensor_scores,operation_range,approx_param,smoke_variance,camera_range,angle_of_view,camera_variance,velocity
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -90,6 +90,8 @@ float64 score"""
         self.angle_of_view = 0.
       if self.camera_variance is None:
         self.camera_variance = 0.
+      if self.velocity is None:
+        self.velocity = geometry_msgs.msg.Point()
     else:
       self.id = 0
       self.position = geometry_msgs.msg.Point()
@@ -102,6 +104,7 @@ float64 score"""
       self.camera_range = 0.
       self.angle_of_view = 0.
       self.camera_variance = 0.
+      self.velocity = geometry_msgs.msg.Point()
 
   def _get_types(self):
     """
@@ -151,7 +154,7 @@ float64 score"""
         _x = val1
         buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
       _x = self
-      buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+      buff.write(_get_struct_9d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance, _x.velocity.x, _x.velocity.y, _x.velocity.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -171,6 +174,8 @@ float64 score"""
         self.weights = voronoi_cbsa.msg.WeightArray()
       if self.sensor_scores is None:
         self.sensor_scores = voronoi_cbsa.msg.WeightArray()
+      if self.velocity is None:
+        self.velocity = geometry_msgs.msg.Point()
       end = 0
       _x = self
       start = end
@@ -237,8 +242,8 @@ float64 score"""
         self.sensor_scores.weights.append(val1)
       _x = self
       start = end
-      end += 48
-      (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+      end += 72
+      (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance, _x.velocity.x, _x.velocity.y, _x.velocity.z,) = _get_struct_9d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -287,7 +292,7 @@ float64 score"""
         _x = val1
         buff.write(_get_struct_hd().pack(_x.event_id, _x.score))
       _x = self
-      buff.write(_get_struct_6d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance))
+      buff.write(_get_struct_9d().pack(_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance, _x.velocity.x, _x.velocity.y, _x.velocity.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -308,6 +313,8 @@ float64 score"""
         self.weights = voronoi_cbsa.msg.WeightArray()
       if self.sensor_scores is None:
         self.sensor_scores = voronoi_cbsa.msg.WeightArray()
+      if self.velocity is None:
+        self.velocity = geometry_msgs.msg.Point()
       end = 0
       _x = self
       start = end
@@ -374,8 +381,8 @@ float64 score"""
         self.sensor_scores.weights.append(val1)
       _x = self
       start = end
-      end += 48
-      (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance,) = _get_struct_6d().unpack(str[start:end])
+      end += 72
+      (_x.operation_range, _x.approx_param, _x.smoke_variance, _x.camera_range, _x.angle_of_view, _x.camera_variance, _x.velocity.x, _x.velocity.y, _x.velocity.z,) = _get_struct_9d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -384,12 +391,12 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_6d = None
-def _get_struct_6d():
-    global _struct_6d
-    if _struct_6d is None:
-        _struct_6d = struct.Struct("<6d")
-    return _struct_6d
+_struct_9d = None
+def _get_struct_9d():
+    global _struct_9d
+    if _struct_9d is None:
+        _struct_9d = struct.Struct("<9d")
+    return _struct_9d
 _struct_d = None
 def _get_struct_d():
     global _struct_d

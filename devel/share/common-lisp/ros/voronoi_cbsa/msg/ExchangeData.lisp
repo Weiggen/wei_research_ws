@@ -61,7 +61,12 @@
     :reader camera_variance
     :initarg :camera_variance
     :type cl:float
-    :initform 0.0))
+    :initform 0.0)
+   (velocity
+    :reader velocity
+    :initarg :velocity
+    :type geometry_msgs-msg:Point
+    :initform (cl:make-instance 'geometry_msgs-msg:Point)))
 )
 
 (cl:defclass ExchangeData (<ExchangeData>)
@@ -126,6 +131,11 @@
 (cl:defmethod camera_variance-val ((m <ExchangeData>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader voronoi_cbsa-msg:camera_variance-val is deprecated.  Use voronoi_cbsa-msg:camera_variance instead.")
   (camera_variance m))
+
+(cl:ensure-generic-function 'velocity-val :lambda-list '(m))
+(cl:defmethod velocity-val ((m <ExchangeData>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader voronoi_cbsa-msg:velocity-val is deprecated.  Use voronoi_cbsa-msg:velocity instead.")
+  (velocity m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <ExchangeData>) ostream)
   "Serializes a message object of type '<ExchangeData>"
   (cl:let* ((signed (cl:slot-value msg 'id)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 18446744073709551616) signed)))
@@ -196,6 +206,7 @@
     (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
+  (roslisp-msg-protocol:serialize (cl:slot-value msg 'velocity) ostream)
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <ExchangeData>) istream)
   "Deserializes a message object of type '<ExchangeData>"
@@ -273,6 +284,7 @@
       (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
     (cl:setf (cl:slot-value msg 'camera_variance) (roslisp-utils:decode-double-float-bits bits)))
+  (roslisp-msg-protocol:deserialize (cl:slot-value msg 'velocity) istream)
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<ExchangeData>)))
@@ -283,16 +295,16 @@
   "voronoi_cbsa/ExchangeData")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<ExchangeData>)))
   "Returns md5sum for a message object of type '<ExchangeData>"
-  "77f411baa5b1143c9a101ed6a3425781")
+  "2f42667d1e0a184c7cc115f894849626")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'ExchangeData)))
   "Returns md5sum for a message object of type 'ExchangeData"
-  "77f411baa5b1143c9a101ed6a3425781")
+  "2f42667d1e0a184c7cc115f894849626")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<ExchangeData>)))
   "Returns full string definition for message of type '<ExchangeData>"
-  (cl:format cl:nil "int64               id~%geometry_msgs/Point position~%SensorArray         role~%WeightArray         weights~%WeightArray         sensor_scores~%float64             operation_range~%float64             approx_param~%float64             smoke_variance~%float64             camera_range~%float64             angle_of_view~%float64             camera_variance~%~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: voronoi_cbsa/SensorArray~%Sensor[] sensors~%================================================================================~%MSG: voronoi_cbsa/Sensor~%string type~%float64 score~%================================================================================~%MSG: voronoi_cbsa/WeightArray~%Weight[] weights~%================================================================================~%MSG: voronoi_cbsa/Weight~%string  type~%int16   event_id~%float64 score~%~%"))
+  (cl:format cl:nil "int64               id~%geometry_msgs/Point position~%SensorArray         role~%WeightArray         weights~%WeightArray         sensor_scores~%float64             operation_range~%float64             approx_param~%float64             smoke_variance~%float64             camera_range~%float64             angle_of_view~%float64             camera_variance~%geometry_msgs/Point velocity~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: voronoi_cbsa/SensorArray~%Sensor[] sensors~%================================================================================~%MSG: voronoi_cbsa/Sensor~%string type~%float64 score~%================================================================================~%MSG: voronoi_cbsa/WeightArray~%Weight[] weights~%================================================================================~%MSG: voronoi_cbsa/Weight~%string  type~%int16   event_id~%float64 score~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'ExchangeData)))
   "Returns full string definition for message of type 'ExchangeData"
-  (cl:format cl:nil "int64               id~%geometry_msgs/Point position~%SensorArray         role~%WeightArray         weights~%WeightArray         sensor_scores~%float64             operation_range~%float64             approx_param~%float64             smoke_variance~%float64             camera_range~%float64             angle_of_view~%float64             camera_variance~%~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: voronoi_cbsa/SensorArray~%Sensor[] sensors~%================================================================================~%MSG: voronoi_cbsa/Sensor~%string type~%float64 score~%================================================================================~%MSG: voronoi_cbsa/WeightArray~%Weight[] weights~%================================================================================~%MSG: voronoi_cbsa/Weight~%string  type~%int16   event_id~%float64 score~%~%"))
+  (cl:format cl:nil "int64               id~%geometry_msgs/Point position~%SensorArray         role~%WeightArray         weights~%WeightArray         sensor_scores~%float64             operation_range~%float64             approx_param~%float64             smoke_variance~%float64             camera_range~%float64             angle_of_view~%float64             camera_variance~%geometry_msgs/Point velocity~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%================================================================================~%MSG: voronoi_cbsa/SensorArray~%Sensor[] sensors~%================================================================================~%MSG: voronoi_cbsa/Sensor~%string type~%float64 score~%================================================================================~%MSG: voronoi_cbsa/WeightArray~%Weight[] weights~%================================================================================~%MSG: voronoi_cbsa/Weight~%string  type~%int16   event_id~%float64 score~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <ExchangeData>))
   (cl:+ 0
      8
@@ -306,6 +318,7 @@
      8
      8
      8
+     (roslisp-msg-protocol:serialization-length (cl:slot-value msg 'velocity))
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <ExchangeData>))
   "Converts a ROS message object to a list"
@@ -321,4 +334,5 @@
     (cl:cons ':camera_range (camera_range msg))
     (cl:cons ':angle_of_view (angle_of_view msg))
     (cl:cons ':camera_variance (camera_variance msg))
+    (cl:cons ':velocity (velocity msg))
 ))
