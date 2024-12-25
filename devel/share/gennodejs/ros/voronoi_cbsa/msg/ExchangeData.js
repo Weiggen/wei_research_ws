@@ -32,6 +32,7 @@ class ExchangeData {
       this.camera_range = null;
       this.angle_of_view = null;
       this.camera_variance = null;
+      this.velocity = null;
     }
     else {
       if (initObj.hasOwnProperty('id')) {
@@ -100,6 +101,12 @@ class ExchangeData {
       else {
         this.camera_variance = 0.0;
       }
+      if (initObj.hasOwnProperty('velocity')) {
+        this.velocity = initObj.velocity
+      }
+      else {
+        this.velocity = new geometry_msgs.msg.Point();
+      }
     }
   }
 
@@ -127,6 +134,8 @@ class ExchangeData {
     bufferOffset = _serializer.float64(obj.angle_of_view, buffer, bufferOffset);
     // Serialize message field [camera_variance]
     bufferOffset = _serializer.float64(obj.camera_variance, buffer, bufferOffset);
+    // Serialize message field [velocity]
+    bufferOffset = geometry_msgs.msg.Point.serialize(obj.velocity, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -156,6 +165,8 @@ class ExchangeData {
     data.angle_of_view = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [camera_variance]
     data.camera_variance = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [velocity]
+    data.velocity = geometry_msgs.msg.Point.deserialize(buffer, bufferOffset);
     return data;
   }
 
@@ -164,7 +175,7 @@ class ExchangeData {
     length += SensorArray.getMessageSize(object.role);
     length += WeightArray.getMessageSize(object.weights);
     length += WeightArray.getMessageSize(object.sensor_scores);
-    return length + 80;
+    return length + 104;
   }
 
   static datatype() {
@@ -174,7 +185,7 @@ class ExchangeData {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '77f411baa5b1143c9a101ed6a3425781';
+    return '2f42667d1e0a184c7cc115f894849626';
   }
 
   static messageDefinition() {
@@ -191,7 +202,7 @@ class ExchangeData {
     float64             camera_range
     float64             angle_of_view
     float64             camera_variance
-    
+    geometry_msgs/Point velocity
     
     ================================================================================
     MSG: geometry_msgs/Point
@@ -299,6 +310,13 @@ class ExchangeData {
     }
     else {
       resolved.camera_variance = 0.0
+    }
+
+    if (msg.velocity !== undefined) {
+      resolved.velocity = geometry_msgs.msg.Point.Resolve(msg.velocity)
+    }
+    else {
+      resolved.velocity = new geometry_msgs.msg.Point()
     }
 
     return resolved;

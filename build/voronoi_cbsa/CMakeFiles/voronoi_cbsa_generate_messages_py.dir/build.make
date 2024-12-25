@@ -71,11 +71,11 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_py: /home/weiggen/wei_res
 
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG voronoi_cbsa/ExchangeData"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg
 
@@ -94,20 +94,20 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_py: /home/weiggen/wei_res
 
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfo.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python from MSG voronoi_cbsa/NeighborInfoArray"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/NeighborInfoArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Sensor.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/SensorArray.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/WeightArray.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/Weight.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeData.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python from MSG voronoi_cbsa/ExchangeDataArray"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/ExchangeDataArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg
@@ -115,17 +115,17 @@ voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_py: /home/weiggen/wei_res
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfo.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfo.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfo.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfo.py: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfo.py: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfo.py: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python from MSG voronoi_cbsa/TargetInfo"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg
 
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
-/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
 /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfo.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
+/home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/weiggen/wei_research_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python from MSG voronoi_cbsa/TargetInfoArray"
 	cd /home/weiggen/wei_research_ws/build/voronoi_cbsa && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/weiggen/wei_research_ws/src/voronoi_cbsa/msg/TargetInfoArray.msg -Ivoronoi_cbsa:/home/weiggen/wei_research_ws/src/voronoi_cbsa/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p voronoi_cbsa -o /home/weiggen/wei_research_ws/devel/lib/python3/dist-packages/voronoi_cbsa/msg
 

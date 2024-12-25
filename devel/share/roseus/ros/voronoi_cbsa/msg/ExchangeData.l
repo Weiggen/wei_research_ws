@@ -16,7 +16,7 @@
 
 (defclass voronoi_cbsa::ExchangeData
   :super ros::object
-  :slots (_id _position _role _weights _sensor_scores _operation_range _approx_param _smoke_variance _camera_range _angle_of_view _camera_variance ))
+  :slots (_id _position _role _weights _sensor_scores _operation_range _approx_param _smoke_variance _camera_range _angle_of_view _camera_variance _velocity ))
 
 (defmethod voronoi_cbsa::ExchangeData
   (:init
@@ -32,6 +32,7 @@
     ((:camera_range __camera_range) 0.0)
     ((:angle_of_view __angle_of_view) 0.0)
     ((:camera_variance __camera_variance) 0.0)
+    ((:velocity __velocity) (instance geometry_msgs::Point :init))
     )
    (send-super :init)
    (setq _id (round __id))
@@ -45,6 +46,7 @@
    (setq _camera_range (float __camera_range))
    (setq _angle_of_view (float __angle_of_view))
    (setq _camera_variance (float __camera_variance))
+   (setq _velocity __velocity)
    self)
   (:id
    (&optional __id)
@@ -95,6 +97,13 @@
   (:camera_variance
    (&optional __camera_variance)
    (if __camera_variance (setq _camera_variance __camera_variance)) _camera_variance)
+  (:velocity
+   (&rest __velocity)
+   (if (keywordp (car __velocity))
+       (send* _velocity __velocity)
+     (progn
+       (if __velocity (setq _velocity (car __velocity)))
+       _velocity)))
   (:serialization-length
    ()
    (+
@@ -120,6 +129,8 @@
     8
     ;; float64 _camera_variance
     8
+    ;; geometry_msgs/Point _velocity
+    (send _velocity :serialization-length)
     ))
   (:serialize
    (&optional strm)
@@ -157,6 +168,8 @@
        (sys::poke _angle_of_view (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _camera_variance
        (sys::poke _camera_variance (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; geometry_msgs/Point _velocity
+       (send _velocity :serialize s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
@@ -193,11 +206,13 @@
      (setq _angle_of_view (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _camera_variance
      (setq _camera_variance (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; geometry_msgs/Point _velocity
+     (send _velocity :deserialize buf ptr-) (incf ptr- (send _velocity :serialization-length))
    ;;
    self)
   )
 
-(setf (get voronoi_cbsa::ExchangeData :md5sum-) "77f411baa5b1143c9a101ed6a3425781")
+(setf (get voronoi_cbsa::ExchangeData :md5sum-) "2f42667d1e0a184c7cc115f894849626")
 (setf (get voronoi_cbsa::ExchangeData :datatype-) "voronoi_cbsa/ExchangeData")
 (setf (get voronoi_cbsa::ExchangeData :definition-)
       "int64               id
@@ -211,7 +226,7 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+geometry_msgs/Point velocity
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -239,6 +254,6 @@ float64 score
 
 
 
-(provide :voronoi_cbsa/ExchangeData "77f411baa5b1143c9a101ed6a3425781")
+(provide :voronoi_cbsa/ExchangeData "2f42667d1e0a184c7cc115f894849626")
 
 

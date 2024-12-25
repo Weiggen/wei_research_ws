@@ -71,7 +71,7 @@ class ExchangeDataArray {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'd040e661939b9707099a5ae103d30bfd';
+    return '18f160db55a6039398f060d660965da4';
   }
 
   static messageDefinition() {
@@ -91,7 +91,7 @@ class ExchangeDataArray {
     float64             camera_range
     float64             angle_of_view
     float64             camera_variance
-    
+    geometry_msgs/Point velocity
     
     ================================================================================
     MSG: geometry_msgs/Point

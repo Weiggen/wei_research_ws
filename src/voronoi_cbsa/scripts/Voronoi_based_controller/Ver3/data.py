@@ -29,11 +29,11 @@ class DataCenter():
         self.ROSInit()
 
     def ROSInit(self):
-        self.total_agent = int(rospy.get_param("/total_agents", '1'))
+        self.total_agent = int(rospy.get_param("/total_agents", '3'))
 
-        for id in range(self.total_agent):
+        for id in range(1, self.total_agent+1):
             if id != self.id:
-                rospy.Subscriber("/agent_"+str(id)+"/global/exchange_data", ExchangeData, self.NeighborCallback)
+                rospy.Subscriber("/iris_"+str(id)+"/global/exchange_data", ExchangeData, self.NeighborCallback) # id = [1, 2, 3]
                 
         rospy.Subscriber("local/exchange_data", ExchangeData, self.SelfCallback)
         rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)

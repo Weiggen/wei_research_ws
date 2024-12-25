@@ -61,7 +61,7 @@
    self)
   )
 
-(setf (get voronoi_cbsa::ExchangeDataArray :md5sum-) "d040e661939b9707099a5ae103d30bfd")
+(setf (get voronoi_cbsa::ExchangeDataArray :md5sum-) "18f160db55a6039398f060d660965da4")
 (setf (get voronoi_cbsa::ExchangeDataArray :datatype-) "voronoi_cbsa/ExchangeDataArray")
 (setf (get voronoi_cbsa::ExchangeDataArray :definition-)
       "ExchangeData[] data
@@ -78,7 +78,7 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+geometry_msgs/Point velocity
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -106,6 +106,6 @@ float64 score
 
 
 
-(provide :voronoi_cbsa/ExchangeDataArray "d040e661939b9707099a5ae103d30bfd")
+(provide :voronoi_cbsa/ExchangeDataArray "18f160db55a6039398f060d660965da4")
 
 

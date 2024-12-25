@@ -9,4 +9,4 @@ float64             smoke_variance
 float64             camera_range
 float64             angle_of_view
 float64             camera_variance
-
+geometry_msgs/Point velocity
