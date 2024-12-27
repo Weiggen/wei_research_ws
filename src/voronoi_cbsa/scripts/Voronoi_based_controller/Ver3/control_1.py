@@ -9,6 +9,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from gazebo_msgs.msg import ModelStates, LinkStates
 from qpsolvers import solve_qp
+from cvxopt import matrix, solvers
 
 import numpy as np
 import pandas as pd
@@ -231,11 +232,16 @@ class PTZCamera():
             
             for score in neighbor.sensor_scores.weights:
                 sensor_scores[score.type][score.event_id] = score.score
+
+            vel_x = neighbor.velocity.x
+            vel_y = neighbor.velocity.y
+            vel = np.array([vel_x, vel_y])
                     
             self.neighbors_buffer[neighbor.id] = {"position":   pos, "role": role, "operation_range": neighbor.operation_range,
                                                   "approx_param": neighbor.approx_param, "smoke_variance": neighbor.smoke_variance,
                                                   "camera_range": neighbor.camera_range, "angle_of_view": neighbor.angle_of_view,
-                                                  "camera_variance": neighbor.camera_variance, "weights": weights, "sensor_scores": sensor_scores}
+                                                  "camera_variance": neighbor.camera_variance, "weights": weights, "sensor_scores": sensor_scores,
+                                                  "velocity": vel}
     
     def TargetCallback(self, msg):
         self.target_ready = True
@@ -505,6 +511,11 @@ class PTZCamera():
         # Maximum Speed restriction
         k = 1.2
         u_p = k*u_p
+
+        for role in self.valid_sensors.keys():
+            for event in self.targets.keys():
+                u_p = self.qp(role = role, event = event, u_des = u_p)
+
         if np.linalg.norm(u_p) > self.max_speed:
             u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
 
@@ -609,7 +620,47 @@ class PTZCamera():
                 total_cost = np.where(cost < total_cost, cost, total_cost)
 
             self.sensor_voronoi[role][event] = sensor_voronoi
-    
+
+    def qp(self, role, event, u_des):
+        # CBF
+        alpha = 1.
+        d_min = 0.15
+
+        P = matrix(np.eye(2))
+        q = matrix(-u_des)
+        rel_pos = np.zeros_like(self.pos)
+        
+        target = self.targets[event]
+
+        G_ = []
+        h_ = []
+
+        if len(self.neighbors) > 0:
+            if role in target[5]:
+                for neighbor in self.sensor_graph[role]:
+                    rel_pos = self.pos - self.neighbors[neighbor]["position"]
+                    d = np.linalg.norm(rel_pos)
+                    h_c = d**2-d_min**2
+                    G = matrix(-2.0*rel_pos.reshape(1, 2))
+                    h = matrix(alpha*h_c - 2.0*np.dot(rel_pos, self.neighbors[neighbor]["velocity"]))
+                    G_.append(G)
+                    h_.append(h)
+
+        if len(G_) > 0:
+            G = matrix(np.vstack(G_))
+            h = matrix(np.vstack(h_))
+            try:
+                solution = solvers.qp(P, q, G, h)
+                if solution['status'] == 'optimal':
+                    # print("CBF triggered.")
+                    return np.array(solution['x']).flatten()
+                else:
+                    return u_des
+            except:
+                return u_des
+        else:
+            return u_des
+
     def ComputeSensorWeight(self):
         if self.sensor_balance:
             for event in self.targets.keys():
