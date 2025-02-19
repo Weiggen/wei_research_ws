@@ -19,8 +19,8 @@ def get_precise_time_info(bag_path):
         print(f"起始時間戳: {start_time}")
         
         # 計算80秒位置的時間戳
-        target_time = start_time + 80.0
-        print(f"80秒位置的時間戳: {target_time}")
+        target_time = start_time + 60.0
+        print(f"60秒位置的時間戳: {target_time}")
         print("\n要使用這個時間戳作為trim_bag.py的結束時間參數")
         print(f"\n使用方法範例:")
         print(f"python trim_bag.py dynamic_sim.bag output.bag {target_time}")

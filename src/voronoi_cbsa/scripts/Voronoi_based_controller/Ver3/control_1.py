@@ -509,7 +509,8 @@ class PTZCamera():
             
     def UpdatePosition(self, u_p):
         # Maximum Speed restriction
-        k = 1.2
+        # k = 1.2 # static tuned
+        k = 1. # dynamic tuned
         u_p = k*u_p
 
         for role in self.valid_sensors.keys():
@@ -589,7 +590,8 @@ class PTZCamera():
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
-        k_yaw = 0.1415
+        # k_yaw = 0.1415 # static tuned
+        k_yaw = 0.08 # dynamic tuned
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):

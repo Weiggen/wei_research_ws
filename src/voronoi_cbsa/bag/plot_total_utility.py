@@ -51,8 +51,8 @@ def plot_comparison(bag_file1, bag_file2):
     timestamps2, H_data2 = process_rosbag(bag_file2)
 
     # 繪製兩組H數據
-    plt.plot(timestamps1, H_data1, label='H (1221)', linewidth=2)
-    plt.plot(timestamps2, H_data2, label='H (Before)', linewidth=2, linestyle='--')
+    plt.plot(timestamps1, H_data1, label='H (constant cov.)', linewidth=2)
+    plt.plot(timestamps2, H_data2, label='H (D cov.)', linewidth=2, linestyle='--')
 
     # 設置圖表屬性
     plt.xlabel('Time (seconds)')
@@ -66,8 +66,8 @@ def plot_comparison(bag_file1, bag_file2):
 
 def main():
     # 替換為您的兩個rosbag文件路徑
-    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/1221_D.bag'
-    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/Dynamic_utilityfrom0_f.bag'
+    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_constantCov.bag'
+    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_dynamicCov.bag'
 
     try:
         # 繪製比較圖表
