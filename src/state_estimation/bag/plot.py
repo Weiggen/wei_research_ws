@@ -350,11 +350,11 @@ def plotFromTwoBags(file1, file2, topic, label1, label2):
     plot_combine_det_p( p1, p2, label1, label2)
 folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 
-file1 = folder + '1221_both.bag'
-file2 = folder + 'result.bag'
+file1 = folder + 'trimmed_dynamicSim_constantCov.bag'
+file2 = folder + 'trimmed_dynamicSim_dynamicCov.bag'
 # file2 = folder + 'lidar.bag'
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
 topic = '/iris_1/THEIF/Plot'
-plotFromTwoBags(file1, file2, topic, '1221_both', 'result')
+plotFromTwoBags(file1, file2, topic, 'constant P', 'dynamic P')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')

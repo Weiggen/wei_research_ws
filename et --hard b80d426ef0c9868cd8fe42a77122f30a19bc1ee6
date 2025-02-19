@@ -1,0 +1,24 @@
+[33mcommit b80d426ef0c9868cd8fe42a77122f30a19bc1ee6[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/solver[m[33m, [m[1;31morigin/feature/solver[m[33m)[m
+Author: Weiggen <weiggen1224@gmail.com>
+Date:   Fri Dec 27 16:56:50 2024 +0800
+
+    CBF added version completed.
+
+[33mcommit 39a9bc6460a4231eddcc809e6b471561b07690ab[m
+Author: Weiggen <weiggen1224@gmail.com>
+Date:   Wed Dec 25 15:42:48 2024 +0800
+
+    Agents cooperation actived.
+
+[33mcommit d2d86798c9376a5eb75da95e88f2f44ea98cb46b[m[33m ([m[1;31morigin/workableDynamicSimulation[m[33m, [m[1;32mworkableDynamicSimulation[m[33m)[m
+Author: Weiggen <weiggen1224@gmail.com>
+Date:   Thu Dec 19 13:05:44 2024 +0800
+
+    plot_total_utility.py is added.
+
+[33mcommit e398836eeacc3c9cd4e9f8c923465c4536843082[m
+Merge: d99a6d3 082393d
+Author: Weiggen <weiggen1224@gmail.com>
+Date:   Thu Dec 12 14:09:48 2024 +0800
+
+    Merge branch 'workableDynamicSimulation' of github.com:Weiggen/wei_research_ws into workableDynamicSimulation

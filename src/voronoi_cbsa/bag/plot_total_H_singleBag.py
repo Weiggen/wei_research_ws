@@ -62,8 +62,10 @@ def plot_data(timestamps, h1_data, h2_data, h3_data, H_data):
     plt.show()
 
 def main():
-    # 替換為您的rosbag文件路徑
-    bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/1221_D.bag'
+    # 替換為您的rosbag文件路徑(only alow single bag file)
+    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/staticSim_constantCov.bag'
+    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/staticSim_dynamicCov.bag'
+    bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/result.bag'
 
     try:
         # 處理數據

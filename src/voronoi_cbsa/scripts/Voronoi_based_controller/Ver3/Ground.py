@@ -38,6 +38,8 @@ def TargetCovCallback(msg):
     global target_covariances
     target_covariance = np.array(msg.P_hat).reshape((6, 6))
     target_covariances[0] = (target_covariance[:2, :2]).flatten()
+    # # constant cov.
+    # target_covariances[0] = [4, 0, 0, 4]
 
 def TargetDynamics(x, y, v):
     spd = 0.005
