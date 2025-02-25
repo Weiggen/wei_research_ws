@@ -54,7 +54,7 @@ def plot_data(timestamps, h1_data, h2_data, h3_data, H_data):
     # 設置圖表屬性
     plt.xlabel('Time (seconds)')
     plt.ylabel('Value')
-    plt.title('ROS Bag Data Analysis')
+    plt.title('Utility of each UAV & Total Utility of Simulation 4')
     plt.legend()
     plt.grid(True)
 
@@ -63,8 +63,10 @@ def plot_data(timestamps, h1_data, h2_data, h3_data, H_data):
 
 def main():
     # 替換為您的rosbag文件路徑(only alow single bag file)
-    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/staticSim_constantCov.bag'
-    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/staticSim_dynamicCov.bag'
+    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_constantCov.bag'
+    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_dynamicCov.bag'
+    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_constantCov.bag'
+    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_dynamicCov.bag'
     bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/result.bag'
 
     try:
