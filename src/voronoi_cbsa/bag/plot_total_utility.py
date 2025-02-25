@@ -38,28 +38,37 @@ def process_rosbag(bag_file):
     timestamps = np.array(timestamps)
     timestamps = timestamps - timestamps[0]
     
-    return timestamps, H_data
+    # 計算 R_overall (使用梯形法則進行積分)
+    R_overall = np.trapz(H_data, timestamps)
+    
+    return timestamps, H_data, R_overall
 
 def plot_comparison(bag_file1, bag_file2):
     # 創建圖表
     plt.figure(figsize=(12, 8))
 
     # 處理第一個bag檔案
-    timestamps1, H_data1 = process_rosbag(bag_file1)
+    timestamps1, H_data1, R_overall1 = process_rosbag(bag_file1)
     
     # 處理第二個bag檔案
-    timestamps2, H_data2 = process_rosbag(bag_file2)
+    timestamps2, H_data2, R_overall2 = process_rosbag(bag_file2)
 
     # 繪製兩組H數據
-    plt.plot(timestamps1, H_data1, label='H (constant cov.)', linewidth=2)
-    plt.plot(timestamps2, H_data2, label='H (D cov.)', linewidth=2, linestyle='--')
+    plt.plot(timestamps1, H_data1, label='H (Sim 1)', linewidth=2)
+    plt.plot(timestamps2, H_data2, label='H (Sim 2)', linewidth=2, linestyle='--')
 
     # 設置圖表屬性
     plt.xlabel('Time (seconds)')
     plt.ylabel('H Value')
-    plt.title('Comparison of H Values from Two Bag Files')
+    plt.title('Comparison of H Values between Simulation 1 & 2')
     plt.legend()
     plt.grid(True)
+
+    # 在終端機顯示 R_overall 值
+    print("\nResults:")
+    print(f"R_overall (Simulation 1): {R_overall1:.4f}")
+    print(f"R_overall (Simulation 2): {R_overall2:.4f}")
+    print(f"Difference (Sim2 - Sim1): {(R_overall2 - R_overall1):.4f}")
 
     # 顯示圖表
     plt.show()
@@ -68,6 +77,8 @@ def main():
     # 替換為您的兩個rosbag文件路徑
     bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_constantCov.bag'
     bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_dynamicCov.bag'
+    # bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_constantCov.bag'
+    # bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_dynamicCov.bag'
 
     try:
         # 繪製比較圖表

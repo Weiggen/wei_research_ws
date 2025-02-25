@@ -48,6 +48,10 @@ queue
 state_estimation/Mav.h
 -
 
+/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.cpp
+getch.h
+/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.h
+
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/Camera.h
 Eigen/Dense
 -

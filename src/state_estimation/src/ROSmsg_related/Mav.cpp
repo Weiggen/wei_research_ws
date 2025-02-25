@@ -52,7 +52,7 @@ void MAV::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& msg)
 
 	////////////////////////// get groundTruth model states and arrange their ID////////////////////
 	std::vector<string> name = msg->name;
-    string prefix =  string("typhoon_h480") + to_string(id);
+    string prefix =  string("iris") + to_string(id);
     for (int i = 0; i<name.size(); i++)
     {
 		if(std::isdigit(name[id+2].back())) ////// First one is ground, skip it

@@ -26,6 +26,10 @@ vector
 EIF.h
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/EIF.h
 
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/HEIF_self.h
+HEIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/HEIF.h
+
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/HEIF_target.h
 HEIF.h
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/HEIF.h
@@ -78,6 +82,24 @@ Eigen/Dense
 Camera.h
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/Camera.h
 
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF.h
+EIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/EIF.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_lidar_neighbors.h
+SEIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_neighbors.h
+SEIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF.h
+Camera.h
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/Camera.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF_pose.h
+SEIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/SEIF.h
+
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/TEIF.h
 EIF.h
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/EIF.h
@@ -86,9 +108,47 @@ Camera.h
 MathLib.h
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/MathLib.h
 
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/TEIF_Lidar.h
+EIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/EIF.h
+Eigen/Dense
+-
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/EIF.cpp
+EIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/EIF.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF.cpp
+HEIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_self.cpp
+HEIF_self.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_self.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_target.cpp
+HEIF_target.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_target.h
+
 /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/MathLib.cpp
 MathLib.h
 /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/MathLib.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF.cpp
+SEIF.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_lidar_neighbors.cpp
+SEIF_lidar_neighbors.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_lidar_neighbors.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_neighbors.cpp
+SEIF_neighbors.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_neighbors.h
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_pose.cpp
+SEIF_pose.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_pose.h
 
 /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF.cpp
 TEIF.h
@@ -105,6 +165,10 @@ Eigen/Dense
 -
 cmath
 -
+
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF_Lidar.cpp
+TEIF_Lidar.h
+/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF_Lidar.h
 
 /opt/ros/noetic/include/gazebo_msgs/ModelStates.h
 string

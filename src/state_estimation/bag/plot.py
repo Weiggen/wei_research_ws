@@ -327,7 +327,7 @@ def plot_combine_det_p( det_p, det_p2, dataset_label, dataset_label2):
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average2}', color='red')    
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
-    plt.title(f'target_trace(p)')
+    plt.title(f'Comparison of trace(p) between Sim1 and Sim2')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -350,11 +350,11 @@ def plotFromTwoBags(file1, file2, topic, label1, label2):
     plot_combine_det_p( p1, p2, label1, label2)
 folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 
-file1 = folder + 'trimmed_dynamicSim_constantCov.bag'
-file2 = folder + 'trimmed_dynamicSim_dynamicCov.bag'
+file1 = folder + 'Sim1.bag'
+file2 = folder + 'Sim2.bag'
 # file2 = folder + 'lidar.bag'
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
 topic = '/iris_1/THEIF/Plot'
-plotFromTwoBags(file1, file2, topic, 'constant P', 'dynamic P')
+plotFromTwoBags(file1, file2, topic, 'Sim1', 'Sim2')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')

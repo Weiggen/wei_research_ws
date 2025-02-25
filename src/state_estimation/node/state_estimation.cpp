@@ -46,6 +46,7 @@ int main(int argc, char **argv)
 	ros::Publisher mavros_fusionTwist_pub = nh.advertise<geometry_msgs::TwistStamped>("mavros/vision_pose/twist", 10);
 	ros::Publisher target_fusionPose_pub = nh.advertise<geometry_msgs::PoseStamped>("THEIF/pose", 10);
 	ros::Publisher target_fusionTwist_pub = nh.advertise<geometry_msgs::TwistStamped>("THEIF/twist", 10);
+	// add another target fusion pose & twist pubsher
 	ros::Publisher isTargetEst_pub = nh.advertise<std_msgs::Bool>("THEIF/isTargetEst", 10);
 
     std::string vehicle;
@@ -102,6 +103,7 @@ int main(int argc, char **argv)
 	Self_rel_EIF SEIF_neighbors;
 	Self_lidar_EIF SEIF_lidar_neighbors;
 	target_EIF teif(6);
+	// target_EIF teif_1(6); // add another target object(can i auto add the target object?)
 	HEIF_self sheif(6);
 	HEIF_target theif(6);
 
