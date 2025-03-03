@@ -1053,7 +1053,7 @@ class PTZCamera():
         # sigma = np.array([target[1], target[1]])
         # covariance = np.diag(sigma**2)
         covariance = np.array(target[1]).reshape((2, 2))
-        z = multivariate_normal.pdf(xy, mean=mu, cov=covariance)
+        z = target[2]*multivariate_normal.pdf(xy, mean=mu, cov=covariance)
         event = z.reshape(x.shape)
             
         #return np.ones(self.size)
@@ -1172,60 +1172,48 @@ if __name__ == "__main__":
     rospy.Subscriber("/kill", Int16, KillCB)
     rospy.Subscriber("/agent_"+str(id)+"/failure", Int16, FailureCB)
     
-    frame = []
-    score = []
-    pos_x = []
-    pos_y = []
-    up_x  = []
-    up_y  = []
-    cnt = 0
+    # frame = []
+    # score = []
+    # pos_x = []
+    # pos_y = []
+    # up_x  = []
+    # up_y  = []
+    # cnt = 0
     
-    while not rospy.is_shutdown() and not kill and not failure:
-        UAV_self.Update()
-        # rospy.loginfo("Updating...")
+    # while not rospy.is_shutdown() and not kill and not failure:
+    #     UAV_self.Update()
+    #     # rospy.loginfo("Updating...")
             
-        frame.append(cnt)
-        score.append(UAV_self.total_score)
-        pos_x.append(UAV_self.pos[0])
-        pos_y.append(UAV_self.pos[1])
-        up_x.append(UAV_self.u_p[0])
-        up_y.append(UAV_self.u_p[1])
-        cnt += 1
+    #     frame.append(cnt)
+    #     score.append(UAV_self.total_score)
+    #     pos_x.append(UAV_self.pos[0])
+    #     pos_y.append(UAV_self.pos[1])
+    #     up_x.append(UAV_self.u_p[0])
+    #     up_y.append(UAV_self.u_p[1])
+    #     cnt += 1
         
-        plt_dict = {'frame_id'              : frame,
-                    str(id)+"'s score"      : score,
-                    "pos_x"                 : pos_x,
-                    "pos_y"                 : pos_y,
-                    "up_x"                  : up_x,
-                    "up_y"                  : up_y}
+    #     plt_dict = {'frame_id'              : frame,
+    #                 str(id)+"'s score"      : score,
+    #                 "pos_x"                 : pos_x,
+    #                 "pos_y"                 : pos_y,
+    #                 "up_x"                  : up_x,
+    #                 "up_y"                  : up_y}
             
-        # df = pd.DataFrame.from_dict(plt_dict) 
-        # df.to_csv (r"~/wei_research_ws/src/voronoi_cbsa/result/"+str(id)+".csv", index=False, header=True)
+    #     # df = pd.DataFrame.from_dict(plt_dict) 
+    #     # df.to_csv (r"~/wei_research_ws/src/voronoi_cbsa/result/"+str(id)+".csv", index=False, header=True)
 
-        save_path = "~/wei_research_ws/src/voronoi_cbsa/result/"
-        isExist = os.path.exists(save_path)
-        # rospy.logwarn(str(id) + ": " + str(cnt))
-        if not isExist:
-            os.makedirs(save_path)
+    #     save_path = "~/wei_research_ws/src/voronoi_cbsa/result/"
+    #     isExist = os.path.exists(save_path)
+    #     # rospy.logwarn(str(id) + ": " + str(cnt))
+    #     if not isExist:
+    #         os.makedirs(save_path)
             
-        df = pd.DataFrame.from_dict(plt_dict) 
-        df.to_csv (save_path + str(id) + ".csv", index=False, header=True)
+    #     df = pd.DataFrame.from_dict(plt_dict) 
+    #     df.to_csv (save_path + str(id) + ".csv", index=False, header=True)
         
-        rate.sleep()
+    #     rate.sleep()
     
     # plt_dict = {'frame_id'              : frame,
     #             str(id)+"'s score"      : score,
     #             "pos_x"                 : pos_x,
     #             "pos_y"                 : pos_y}
-            
-    # # df = pd.DataFrame.from_dict(plt_dict) 
-    # # df.to_csv (r"~/wei_research_ws/src/voronoi_cbsa/result/"+str(id)+".csv", index=False, header=True)
-
-    # save_path = "/home/andrew/wei_research_ws/src/voronoi_cbsa/result/"
-    # isExist = os.path.exists(save_path)
-    # rospy.logwarn(str(id) + ": " + str(cnt))
-    # if not isExist:
-    #     os.makedirs(save_path)
-        
-    # df = pd.DataFrame.from_dict(plt_dict) 
-    # df.to_csv (save_path + str(id) + ".csv", index=False, header=True)global_eventelf.cooperation
