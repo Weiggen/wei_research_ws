@@ -82,7 +82,7 @@ if __name__ == "__main__":
     
     while not rospy.is_shutdown():
         
-        targets = [[target_positions[0], target_covariances[0], 10, RandomUnitVector(), ['camera'], target_heights[0]]]
+        targets = [[target_positions[0], target_covariances[0], 1, RandomUnitVector(), ['camera'], target_heights[0]]]
         grid_size = rospy.get_param("/grid_size", 0.1)
         tmp = []
 
