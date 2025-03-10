@@ -54,7 +54,7 @@ def plot_data(timestamps, h1_data, h2_data, h3_data, H_data):
     # 設置圖表屬性
     plt.xlabel('Time (seconds)')
     plt.ylabel('Value')
-    plt.title('Utility of each UAV & Total Utility of Simulation 4')
+    plt.title('Utility of each UAV & Total Utility of Simulation 5')
     plt.legend()
     plt.grid(True)
 

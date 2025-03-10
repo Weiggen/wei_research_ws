@@ -150,6 +150,7 @@ class PTZCamera():
         self.target_buffer          = {}
             
         self.event_density          = {}
+        self.const_event_density    = {}
         self.event_density_buffer   = {}
 
         # self.event_density_gradient = []
@@ -467,6 +468,7 @@ class PTZCamera():
             
             for target in self.targets.keys():
                 self.event_density[target]    = self.ComputeEventDensity(target = self.targets[target])
+                self.const_event_density[target] = self.ComputeConstantEventDensity(target = self.targets[target])
             
             for sensor in self.valid_sensors.keys():
                 self.sensor_graph[sensor]       = []
@@ -733,7 +735,12 @@ class PTZCamera():
         # k_2 = 0.0000000001
         k_1 = .255
         k_2 = .00000000125
+        # k_1 = 0.
+        # k_2 = 0.
+        k_3 = 5000.
+
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
+        total_gradient_1 = [np.zeros(self.size), np.zeros(self.size)]
         sensor_gradient = [np.zeros(self.size), np.zeros(self.size)]
         event_gradient = [np.zeros(self.size), np.zeros(self.size)]
         f = np.zeros(self.size)
@@ -786,9 +793,13 @@ class PTZCamera():
                         
                                 total_gradient[0] += sensor_gradient[0]
                                 total_gradient[1] += sensor_gradient[1]
-
+                
+                total_gradient_1[0] = total_gradient[0]
+                total_gradient_1[1] = total_gradient[1]
                 total_gradient[0] *= self.event_density[event]
                 total_gradient[1] *= self.event_density[event]
+                total_gradient_1[0] *= self.const_event_density[event]
+                total_gradient_1[1] *= self.const_event_density[event]
                 event_gradient[0] *= f
                 event_gradient[1] *= f
                 # print("sensor_gradient[0]"+str(self.id)+": \n {}".format(sensor_gradient[0]))
@@ -802,9 +813,15 @@ class PTZCamera():
                 tmp_x_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[0])
                 tmp_y_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[1])
 
-                u_p[0] = u_p[0] + (tmp_x if not np.isnan(tmp_x) else 0) + (tmp_x_2 if not np.isnan(tmp_x_2) else 0)
-                u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0) + (tmp_y_2 if not np.isnan(tmp_y_2) else 0)
-                # target_weight = self.targets[event][2]
+                tmp_x_3 = k_3*self.sensor_weight[role][event]*np.sum(total_gradient_1[0])
+                tmp_y_3 = k_3*self.sensor_weight[role][event]*np.sum(total_gradient_1[1])
+
+                u_p[0] = u_p[0] + (tmp_x if not np.isnan(tmp_x) else 0)
+                u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0)
+                u_p[0] += (tmp_x_2 if not np.isnan(tmp_x_2) else 0)
+                u_p[1] += (tmp_y_2 if not np.isnan(tmp_y_2) else 0)
+                u_p[0] += (tmp_x_3 if not np.isnan(tmp_x_3) else 0)
+                u_p[1] += (tmp_y_3 if not np.isnan(tmp_x_3) else 0)
                 # u_p[0] *= target_weight
                 # u_p[1] *= target_weight
         
@@ -1045,15 +1062,22 @@ class PTZCamera():
         x, y = np.mgrid[0:self.map_size[0]:self.grid_size[0], 0:self.map_size[1]:self.grid_size[1]]
         xy = np.column_stack([x.flat, y.flat])
         mu = np.array(target[0]) # target mean pos
-        # sigma = np.array([target[1], target[1]])
-        # covariance = np.diag(sigma**2)
         covariance = np.array(target[1]).reshape((2, 2))
         z = multivariate_normal.pdf(xy, mean=mu, cov=covariance)
         event = z.reshape(x.shape)
-            
-        #return np.ones(self.size)
 
         return event
+    
+    def ComputeConstantEventDensity(self, target):
+        x, y = np.mgrid[0:self.map_size[0]:self.grid_size[0], 0:self.map_size[1]:self.grid_size[1]]
+        xy = np.column_stack([x.flat, y.flat])
+        mu = np.array(target[0]) # target mean pos
+        c = 4.
+        covariance = np.array([c, 0, 0, c]).reshape((2, 2))
+        z = multivariate_normal.pdf(xy, mean=mu, cov=covariance)
+        contant_event = z.reshape(x.shape)
+
+        return contant_event
 
     def Norm(self, arr):
 
