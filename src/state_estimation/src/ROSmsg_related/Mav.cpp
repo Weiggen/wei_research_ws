@@ -55,7 +55,7 @@ void MAV::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& msg)
     string prefix =  string("iris") + to_string(id);
     for (int i = 0; i<name.size(); i++)
     {
-		if(std::isdigit(name[id+2].back())) ////// First one is ground, skip it
+		if(std::isdigit(name[id+2].back())) // First one is ground, skip it // std::isdigit(name[id+2].back()) means check if the last character of the string"name[id+2]" is a digit
 		{
             if(prefix == name[i])
             {
@@ -64,7 +64,7 @@ void MAV::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& msg)
                 // std::cout << name[i]<<"\n"<<id <<"\n";
 
             }
-            if(id==0 && string("iris0")== name[i])
+            if(id==0 && string("iris0")== name[i] || id==4 && string("iris4")== name[i])
             {
                 setPose(msg->pose[i]);
                 setTwist(msg->twist[i]);

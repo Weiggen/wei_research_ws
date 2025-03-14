@@ -62,7 +62,7 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
 			GTs[int(name[i].back()-'0')].setTwist(msg->twist[i]);
 		}
 	}
-	GTs_eigen = mavsMsg2Eigen(GTs, mavNum);
+	GTs_eigen = mavsMsg2Eigen(GTs, mavNum+targetNum);
 	std::vector<MAV_eigen> formation_eigen_GT(GTs_eigen.begin()+1, GTs_eigen.begin()+GTs_eigen.size()); // First one is target, we want all UAV
 
 	////////////////////////// Transform from groundtruth to measurements,  ////////////////////////
@@ -70,9 +70,19 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
 	if(GTs_count % (GTs_rate/lidar_rate) == 0) // lidar_rate = 10hz means that we do a measurement evry 50 count 
 	{
 		lidarMeasurements = lidarMeasure(formation_eigen_GT, generator);
-		lidar4target = lidarmeasure4target(formation_eigen_GT,GTs_eigen[0], generator);
+		lidar4target = lidarmeasure4target(formation_eigen_GT, GTs_eigen[0], generator);
 		CameraModel = Camera4Neighbor(formation_eigen_GT, generator);
-		CameraModel4target = CameraMeasure4target(formation_eigen_GT,GTs_eigen[0], generator);
+		CameraModel4target_1 = CameraMeasure4target_1(formation_eigen_GT, GTs_eigen[0], generator);  // CameraMeasure4target_1(<all robots' pose>, <target_1 pose>, generator)
+		CameraModel4target_2 = CameraMeasure4target_2(formation_eigen_GT, GTs_eigen[4], generator);
+
+		// for (int i = 0; i < targetNum; i++)
+		// {
+		// 	if (i < GTs_eigen.size())
+		// 	{
+		// 		lidar4targets[i] = lidar4targets();
+		// 		Camera4targets[i] = Camera4targets();
+		// 	}
+		// }
 	}
 	if(GTs_count % (GTs_rate/position_rate) == 0) // position_rate = 10hz means that we do a measurement evry 50 count 
 		positionMeasurement = positionMeasure(GTs_eigen[ID], generator);
@@ -196,14 +206,15 @@ std::vector<Eigen::Vector4d> GT_measurement::Camera4Neighbor(std::vector<MAV_eig
 	return measurements;
 
 }
-Eigen::Vector3d GT_measurement::CameraMeasure4target(std::vector<MAV_eigen> formation_GT,MAV_eigen target_eigen, std::default_random_engine generator)
+Eigen::Vector3d GT_measurement::CameraMeasure4target_1(std::vector<MAV_eigen> formation_GT,MAV_eigen target_eigen, std::default_random_engine generator)
 {	
 
 	Eigen::Vector3d measurement;
 	Eigen::Matrix3d R_b2c ;
 	R_b2c = cam.R_B2C();
-	Eigen::Matrix3d R_w2c = R_b2c*formation_GT[self_index].R_w2b; ///////////////// rotation problem
+	Eigen::Matrix3d R_w2c = R_b2c*formation_GT[self_index].R_w2b; 				// rotation problem
 	Eigen::Vector3d r_qc_c = R_w2c*(target_eigen.r - formation_GT[self_index].r - cam.t_B2C()); 
+	// printf("target_1 pose in camera: %f, %f, %f\n", target_eigen.r(0), target_eigen.r(1), target_eigen.r(2));
 
 	double X = r_qc_c(0)/r_qc_c(2);
 	double Y = r_qc_c(1)/r_qc_c(2);
@@ -212,16 +223,38 @@ Eigen::Vector3d GT_measurement::CameraMeasure4target(std::vector<MAV_eigen> form
 	measurement(0) = cam.fx()*X + cam.cx();
 	measurement(1) = cam.fy()*Y + cam.cy() ;
 	measurement(2) = Z;
+	// Now measurement is z_{Tij} = [u, v, z]
 
 	return measurement;
+}
+Eigen::Vector3d GT_measurement::CameraMeasure4target_2(std::vector<MAV_eigen> formation_GT,MAV_eigen target_eigen, std::default_random_engine generator)
+{	
 
+	Eigen::Vector3d measurement;
+	Eigen::Matrix3d R_b2c ;
+	R_b2c = cam.R_B2C();
+	Eigen::Matrix3d R_w2c = R_b2c*formation_GT[self_index].R_w2b; 				// rotation problem
+	Eigen::Vector3d r_qc_c = R_w2c*(target_eigen.r - formation_GT[self_index].r - cam.t_B2C()); 
+	// printf("target_2 pose in camera: %f, %f, %f\n", target_eigen.r(0), target_eigen.r(1), target_eigen.r(2));
+
+	double X = r_qc_c(0)/r_qc_c(2);
+	double Y = r_qc_c(1)/r_qc_c(2);
+	double Z = r_qc_c(2);
+
+	measurement(0) = cam.fx()*X + cam.cx();
+	measurement(1) = cam.fy()*Y + cam.cy() ;
+	measurement(2) = Z;
+	// Now measurement is z_{Tij} = [u, v, z]
+
+	return measurement;
 }
 void GT_measurement::setCamera(Camera camera)
 {
 	cam = camera;
 }
 std::vector<Eigen::Vector4d>GT_measurement::getCameraNeighbor(){return CameraModel;}
-Eigen::Vector3d GT_measurement::getCamera4target(){return  CameraModel4target;}
+Eigen::Vector3d GT_measurement::getCamera4target_1(){return  CameraModel4target_1;}
+Eigen::Vector3d GT_measurement::getCamera4target_2(){return  CameraModel4target_2;}
 /*=================================================================================================================================
     Camera boundingBox
 =================================================================================================================================*/

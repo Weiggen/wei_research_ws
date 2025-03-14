@@ -20,6 +20,7 @@ private:
     int self_index;
     int formation_num;
     int mavNum;
+    int targetNum;
     int ID;
     int rosRate;
     /*=================================================================================================================================
@@ -41,7 +42,8 @@ private:
     int position_rate;
 
     std::vector<Eigen::Vector4d> lidarMeasure(std::vector<MAV_eigen> GTs_eigen, std::default_random_engine generator);
-    Eigen::Vector3d lidarmeasure4target(std::vector<MAV_eigen> formation_eigen_GT, MAV_eigen target_eigen, std::default_random_engine generator);
+    Eigen::Vector3d lidarmeasure4target(std::vector<MAV_eigen> formation_eigen_GT, MAV_eigen target_eigen, std::default_random_engine generator); // single target
+    std::vector<Eigen::Vector3d> lidar4targets; // multi-targets
     Eigen::Vector3d positionMeasure(MAV_eigen GT_eigen, std::default_random_engine generator);
   /*=================================================================================================================================
         Camera model
@@ -49,9 +51,12 @@ private:
     Camera cam;
 
     std::vector<Eigen::Vector4d> CameraModel;
-    Eigen::Vector3d CameraModel4target;
+    Eigen::Vector3d CameraModel4target_1; // single target_1
+    Eigen::Vector3d CameraModel4target_2; // single target_2
+    std::vector<Eigen::Vector4d> Camera4targets; // store the multiple camera measurements corresponding to multi-targets
     std::vector<Eigen::Vector4d> Camera4Neighbor(std::vector<MAV_eigen> GTs_eigen, std::default_random_engine generator);
-    Eigen::Vector3d CameraMeasure4target(std::vector<MAV_eigen> formation_eigen_GT, MAV_eigen target_eigen, std::default_random_engine generator);
+    Eigen::Vector3d CameraMeasure4target_1(std::vector<MAV_eigen> formation_eigen_GT, MAV_eigen target_eigen, std::default_random_engine generator);
+    Eigen::Vector3d CameraMeasure4target_2(std::vector<MAV_eigen> formation_eigen_GT, MAV_eigen target_eigen, std::default_random_engine generator);
     /*=================================================================================================================================
         Camera boundingBox
     =================================================================================================================================*/
@@ -88,7 +93,8 @@ public:
     void setCamera(Camera camera);
 
     std::vector<Eigen::Vector4d>getCameraNeighbor();
-    Eigen::Vector3d getCamera4target();
+    Eigen::Vector3d getCamera4target_1();
+    Eigen::Vector3d getCamera4target_2();
     /*=================================================================================================================================
         Camera boundingBox
     =================================================================================================================================*/

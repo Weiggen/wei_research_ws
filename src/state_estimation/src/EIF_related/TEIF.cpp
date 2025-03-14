@@ -9,12 +9,13 @@
 target_EIF::target_EIF(int state_size)
 {
 	target_state_size = state_size;
-	target_measurement_size = 3;
+	target_measurement_size = 3; // (u, v, d)
 	filter_init = false;
 	EIF_data_init(target_state_size, target_measurement_size, &T);
-	Q.block(0, 0, 3, 3) = 1e-3*Eigen::MatrixXd::Identity(3, 3);
-	Q.block(3, 3, 3, 3) = 7e-2*Eigen::MatrixXd::Identity(3, 3);
-	// R = 1e-5*Eigen::MatrixXd::Identity(3, 3);
+	// Q is process noise
+	Q.block(0, 0, 3, 3) = 1e-3*Eigen::MatrixXd::Identity(3, 3);		// position noise
+	Q.block(3, 3, 3, 3) = 7e-2*Eigen::MatrixXd::Identity(3, 3);		// velocity noise
+	// R is measurement noise (z is less accurate then x & y)
     R(0, 0) = 4e-4;
     R(1, 1) = 4e-4;
     R(2, 2) = 3e-3;
@@ -29,9 +30,10 @@ void target_EIF::setInitialState(Eigen::Vector3d Bbox)
 		0, cam.fy(), cam.cy(),
 		0, 0, Bbox(2);
 	
-	T.X.segment(0, 3) << 0, 0, 5;
+	// T.X.segment(0, 3) << 0, 0, 5;
+	T.X.segment(0, 3) = Bbox;
 	T.X.segment(3, 3) << 0, 0, 0;
-	std::cout << "Init:\n" << T.X.segment(0, 3) << std::endl;
+	// std::cout << "Init:\n" << T.X.segment(0, 3) << std::endl;
 	T.P.setIdentity();
 	T.P *= 1e-3;
 	filter_init = true;
@@ -62,7 +64,7 @@ void target_EIF::computePredPairs(double delta_t)
 
 void target_EIF::computeCorrPairs()
 {
-	T.z = boundingBox;
+	T.z = boundingBox; // boundingBox = (u, v, d) by setMeasurement()
 
 	Eigen::MatrixXd R_tilde, R_bar;
 	Eigen::Matrix3d R_b2c ;
@@ -71,13 +73,20 @@ void target_EIF::computeCorrPairs()
 	self.s.setZero();
 	self.y.setZero();
 
+	bool updated = false;
+	bool significant_change = (T.z - T.pre_z).norm() > 1e-5;	// avoid NaN
+
+	// std::cout << "Condition check: (T.z != T.pre_z) = " << (T.z != T.pre_z) 
+    //       << ", (T.z(2) >= 0.0) = " << (T.z(2) >= 0.0)
+    //       << ", difference norm = " << (T.z - T.pre_z).norm() << std::endl;
+
 	// if(T.z != T.pre_z && T.z(2) >= 0.0 && T.z(2) <= 20.0)
-	if(T.z != T.pre_z && T.z(2) >= 0.0)
+	if(significant_change && T.z(2) >= 0.0)
 	{
 
 		R_b2c = cam.R_B2C();
 
-		Eigen::Matrix3d R_w2c = R_b2c*Mav_eigen_self.R_w2b; ///////////////// rotation problem
+		Eigen::Matrix3d R_w2c = R_b2c*Mav_eigen_self.R_w2b; ///////////////// rotation problem: world to camera
 		Eigen::Vector3d r_qc_c = R_w2c*(T.X_hat.segment(0, 3) - self.X_hat.segment(0, 3)); 
 
 		X = r_qc_c(0)/r_qc_c(2);
@@ -113,12 +122,22 @@ void target_EIF::computeCorrPairs()
 		self.s = self.H.transpose()*R_bar.inverse()*self.H;
 		self.y = self.H.transpose()*R_bar.inverse()*(self.z - self.h + self.H*self.X_hat);
 
+		updated = true;
 	}
 	// T.P = (T.P_hat.inverse() + T.s).inverse();
 	// T.X = T.P*(T.P_hat.inverse()*T.X_hat + T.y);
-	T.P = T.s.inverse();
-	T.X = T.P*T.y;
-	T.pre_z = T.z;
+	if (updated) {
+        T.P = T.s.inverse();
+        T.X = T.P*T.y;
+		T.pre_z = T.z;
+    } else {
+        // 若沒有更新，使用預測值或保持先前的值
+        T.X = T.X_hat;
+        T.P = T.P_hat;
+    }
+	// T.P = T.s.inverse();
+	// T.X = T.P*T.y;
+	// T.pre_z = T.z;
 }
 
 Eigen::MatrixXd target_EIF::getGradientDensityFnc(Eigen::MatrixXd fusedP, Eigen::MatrixXd weightedS, Eigen::VectorXd weightedY, Eigen::VectorXd weightedXi_hat, double eta_ij)
@@ -342,5 +361,5 @@ void target_EIF::setEstAcc(Eigen::Vector3d acc)
 
 void target_EIF::setCamera(Camera camera)
 {
-	cam = camera;
+	cam = camera; // set camera parameters including fx, fy, cx, cy, translation and rotation
 }

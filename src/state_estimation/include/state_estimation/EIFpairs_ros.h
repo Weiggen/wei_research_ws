@@ -20,27 +20,34 @@ private:
 	ros::Subscriber* neighborsEIFpairs_sub;
 	ros::Subscriber* rbs2TgtEIFpairs_sub;
 
-	std::string* neighborsEIFpairs_sub_topic;
-	std::string self2TgtEIFpairs_pub_topic;
-	std::string* rbs2TgtEIFpairs_sub_topic;
-	std::string selfPredEIFpairs_pub_topic;
-	std::string tgtStatePlot_topic;
-	std::string selfStatePlot_topic;
-	std::string densityGradient_pub_topic;
+	std::string* 	neighborsEIFpairs_sub_topic;
+	// std::string 	self2TgtEIFpairs_pub_topic; 		// single target
+	std::string* 	self2TgtEIFpairs_pub_topics;		// multiple targets
+	std::string* 	rbs2TgtEIFpairs_sub_topic;
+	std::string 	selfPredEIFpairs_pub_topic;
+	// std::string		tgtStatePlot_topic;				// single target
+	std::string*	tgtStatePlot_topics;				// multiple targets
+	std::string		selfStatePlot_topic;
+	// std::string		densityGradient_pub_topic;		// single target 	// For coverageCtrl
+	std::string*	densityGradient_pub_topics;			// multiple targets // For coverageCtrl
 
 	int state_size;
 	int mavNum;
+	int targetNum;
 	int self_id;
 	int self_index;
 public:
-	EIFpairs_ros(ros::NodeHandle &nh, string vehicle, int ID, int mavnum);
+	EIFpairs_ros(ros::NodeHandle &nh, string vehicle, int ID, int mavnum, int tarnum);
 	~EIFpairs_ros();
 
-	ros::Publisher tgtState_Plot_pub;
-	ros::Publisher selfState_Plot_pub;
-	ros::Publisher self2TgtEIFpairs_pub;
-	ros::Publisher selfPredEIFpairs_pub;
-	ros::Publisher densityGradient_pub;
+	// ros::Publisher	tgtState_Plot_pub; 		// single target
+	ros::Publisher* tgtState_Plot_pubs; 		// multiple targets
+	ros::Publisher	selfState_Plot_pub;
+	// ros::Publisher	self2TgtEIFpairs_pub; 	// single target
+	ros::Publisher* self2TgtEIFpairs_pubs;		// multiple targets
+	ros::Publisher	selfPredEIFpairs_pub;
+	// ros::Publisher	densityGradient_pub; 	// single target
+	ros::Publisher*	densityGradient_pubs;		// multiple targets
 
 	std_msgs::Header sync_header;
 	state_estimation::EIFpairStamped* neighborsEIFpairs;
