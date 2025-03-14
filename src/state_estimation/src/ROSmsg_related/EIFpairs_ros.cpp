@@ -1,15 +1,19 @@
 #include "EIFpairs_ros.h"
 
-EIFpairs_ros::EIFpairs_ros(ros::NodeHandle &nh, string vehicle, int ID, int mavnum)
+EIFpairs_ros::EIFpairs_ros(ros::NodeHandle &nh, string vehicle, int ID, int mavnum, int tarnum)
 {
 	self_id = ID;
 	self_index = ID-1;
 	mavNum = mavnum;
+	targetNum = tarnum;
 	set_topic(vehicle, self_id);
 
 	gotFusedPair = false;
 	neighborsEIFpairs = new state_estimation::EIFpairStamped[mavNum];
 	rbs2Tgt_EIFPairs = new state_estimation::EIFpairStamped[mavNum];
+	tgtState_Plot_pubs = new ros::Publisher[targetNum];
+    self2TgtEIFpairs_pubs = new ros::Publisher[targetNum];
+    densityGradient_pubs = new ros::Publisher[targetNum];
 
 	/*=================================================================================================================================
 		Subscriber
@@ -23,16 +27,21 @@ EIFpairs_ros::EIFpairs_ros(ros::NodeHandle &nh, string vehicle, int ID, int mavn
 			neighborsEIFpairs_sub[i] = nh.subscribe<state_estimation::EIFpairStamped>(neighborsEIFpairs_sub_topic[i], 1, &EIFpairs_ros::neighborsEIFpair_cb, this);
 			rbs2TgtEIFpairs_sub[i] = nh.subscribe<state_estimation::EIFpairStamped>(rbs2TgtEIFpairs_sub_topic[i], 1, &EIFpairs_ros::rbs2TgtEIFpair_cb, this);
 		}
-
 	/*=================================================================================================================================
 		Publisher
 	=================================================================================================================================*/
   	
-	tgtState_Plot_pub = nh.advertise<state_estimation::Plot>(tgtStatePlot_topic, 1);
+	// tgtState_Plot_pub = nh.advertise<state_estimation::Plot>(tgtStatePlot_topic, 1);
 	selfState_Plot_pub = nh.advertise<state_estimation::Plot>(selfStatePlot_topic, 1);
-	self2TgtEIFpairs_pub = nh.advertise<state_estimation::EIFpairStamped>(self2TgtEIFpairs_pub_topic, 1);
+	// self2TgtEIFpairs_pub = nh.advertise<state_estimation::EIFpairStamped>(self2TgtEIFpairs_pub_topic, 1);
 	selfPredEIFpairs_pub = nh.advertise<state_estimation::EIFpairStamped>(selfPredEIFpairs_pub_topic, 1);
-	densityGradient_pub = nh.advertise<state_estimation::densityGradient>(densityGradient_pub_topic, 1);// For coverageCtrl
+	// densityGradient_pub = nh.advertise<state_estimation::densityGradient>(densityGradient_pub_topic, 1);// For coverageCtrl
+	for (int i = 0; i < targetNum; i++)
+	{
+		tgtState_Plot_pubs[i] = nh.advertise<state_estimation::Plot>(tgtStatePlot_topics[i], 1);
+		self2TgtEIFpairs_pubs[i] = nh.advertise<state_estimation::EIFpairStamped>(self2TgtEIFpairs_pub_topics[i], 1);
+		densityGradient_pubs[i] = nh.advertise<state_estimation::densityGradient>(densityGradient_pub_topics[i], 1);
+	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
@@ -46,27 +55,41 @@ EIFpairs_ros::~EIFpairs_ros()
 
 	delete[] neighborsEIFpairs;
 	delete[] rbs2Tgt_EIFPairs;
+
+	delete[] tgtState_Plot_pubs;
+    delete[] self2TgtEIFpairs_pubs;
+    delete[] densityGradient_pubs;
 }
 
 void EIFpairs_ros::set_topic(std::string vehicle, int id)
 {
 	string prefix = std::string("/") + vehicle + std::string("_") + std::to_string(id);
-	self2TgtEIFpairs_pub_topic = prefix + std::string("/TEIF/fusionPairs");
-	tgtStatePlot_topic = prefix  + std::string("/THEIF/Plot");
+	// self2TgtEIFpairs_pub_topic = prefix + std::string("/TEIF/fusionPairs");  // single target
+	// tgtStatePlot_topic = prefix  + std::string("/THEIF/Plot");				// single target
 	selfStatePlot_topic = prefix + std::string("/SHEIF/Plot");
 	selfPredEIFpairs_pub_topic = prefix + std::string("/SEIF_pred/fusionPairs");
 
-	densityGradient_pub_topic = prefix + std::string("/densityGradient");// For coverageCtrl
+	// densityGradient_pub_topic = prefix + std::string("/densityGradient");	// single target // For coverageCtrl
 
 	neighborsEIFpairs_sub_topic = new std::string[mavNum];
 	rbs2TgtEIFpairs_sub_topic = new std::string[mavNum];
-	for(int i=0; i<mavNum; i++)
+	for(int i = 0; i < mavNum; i++)
 		if(i != self_index)
 		{
 			prefix = std::string("/") + vehicle + std::string("_") + std::to_string(i+1);
 			neighborsEIFpairs_sub_topic[i] = prefix + std::string("/SEIF_pred/fusionPairs");
 			rbs2TgtEIFpairs_sub_topic[i] = prefix + std::string("/TEIF/fusionPairs");
 		}
+	// multiple targets
+	self2TgtEIFpairs_pub_topics = new std::string[targetNum];
+	tgtStatePlot_topics = new std::string[targetNum];
+	densityGradient_pub_topics = new std::string[targetNum];
+	for (int i = 0; i < targetNum; i++)
+	{
+		self2TgtEIFpairs_pub_topics[i] = prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/fusionPairs");
+		tgtStatePlot_topics[i] = prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/Plot");
+		densityGradient_pub_topics[i] = prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/densityGradient");
+	}
 }
 
 std::vector<EIF_data> EIFpairs_ros::get_curr_fusing_data(state_estimation::EIFpairStamped* EIFPairs, double tolerance)

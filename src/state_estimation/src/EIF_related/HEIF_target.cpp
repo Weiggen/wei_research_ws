@@ -1,6 +1,6 @@
 #include "HEIF_target.h"
 
-HEIF_target::HEIF_target(int x_size=6) : HEIF(x_size)
+HEIF_target::HEIF_target(int x_size) : HEIF(x_size)
 {
 	fusionNum = 0;
 
