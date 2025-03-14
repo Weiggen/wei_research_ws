@@ -151,10 +151,22 @@ Eigen::MatrixXd target_EIF::getGradientDensityFnc(Eigen::MatrixXd fusedP, Eigen:
     Eigen::Matrix3d R_w2c = R_b2c * Mav_eigen_self.R_w2b;
     Eigen::Vector3d r_qc_c = R_w2c * (T.X_hat.segment(0, 3) - self.X_hat.segment(0, 3)); 
 
+	if (fusedP.hasNaN() || weightedS.hasNaN() || weightedY.hasNaN() || weightedXi_hat.hasNaN() || std::isnan(eta_ij)) {
+        std::cerr << "Input contains NaN!" << std::endl;
+        Eigen::MatrixXd default_gradient(2, 240*240);
+        default_gradient.setZero();
+        return default_gradient;
+    }
+
     double X = r_qc_c(0) / r_qc_c(2);
     double Y = r_qc_c(1) / r_qc_c(2);
-    double Z = r_qc_c(2);
-
+	double Z = r_qc_c(2);
+    if (std::abs(Z) < 1e-6) {
+        std::cerr << "Z too small: " << Z << std::endl;
+        Eigen::MatrixXd default_gradient(2, 240*240);
+        default_gradient.setZero();
+        return default_gradient;
+    }
 	// gradient_TH is a 3x3 matrix，using std::vector<double> as its element.
     std::vector<std::vector<std::vector<double>>> gradient_TH(3, std::vector<std::vector<double>>(3, std::vector<double>(3)));
     

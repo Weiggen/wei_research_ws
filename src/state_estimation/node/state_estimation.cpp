@@ -178,6 +178,8 @@ int main(int argc, char **argv)
 	
     while(ros::ok())
     {
+		int iteration_count = 0;
+
 		mav.setOrientation(gt_m.getGTorientation(ID));   // set orientation of robot
 		mav_eigen = mavMsg2Eigen(mav); 					 // convert mav message to eigen format
 		mav_t1.setOrientation(gt_m.getGTorientation(0)); // set orientation of target_1
@@ -205,15 +207,18 @@ int main(int argc, char **argv)
 			teif_objects[i].setCamera(cam); // camera parameters, transformation matrix
 			teif_objects[i].setMavSelfData(mav_eigen); // self state (robot state, not target) // why? -> for observe the measurement correction so the value of prediction isn't important 
 
-			// set gt as prediction.
+			// For the first iteration, the GT is the initial value of the target
 			Eigen::Vector3d initialBbox;
 			if (i == 0) {
 				initialBbox << gt_m.getGTs_eigen()[0].r;
 			} else {
 				initialBbox << gt_m.getGTs_eigen()[4].r;
 			}
-			teif_objects[i].setInitialState(initialBbox);
-
+			if (iteration_count == 0) {
+				teif_objects[i].setInitialState(initialBbox);
+			} else {
+				teif_objects[i].setInitialState(gt_m.getGTs_eigen()[i].r);
+			}
 			if (i == 0){
 				teif_objects[i].setMavSelfData(mav_eigen_t1);
 				teif_objects[i].setMeasurement(gt_m.getCamera4target_1()); // camera measurement(u, v, d) for target_1
@@ -276,6 +281,12 @@ int main(int argc, char **argv)
 			// Compute density gradient & publish to /$(vehicle)_$(id)/densityGradient. //For coverageCtrl
 			Eigen::MatrixXd gradient_M(2, 240*240);
 			gradient_M.setZero();
+			std::cout << "params:\n" 
+						<< theif_objects[i]->getFusedCov() << "\n" 
+						<< theif_objects[i]->getWeightedS() << "\n"
+						<< theif_objects[i]->getWeightedY() << "\n" 
+						<< theif_objects[i]->getWeightedXi_hat() << "\n" 
+						<< theif_objects[i]->getEta_ij() << "\n";
 			gradient_M = teif_objects[i].getGradientDensityFnc(theif_objects[i]->getFusedCov(), theif_objects[i]->getWeightedS(), theif_objects[i]->getWeightedY(), theif_objects[i]->getWeightedXi_hat(), theif_objects[i]->getEta_ij());
 			eif_ros.densityGradient_pubs[i].publish(eigen2densityGradient(gradient_M));		
 
@@ -398,6 +409,8 @@ int main(int argc, char **argv)
 		=================================================================================================================================*/
 		dt = ros::Time::now().toSec() - last_t;
     	last_t = ros::Time::now().toSec();
+
+		iteration_count++;
 		
 		rate.sleep();
     	ros::spinOnce();
