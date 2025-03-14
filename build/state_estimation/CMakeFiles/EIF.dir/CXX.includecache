@@ -86,10 +86,6 @@ Camera.h
 MathLib.h
 /home/weiggen/wei_research_ws/src/state_estimation/include/state_estimation/MathLib.h
 
-/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_target.cpp
-HEIF_target.h
-/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_target.h
-
 /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF.cpp
 TEIF.h
 /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF.h
