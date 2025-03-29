@@ -19,6 +19,11 @@ target_covariances = {}
 target_positions[0] = [0.0, 0.0]
 target_covariances[0] = [1, 0, 0, 1] # x, y 2D covariance
 target_heights[0] = 0
+
+target_positions[1] = [0.0, 0.0]
+target_covariances[1] = [1, 0, 0, 1] # x, y 2D covariance
+target_heights[1] = 0
+
 constant_cov = [4, 0, 0, 4]
 
 def norm(arr):
@@ -28,19 +33,45 @@ def norm(arr):
 
     return sqrt(sum)
 
-def TargetPosCallback(msg):
-    global target_positions
-    position = np.array((msg.pose.position.x, msg.pose.position.y))
-    target_positions[0] = position
-    target_heights[0] = msg.pose.position.z
-    # print("target_positions[0]: {}\n".format(target_positions[0])) # value
+# def TargetPosCallback(msg):
+#     global target_positions
+#     position = np.array((msg.pose.position.x, msg.pose.position.y))
+#     target_positions[0] = position
+#     target_heights[0] = msg.pose.position.z
+#     # print("target_positions[0]: {}\n".format(target_positions[0])) # value
 
-def TargetCovCallback(msg):
+# def TargetCovCallback(msg):
+#     global target_covariances
+#     target_covariance = np.array(msg.P_hat).reshape((6, 6))
+#     target_covariances[0] = (target_covariance[:2, :2]).flatten()
+#     # # constant cov.
+#     # target_covariances[0] = [4, 0, 0, 4]
+
+def Target1PosCallback(msg):
+    global target_positions
+    idx = 0 
+    position = np.array((msg.pose.position.x, msg.pose.position.y))
+    target_positions[idx] = position
+    target_heights[idx] = msg.pose.position.z
+
+def Target2PosCallback(msg):
+    global target_positions
+    idx = 1 
+    position = np.array((msg.pose.position.x, msg.pose.position.y))
+    target_positions[idx] = position
+    target_heights[idx] = msg.pose.position.z
+
+def Target1CovCallback(msg):
     global target_covariances
     target_covariance = np.array(msg.P_hat).reshape((6, 6))
     target_covariances[0] = (target_covariance[:2, :2]).flatten()
-    # # constant cov.
-    # target_covariances[0] = [4, 0, 0, 4]
+    target_covariances[0] = [4, 0, 0, 4]
+
+def Target2CovCallback(msg):
+    global target_covariances
+    target_covariance = np.array(msg.P_hat).reshape((6, 6))
+    target_covariances[1] = (target_covariance[:2, :2]).flatten()
+    target_covariances[1] = [4, 0, 0, 4]
 
 def TargetDynamics(x, y, v):
     spd = 0.005
@@ -63,9 +94,16 @@ if __name__ == "__main__":
     rospy.init_node('ground_control_station', anonymous=True, disable_signals=True)
     rate = rospy.Rate(60)
 
-    target_pos_sub = rospy.Subscriber("/iris_1/THEIF/pose", PoseStamped, callback = TargetPosCallback)
-    target_cov_sub = rospy.Subscriber("/iris_1/TEIF/fusionPairs", EIFpairStamped, callback = TargetCovCallback)
+    # # Subscriber for single target's positions & cavariances
+    # target_pos_sub = rospy.Subscriber("/iris_1/THEIF/pose", PoseStamped, callback = TargetPosCallback)
+    # target_cov_sub = rospy.Subscriber("/iris_1/TEIF/fusionPairs", EIFpairStamped, callback = TargetCovCallback)
 
+    # Subscribers for multi-targets scenario
+    target_1_pos_sub = rospy.Subscriber("/iris_1/THEIF/target_1/pose", PoseStamped, callback = Target1PosCallback)
+    target_1_cov_sub = rospy.Subscriber("/iris_1/TEIF/target_1/fusionPairs", EIFpairStamped, callback = Target1CovCallback)
+    target_2_pos_sub = rospy.Subscriber("/iris_1/THEIF/target_2/pose", PoseStamped, callback = Target2PosCallback)
+    target_2_cov_sub = rospy.Subscriber("/iris_1/TEIF/target_2/fusionPairs", EIFpairStamped, callback = Target2CovCallback)
+    # Publisher for target's(targets') information that will be sent to the agents and use for the coverage control
     target_pub = rospy.Publisher("/target", TargetInfoArray, queue_size=10)
     
     # 若沒有設定targets位置(pos=(0,0) ), 則隨機給x, y的位置
@@ -82,7 +120,9 @@ if __name__ == "__main__":
     
     while not rospy.is_shutdown():
         
-        targets = [[target_positions[0], target_covariances[0], 1, RandomUnitVector(), ['camera'], target_heights[0]]]
+        # targets = [[target_positions[0], target_covariances[0], 1, RandomUnitVector(), ['camera'], target_heights[0]]]
+        targets = [[target_positions[0], target_covariances[0], 1, RandomUnitVector(), ['camera'], target_heights[0]],
+                   [target_positions[1], target_covariances[1], 1, RandomUnitVector(), ['camera'], target_heights[1]]]
         grid_size = rospy.get_param("/grid_size", 0.1)
         tmp = []
 

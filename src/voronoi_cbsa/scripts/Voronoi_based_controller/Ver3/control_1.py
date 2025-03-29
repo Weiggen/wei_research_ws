@@ -153,9 +153,12 @@ class PTZCamera():
         self.const_event_density    = {}
         self.event_density_buffer   = {}
 
-        # self.event_density_gradient = []
-        self.event_density_gradient = [np.zeros(self.size), np.zeros(self.size)]
-        
+        # # Single target scenario
+        # self.event_density_gradient = [np.zeros(self.size), np.zeros(self.size)]
+
+        # Multi-target scenario
+        self.event_density_gradients = {}
+
         self.neighbors              = []
         self.neighbors_buffer       = {}
         
@@ -176,19 +179,24 @@ class PTZCamera():
     def RosInit(self):
 
         rospy.Subscriber("local/neighbor_info", ExchangeDataArray, self.NeighborCallback)
-        rospy.Subscriber("local/target", TargetInfoArray, self.TargetCallback)      
-        # rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)  
+        rospy.Subscriber("local/target", TargetInfoArray, self.TargetCallback)
+        # rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)
         # rospy.Subscriber("/iris_"+str(self.id)+"/mavros/local_position/pose", PoseStamped, self.AgentPosCallback)
         rospy.Subscriber("/gazebo/model_states", ModelStates, self.AgentPosCallback)
-        rospy.Subscriber("/iris_"+str(self.id)+"/densityGradient", densityGradient, self.DensityGradientCallback)
+
         rospy.Subscriber("/iris_"+str(self.id)+"/heading_cmd", Float64MultiArray, self.HeadingCmdCallback)
+        # # Single target scenario
+        # rospy.Subscriber("/iris_"+str(self.id)+"/densityGradient", densityGradient, self.DensityGradientCallback)
+        # Multi-target scenario
+        rospy.Subscriber("/iris_"+str(self.id)+"/target_1/densityGradient", densityGradient, self.DensityGradientCallback_1)
+        rospy.Subscriber("/iris_"+str(self.id)+"/target_2/densityGradient", densityGradient, self.DensityGradientCallback_2)
 
         self.pub_pos                = rospy.Publisher("local/position", Point, queue_size=10)
         self.pub_exchange_data      = rospy.Publisher("local/exchange_data",ExchangeData, queue_size=10)
         self.pub_utility            = rospy.Publisher("/iris_"+str(self.id)+"/utility", Float64, queue_size=10)
 
-        self.pub_vel_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_velocity/cmd_vel", TwistStamped, queue_size=10)       
-        self.pub_pos_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_position/local", PoseStamped, queue_size=10)       
+        self.pub_vel_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_velocity/cmd_vel", TwistStamped, queue_size=10)
+        self.pub_pos_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_position/local", PoseStamped, queue_size=10)
         self.pub_heading_cmd        = rospy.Publisher("/iris_"+str(self.id)+"/heading_cmd", Float64MultiArray, queue_size=10)
 
         self.pub_sensor_weight      = rospy.Publisher("visualize/sensor_weights", WeightArray, queue_size=10)
@@ -284,19 +292,46 @@ class PTZCamera():
         self.yaw = euler[2] # rad
         self.perspective = [math.cos(self.yaw), math.sin(self.yaw)] # [v_x, v_y]
 
-    def DensityGradientCallback(self, msg):
+    # def DensityGradientCallback(self, msg):
+    #     self.agent_ready = True
+    #     self.event_density_gradient = [np.zeros(self.size), np.zeros(self.size)]
+    #     gradient_x_array = np.array(msg.gradient_x).reshape(self.size[0], self.size[1])
+    #     gradient_y_array = np.array(msg.gradient_y).reshape(self.size[0], self.size[1])
+    #     gradient_x_array = np.nan_to_num(gradient_x_array, nan=0.0)
+    #     gradient_y_array = np.nan_to_num(gradient_y_array, nan=0.0)
+    #     self.event_density_gradient[0] += gradient_x_array
+    #     self.event_density_gradient[1] += gradient_y_array
+    #     # rospy.loginfo("Size of self.event_density_gradient[0]: {}".format(self.event_density_gradient[0].shape))
+    #     # rospy.loginfo("Size of self.event_density_gradient[1]: {}".format(self.event_density_gradient[1].shape))
+    #     # rospy.loginfo("msg.gradient_x: \n{}".format(np.array(msg.gradient_x)[:3]))
+    #     # rospy.loginfo("self.event_density_gradient[0]: \n{}".format(self.event_density_gradient[0][:3, :3]))
+
+    def DensityGradientCallback_1(self, msg):
         self.agent_ready = True
-        self.event_density_gradient = [np.zeros(self.size), np.zeros(self.size)]
+        # print("DensityGradientCallback_1")
+        if 0 not in self.event_density_gradients.keys():
+            self.event_density_gradients[0] = [np.zeros(self.size), np.zeros(self.size)]
         gradient_x_array = np.array(msg.gradient_x).reshape(self.size[0], self.size[1])
         gradient_y_array = np.array(msg.gradient_y).reshape(self.size[0], self.size[1])
         gradient_x_array = np.nan_to_num(gradient_x_array, nan=0.0)
         gradient_y_array = np.nan_to_num(gradient_y_array, nan=0.0)
-        self.event_density_gradient[0] += gradient_x_array
-        self.event_density_gradient[1] += gradient_y_array
-        # rospy.loginfo("Size of self.event_density_gradient[0]: {}".format(self.event_density_gradient[0].shape))
-        # rospy.loginfo("Size of self.event_density_gradient[1]: {}".format(self.event_density_gradient[1].shape))
-        # rospy.loginfo("msg.gradient_x: \n{}".format(np.array(msg.gradient_x)[:3]))
-        # rospy.loginfo("self.event_density_gradient[0]: \n{}".format(self.event_density_gradient[0][:3, :3]))
+        self.event_density_gradients[0][0] += gradient_x_array
+        self.event_density_gradients[0][1] += gradient_y_array
+        # print("event_density_gradients[0][0]: \n{}".format(self.event_density_gradients[0][0][:3, :3]))
+        # print("event_density_gradients[0][1]: \n{}".format(self.event_density_gradients[0][1][:3, :3]))
+
+    def DensityGradientCallback_2(self, msg):
+        self.agent_ready = True
+        if 1 not in self.event_density_gradients.keys():
+            self.event_density_gradients[1] = [np.zeros(self.size), np.zeros(self.size)]
+        gradient_x_array = np.array(msg.gradient_x).reshape(self.size[0], self.size[1])
+        gradient_y_array = np.array(msg.gradient_y).reshape(self.size[0], self.size[1])
+        gradient_x_array = np.nan_to_num(gradient_x_array, nan=0.0)
+        gradient_y_array = np.nan_to_num(gradient_y_array, nan=0.0)
+        self.event_density_gradients[1][0] += gradient_x_array
+        self.event_density_gradients[1][1] += gradient_y_array
+        # print("event_density_gradients[1][0]: \n{}".format(self.event_density_gradients[1][0][:3, :3]))
+        # print("event_density_gradients[1][1]: \n{}".format(self.event_density_gradients[1][1][:3, :3]))
 
     def PublishInfo(self):
         # publish position
@@ -731,13 +766,14 @@ class PTZCamera():
     def ComputeControlSignal(self):
         u_p = np.array([0., 0.])  
         u_v = np.array([0., 0.])
-        # k_1 = 0.2
-        # k_2 = 0.0000000001
-        k_1 = .255
-        k_2 = .00000000125
+        k_1 = 0.2
+        k_2 = 0.0000000001
+        # k_1 = .255
+        # k_2 = .00000000125
         # k_1 = 0.
-        # k_2 = 0.
-        k_3 = 5000.
+        k_2 = 0.
+        # k_3 = 5000.
+        k_3 = 0.
 
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
         total_gradient_1 = [np.zeros(self.size), np.zeros(self.size)]
@@ -801,7 +837,7 @@ class PTZCamera():
                 total_gradient_1[0] *= self.const_event_density[event]
                 total_gradient_1[1] *= self.const_event_density[event]
                 event_gradient[0] *= f
-                event_gradient[1] *= f
+                event_gradient[1] *= f # event_gradient = f * \nabla L_\phi
                 # print("sensor_gradient[0]"+str(self.id)+": \n {}".format(sensor_gradient[0]))
                 # print("self.event_density[event]"+str(self.id)+": \n {}".format(self.event_density[event]))
                 
@@ -908,15 +944,18 @@ class PTZCamera():
         x = (x_coords*grid_size[0] - pos_self[0]) # q-p_i (x direction)
         y = (y_coords*grid_size[1] - pos_self[1]) # q-p_i (y direction)
 
-        # rospy.loginfo("size of density_gradient_y: {}".format(density_gradient_x.shape))
-        # rospy.loginfo("size of density_gradient_y: {}".format(density_gradient_y.shape))
-        # rospy.loginfo("size of self.event_density_gradient[0]: {}".format(self.event_density_gradient[0].shape))
-        # rospy.loginfo("size of self.event_density_gradient[1]: {}".format(self.event_density_gradient[1].shape))
-        # rospy.loginfo("self.event_density_gradient[0]: {}".format(self.event_density_gradient[0]))
-        # rospy.loginfo("self.event_density_gradient[1]: {}".format(self.event_density_gradient[1]))
-
-        density_gradient_x += self.event_density_gradient[0]
-        density_gradient_y += self.event_density_gradient[1]
+        # Single target
+        # density_gradient_x += self.event_density_gradient[0]
+        # density_gradient_y += self.event_density_gradient[1]
+        # Multiple targets
+        if event in self.event_density_gradients.keys():
+            # print("event: {}".format(event))
+            density_gradient_x = self.event_density_gradients[event][0]
+            density_gradient_y = self.event_density_gradients[event][1]
+        else:
+            print(f"Warning: event {event} not found in event_density_gradients, using zeros")
+            density_gradient_x = np.zeros(self.size)
+            density_gradient_y = np.zeros(self.size)
 
         per_quality = (1/(1-np.cos(self.angle_of_view)))*((x*self.perspective[0] + y*self.perspective[1])/dist - np.cos(self.angle_of_view))
         if role == 'camera':

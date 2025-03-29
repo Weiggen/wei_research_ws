@@ -281,12 +281,12 @@ int main(int argc, char **argv)
 			// Compute density gradient & publish to /$(vehicle)_$(id)/densityGradient. //For coverageCtrl
 			Eigen::MatrixXd gradient_M(2, 240*240);
 			gradient_M.setZero();
-			std::cout << "params:\n" 
-						<< theif_objects[i]->getFusedCov() << "\n" 
-						<< theif_objects[i]->getWeightedS() << "\n"
-						<< theif_objects[i]->getWeightedY() << "\n" 
-						<< theif_objects[i]->getWeightedXi_hat() << "\n" 
-						<< theif_objects[i]->getEta_ij() << "\n";
+			// std::cout << "params:\n" 
+			// 			<< theif_objects[i]->getFusedCov() << "\n" 
+			// 			<< theif_objects[i]->getWeightedS() << "\n"
+			// 			<< theif_objects[i]->getWeightedY() << "\n" 
+			// 			<< theif_objects[i]->getWeightedXi_hat() << "\n" 
+			// 			<< theif_objects[i]->getEta_ij() << "\n";
 			gradient_M = teif_objects[i].getGradientDensityFnc(theif_objects[i]->getFusedCov(), theif_objects[i]->getWeightedS(), theif_objects[i]->getWeightedY(), theif_objects[i]->getWeightedXi_hat(), theif_objects[i]->getEta_ij());
 			eif_ros.densityGradient_pubs[i].publish(eigen2densityGradient(gradient_M));		
 

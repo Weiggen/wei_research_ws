@@ -21,7 +21,7 @@ import itertools
 
 class Visualize2D():
     def __init__(self):
-        self.total_agents   = rospy.get_param('/total_agents', 1)
+        self.total_agents   = rospy.get_param('/total_agents', 3)
         map_width           = rospy.get_param("/map_width", 24)
         map_height          = rospy.get_param("/map_height", 24)
         self.map_size       = np.array([map_height, map_width])
@@ -60,7 +60,8 @@ class Visualize2D():
         self.agent_failure          = {}
         #self.FetchAgentInfo()
         
-        color_pool = [(255, 0, 0), (255, 128, 0), (255,255,0), (0,255,0), (0,255,255), (0,0,255), (178,102,255), (255,0,255), (13, 125, 143)]
+        # color_pool = [(0, 255, 0), (255, 128, 0), (255,255,0), (255, 0, 0), (0,255,255), (0,0,255), (178,102,255), (255,0,255), (13, 125, 143)]
+        color_pool = [(175, 100, 100), (100, 150, 100), (100,100,150), (255, 0, 0), (0,255,255), (0,0,255), (178,102,255), (255,0,255), (13, 125, 143)]
         
         rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)
 
@@ -75,17 +76,22 @@ class Visualize2D():
             except:
                 self.color[i] = list(np.random.choice(range(255),size=3))
             
-            rospy.Subscriber("/agent_"+str(i)+"/visualize/sensor_weights", WeightArray, self.WeightCB(i))           
-            rospy.Subscriber("/agent_"+str(i)+"/visualize/valid_sensors", ValidSensors, self.ValidSensorCB(i))
-            rospy.Subscriber("/agent_"+str(i)+"/visualize/sensor_scores", SensorArray, self.SensorScoresCB(i))
-            rospy.Subscriber("/agent_"+str(i)+"/visualize/total_score", Float64, self.TotalScoreCB(i))
-            rospy.Subscriber("/agent_"+str(i)+"/visualize/pose", Pose, self.PoseCB(i))
-            rospy.Subscriber("/agent_"+str(i)+"/failure", Int16, self.FailureCB(i))
+            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/sensor_weights", WeightArray, self.WeightCB(i))           
+            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/valid_sensors", ValidSensors, self.ValidSensorCB(i))
+            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/sensor_scores", SensorArray, self.SensorScoresCB(i))
+            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/total_score", Float64, self.TotalScoreCB(i))
+            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/pose", Pose, self.PoseCB(i))
+            rospy.Subscriber("/iris_"+str(i+1)+"/failure", Int16, self.FailureCB(i))
                     
         self.window_size = self.size*4
         self.display = pygame.display.set_mode(self.window_size)
         self.display.fill((0,0,0))
         self.blockSize = int(self.window_size[0]/self.size[0])
+
+        # 添加一個函數來翻轉x坐標
+        self.flip_x = lambda x: x
+        # 添加一個函數來翻轉y坐標
+        self.flip_y = lambda y: self.window_size[1] - y
 
         # define the codec and create a video writer object
         self.cnt = 0
@@ -94,12 +100,23 @@ class Visualize2D():
         self.prefix = '~/research_ws/src/voronoi_cbsa/result/'
         if not os.path.exists(self.prefix + self.timestr):
             os.makedirs(self.prefix + self.timestr)
+
+    def flip_position(self, position):
+        if isinstance(position, np.ndarray) and position.ndim > 1:
+            # 處理多個點的情況
+            flipped = position.copy()
+            flipped[:, 0] = self.flip_x(position[:, 0])
+            flipped[:, 1] = self.flip_y(position[:, 1])
+            return flipped
+        else:
+            # 處理單個點的情況
+            return np.array([self.flip_x(position[0]), self.flip_y(position[1])])
         
     def FetchAgentInfo(self):
 
         for agent in range(self.total_agents):
             # General Agent's Settings
-            prefix = "agent_" + str(agent) + "/Controller"
+            prefix = "iris_" + str(agent) + "/Controller"
             id                      = rospy.get_param(prefix+"/id", default=0)
             camera_valid            = rospy.get_param(prefix+"/camera", default=0)
             manipulator_valid       = rospy.get_param(prefix+"manipulator", default=0)
@@ -160,14 +177,15 @@ class Visualize2D():
             pos_y = target.position.y
             pos = np.array([pos_x, pos_y])
 
-            std = target.standard_deviation
+            # std = target.standard_deviation
+            cov = target.covariance
             weight = target.weight
 
             vel_x = target.velocity.linear.x
             vel_y = target.velocity.linear.y
             vel = np.array([vel_x, vel_y])
             requirements = [target.required_sensor[i] for i in range(len(target.required_sensor))]
-            self.targets.append([pos, std, weight, vel, target.id, requirements])
+            self.targets.append([pos, cov, weight, vel, target.id, requirements])
             
     def FailureCB(self, id):
         def callback(msg):
@@ -225,8 +243,10 @@ class Visualize2D():
                     x, y = np.mgrid[0:map_size[0]:grid_size[0], 0:map_size[1]:grid_size[1]]
                     xy = np.column_stack([x.flat, y.flat])
                     mu = np.array(target[i][0])
-                    sigma = np.array([target[i][1], target[i][1]])
-                    covariance = np.diag(sigma**2)
+                    # sigma = np.array([target[i][1], target[i][1]])
+                    # covariance = np.diag(sigma**2)
+                    covariance = np.array(target[i][1]).reshape(2,2)
+                    print("covariance matrix:\n", covariance)
                     z = multivariate_normal.pdf(xy, mean=mu, cov=covariance)
                     event += z.reshape(x.shape)
              
@@ -266,10 +286,11 @@ class Visualize2D():
                                     weight += self.agent_sensor_weights[agent][role][event]
                             
                             weight *= 50
-                            # if role == 'camera':
-                            #     print(agent, ": ", weight)
-                            cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2)
-                                    - weight**2)*global_event#self.ComputeCost(role, pos_self, grid_size, x_coords, y_coords)
+                            if role == 'camera':
+                                print(agent, ": ", weight)
+                            # cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2)
+                            #         - weight**2)*global_event#self.ComputeCost(role, pos_self, grid_size, x_coords, y_coords)
+                            cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2))*global_event
                             sensor_voronoi = np.where(cost < total_cost, agent, sensor_voronoi)
                             total_cost = np.where(cost < total_cost, cost, total_cost)
 
@@ -278,7 +299,7 @@ class Visualize2D():
         def ComputeSensorFootprint(role, agent_pos, global_event, agent_info):
             for agent in self.agent_pos.keys():
                 pass
-            
+
         self.display.fill((0,0,0))
         
         if self.target_received:
@@ -287,64 +308,71 @@ class Visualize2D():
             
             if self.plot_type == 'voronoi':
                 voronoi_plt = ComputeSensorVoronoi(self.plot_role, self.agent_pos.copy(), event.copy())
-                for x_map,x in enumerate(range(0, self.window_size[0], self.blockSize)):
-                    for y_map,y in enumerate(range(0, self.window_size[1], self.blockSize)):
+                for x_map, x in enumerate(range(0, self.window_size[0], self.blockSize)):
+                    for y_map, y in enumerate(range(0, self.window_size[1], self.blockSize)):
                         
                         id = voronoi_plt[y_map, x_map]
-                        rect = pygame.Rect(x, y, self.blockSize, self.blockSize)
+                        # 翻轉矩形位置
+                        rect = pygame.Rect(
+                            self.flip_x(x + self.blockSize) - self.blockSize, 
+                            self.flip_y(y + self.blockSize) - self.blockSize, 
+                            self.blockSize, 
+                            self.blockSize
+                        )
                         pygame.draw.rect(self.display, (event_plt[x_map,y_map],event_plt[x_map,y_map],event_plt[x_map,y_map]), rect, 1)
                         
                         if id != -1:
-                            rect = pygame.Rect(x, y, self.blockSize, self.blockSize)
-                            w = 0.6
+                            # 矩形位置已經翻轉，不需要再次翻轉
+                            w = 0.5
                             color = [0, 0, 0]
                             color[0] = w*self.color[id][0] + (1-w)*event_plt[x_map,y_map]
                             color[1] = w*self.color[id][1] + (1-w)*event_plt[x_map,y_map]
                             color[2] = w*self.color[id][2] + (1-w)*event_plt[x_map,y_map]
                             pygame.draw.rect(self.display, color, rect, 1)
-                            
+            
+            # 文本位置翻轉
             font = pygame.font.Font('freesansbold.ttf', 30)
             text = font.render(self.plot_role, True, (255,255,255))
             textRect = text.get_rect()
-            textRect.center = (100, 50)
+            textRect.center = (self.flip_x(100), self.flip_y(50))  # 翻轉文本位置
             self.display.blit(text, textRect)
             
             for i in range(len(self.targets)):
-                if self.plot_role in self.targets[i][5] or self.plot_role == 'All': 
-                    center =  np.array(self.targets[i][0])/self.grid_size*self.blockSize
+                if self.plot_role in self.targets[i][5] or self.plot_role == 'All':
+                    # 翻轉目標中心位置
+                    original_center = np.array(self.targets[i][0])/self.grid_size*self.blockSize
+                    center = self.flip_position(original_center)
+                    
                     offset = 15
-                    pygame.draw.polygon(self.display, (0, 0, 0), ((center[0], center[1] - offset),
-                                                                  (center[0] - offset, center[1] + offset),
-                                                                  (center[0] + offset, center[1] + offset)))
+                    # 三角形頂點需要按照翻轉後的方向重新計算
+                    pygame.draw.polygon(self.display, (0, 0, 0), (
+                        (center[0], center[1] + offset),           # 底部中心點變成頂部中心點
+                        (center[0] - offset, center[1] - offset),  # 左下角變成左上角
+                        (center[0] + offset, center[1] - offset)   # 右下角變成右上角
+                    ))
                     
                     font = pygame.font.Font('freesansbold.ttf', 20)
-                    context_sensor = str(i) + ": " + "{"
+                    context_sensor = str(i+1) + ": " + "{"
                     for sensor in self.sensor_pool:
                         if sensor in self.targets[i][5]:
                             context_sensor += sensor + " "
                     context_sensor += "}"
-                            
+                    
                     text = font.render(context_sensor, True, (0,0,0))
                     textRect = text.get_rect()
-                    textRect.center = (center[0], center[1] - 30)
+                    textRect.center = (center[0], center[1] + 30)  # 翻轉文本位置
                     self.display.blit(text, textRect)
             
-            #total_score = 0
-            #score_ready = True
             for id in self.agent_pos.keys():
-                
                 if not self.agent_failure[id]:
                     if id in self.agent_scores.keys():
                         self.agent_score_plt[id].append(self.agent_scores[id])
-                        
-                    # # compute total scores
-                    # if id in self.agent_scores.keys():
-                    #     total_score += self.agent_scores[id]
-                    # else:
-                    #     score_ready = False
                     
-                    # Draw id and valid sensors
-                    center = self.agent_pos[id]/self.grid_size*self.blockSize
+                    # 翻轉代理位置
+                    original_center = self.agent_pos[id]/self.grid_size*self.blockSize
+                    center = self.flip_position(original_center)
+                    
+                    # 繪製ID和有效感測器
                     font = pygame.font.Font('freesansbold.ttf', 15)
                     context_sensor = "{"
                     for sensor in self.sensor_pool:
@@ -352,20 +380,20 @@ class Visualize2D():
                             if sensor in self.agent_valid_sensors[id]:
                                 context_sensor += sensor + " "
                     context_sensor += "}"
-                            
+                    
                     text = font.render(context_sensor, True, self.color[id])
                     textRect = text.get_rect()
-                    upper = center[1] - 20 if center[1] - 20 > 0 else center[1] + 20
+                    upper = center[1] + 20 if center[1] + 20 < self.window_size[1] else center[1] - 20  # 翻轉上方判斷
                     textRect.center = (center[0], upper)
                     self.display.blit(text, textRect)
                     
-                    text = font.render(str(id), True, self.color[id])
+                    text = font.render(str(id+1), True, self.color[id])
                     textRect = text.get_rect()
-                    upper = center[1] - 40 if center[1] - 40 > 0 else center[1] + 40
+                    upper = center[1] + 40 if center[1] + 40 < self.window_size[1] else center[1] - 40  # 翻轉上方判斷
                     textRect.center = (center[0], upper)
                     self.display.blit(text, textRect)
                     
-                    # Draw agent's position
+                    # 繪製代理位置
                     if id in self.agent_valid_sensors.keys():
                         if self.plot_role in self.agent_valid_sensors[id]:
                             width = 0
@@ -373,16 +401,24 @@ class Visualize2D():
                             width = 0
                         else:
                             width = 2
-                        pygame.draw.circle(self.display, self.color[id], 
-                            self.agent_pos[id]/self.grid_size*self.blockSize, radius=10, width=width) 
-                    
+                        pygame.draw.circle(self.display, self.color[id], center, radius=10, width=width)
+                        
                         if 'camera' in self.agent_valid_sensors[id]:
-                            # Draw agent's perspective
-                            pos = self.agent_pos[id]/self.grid_size*self.blockSize
-                            per = self.agent_per[id]/self.grid_size*self.blockSize
+                            # 繪製代理視角，需要翻轉方向向量
+                            original_pos = self.agent_pos[id]/self.grid_size*self.blockSize
+                            pos = self.flip_position(original_pos)
+                            
+                            # 翻轉方向向量
+                            original_per = self.agent_per[id]/self.grid_size*self.blockSize
+                            # 方向向量需要特殊處理，翻轉後方向也要相反
+                            per = np.array([original_per[0], -original_per[1]])
+                            
                             pygame.draw.line(self.display, self.color[id], pos, pos + per, 2)
                 else:
-                    # Draw agent's position
+                    # 繪製失效代理位置
+                    original_center = self.agent_pos[id]/self.grid_size*self.blockSize
+                    center = self.flip_position(original_center)
+                    
                     if id in self.agent_valid_sensors.keys():
                         if self.plot_role in self.agent_valid_sensors[id]:
                             width = 0
@@ -390,9 +426,8 @@ class Visualize2D():
                             width = 0
                         else:
                             width = 2
-                        pygame.draw.circle(self.display, (125, 125, 125), 
-                            self.agent_pos[id]/self.grid_size*self.blockSize, radius=10, width=width) 
-                    
+                        pygame.draw.circle(self.display, (125, 125, 125), center, radius=10, width=width)
+            
             # if score_ready:
             #     font = pygame.font.Font('freesansbold.ttf', 32)
             #     text = font.render(str(np.round(total_score, 3)), True, (255,255,255))
@@ -412,7 +447,7 @@ class Visualize2D():
 
         self.images.append(pixels)
         #self.plot()
-        
+
     def plot(self):
         plt.plot(self.frame, self.total_score, color = 'b')
         plt.title("Total score")
@@ -439,7 +474,7 @@ if __name__=="__main__":
     
     rospy.init_node('visualizer', anonymous=False, disable_signals=True)
     
-    total_agents = rospy.get_param('/total_agents', '1')
+    total_agents = rospy.get_param('/total_agents', '3')
     rospy.Subscriber("/kill", Int16, KillCB)
     
     pygame.init()
