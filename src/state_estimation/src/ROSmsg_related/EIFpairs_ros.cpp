@@ -63,11 +63,11 @@ EIFpairs_ros::~EIFpairs_ros()
 
 void EIFpairs_ros::set_topic(std::string vehicle, int id)
 {
-	string prefix = std::string("/") + vehicle + std::string("_") + std::to_string(id);
+	string self_prefix = std::string("/") + vehicle + std::string("_") + std::to_string(id);
 	// self2TgtEIFpairs_pub_topic = prefix + std::string("/TEIF/fusionPairs");  // single target
 	// tgtStatePlot_topic = prefix  + std::string("/THEIF/Plot");				// single target
-	selfStatePlot_topic = prefix + std::string("/SHEIF/Plot");
-	selfPredEIFpairs_pub_topic = prefix + std::string("/SEIF_pred/fusionPairs");
+	selfStatePlot_topic = self_prefix + std::string("/SHEIF/Plot");
+	selfPredEIFpairs_pub_topic = self_prefix + std::string("/SEIF_pred/fusionPairs");
 
 	// densityGradient_pub_topic = prefix + std::string("/densityGradient");	// single target // For coverageCtrl
 
@@ -76,7 +76,7 @@ void EIFpairs_ros::set_topic(std::string vehicle, int id)
 	for(int i = 0; i < mavNum; i++)
 		if(i != self_index)
 		{
-			prefix = std::string("/") + vehicle + std::string("_") + std::to_string(i+1);
+			string prefix = std::string("/") + vehicle + std::string("_") + std::to_string(i+1);
 			neighborsEIFpairs_sub_topic[i] = prefix + std::string("/SEIF_pred/fusionPairs");
 			rbs2TgtEIFpairs_sub_topic[i] = prefix + std::string("/TEIF/fusionPairs");
 		}
@@ -86,9 +86,9 @@ void EIFpairs_ros::set_topic(std::string vehicle, int id)
 	densityGradient_pub_topics = new std::string[targetNum];
 	for (int i = 0; i < targetNum; i++)
 	{
-		self2TgtEIFpairs_pub_topics[i] = prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/fusionPairs");
-		tgtStatePlot_topics[i] = prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/Plot");
-		densityGradient_pub_topics[i] = prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/densityGradient");
+		self2TgtEIFpairs_pub_topics[i] = self_prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/fusionPairs");
+		tgtStatePlot_topics[i] = self_prefix + std::string("/TEIF/target_") + std::to_string(i+1) + std::string("/Plot");
+		densityGradient_pub_topics[i] = self_prefix + std::string("/target_") + std::to_string(i+1) + std::string("/densityGradient");
 	}
 }
 
