@@ -627,8 +627,14 @@ class PTZCamera():
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
-        # k_yaw = 0.1415 # static tuned
-        k_yaw = 0.08 # dynamic tuned
+        # single target static scenario
+        # k_yaw = 0.1415
+        # single target dynamic scenario
+        # k_yaw = 0.08
+        # muti-target static scenario
+        # k_yaw = 0.04
+        # muti-target dynamic scenario
+        k_yaw = 0.06
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
@@ -654,7 +660,7 @@ class PTZCamera():
                 pos_self = self.neighbors[neighbor]["position"]
                 grid_size = self.grid_size
 
-                cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2) - (100*self.neighbors[neighbor]["weights"][role][event])**2)*global_event#self.ComputeCost(role, pos_self, grid_size, x_coords, y_coords)
+                cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2) - (100*self.neighbors[neighbor]["weights"][role][event])**2)*global_event
                 sensor_voronoi = np.where(cost < total_cost, neighbor, sensor_voronoi)
                 total_cost = np.where(cost < total_cost, cost, total_cost)
 
@@ -662,8 +668,8 @@ class PTZCamera():
 
     def qp(self, role, event, u_des):
         # CBF
-        alpha = 1.
-        d_min = 0.15
+        alpha = 3.
+        d_min = 0.2
 
         P = matrix(np.eye(2))
         q = matrix(-u_des)
@@ -757,7 +763,6 @@ class PTZCamera():
                             tmp *= (1 + self.w_coop*coop_quality)
 
                     tmp *= self.event_density[event]*self.grid_size[0]
-                    # print("888888888: {}".format(self.event_density[event].shape)) # (240, 240)
 
                     self.total_score += self.sensor_weight[role][event]*np.sum(tmp)
                 self.sensor_scores[role][event] = np.sum(quality)
@@ -766,13 +771,20 @@ class PTZCamera():
     def ComputeControlSignal(self):
         u_p = np.array([0., 0.])  
         u_v = np.array([0., 0.])
-        k_1 = 0.2
-        k_2 = 0.0000000001
+        # static tuned for single target
+        # k_1 = 0.2
+        # k_2 = 0.0000000001
+        # dynamic tuned for single target
         # k_1 = .255
         # k_2 = .00000000125
+        # static tuned for multi-target
+        # k_1 = 0.08
+        # k_2 = 0.0000000001
+        # dynamic tuned for multi-target
+        k_1 = 0.15
+        k_2 = 0.0000000015
         # k_1 = 0.
-        k_2 = 0.
-        # k_3 = 5000.
+        # k_2 = 0.
         k_3 = 0.
 
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
@@ -830,12 +842,8 @@ class PTZCamera():
                                 total_gradient[0] += sensor_gradient[0]
                                 total_gradient[1] += sensor_gradient[1]
                 
-                total_gradient_1[0] = total_gradient[0]
-                total_gradient_1[1] = total_gradient[1]
                 total_gradient[0] *= self.event_density[event]
                 total_gradient[1] *= self.event_density[event]
-                total_gradient_1[0] *= self.const_event_density[event]
-                total_gradient_1[1] *= self.const_event_density[event]
                 event_gradient[0] *= f
                 event_gradient[1] *= f # event_gradient = f * \nabla L_\phi
                 # print("sensor_gradient[0]"+str(self.id)+": \n {}".format(sensor_gradient[0]))
@@ -849,15 +857,11 @@ class PTZCamera():
                 tmp_x_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[0])
                 tmp_y_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[1])
 
-                tmp_x_3 = k_3*self.sensor_weight[role][event]*np.sum(total_gradient_1[0])
-                tmp_y_3 = k_3*self.sensor_weight[role][event]*np.sum(total_gradient_1[1])
 
                 u_p[0] = u_p[0] + (tmp_x if not np.isnan(tmp_x) else 0)
                 u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0)
                 u_p[0] += (tmp_x_2 if not np.isnan(tmp_x_2) else 0)
                 u_p[1] += (tmp_y_2 if not np.isnan(tmp_y_2) else 0)
-                u_p[0] += (tmp_x_3 if not np.isnan(tmp_x_3) else 0)
-                u_p[1] += (tmp_y_3 if not np.isnan(tmp_x_3) else 0)
                 # u_p[0] *= target_weight
                 # u_p[1] *= target_weight
         

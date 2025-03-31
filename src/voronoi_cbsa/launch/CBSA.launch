@@ -40,8 +40,8 @@
 
         <arg name="perspective_x"   value="1"     />
         <arg name="perspective_y"   value="1"     />
-        <arg name="angle_of_view"   value="20"    />
-        <arg name="desired_range"   value="3"     />
+        <arg name="angle_of_view"   value="30"    />
+        <arg name="desired_range"   value="2"     />
         <arg name="camera_variance" value="2"     />
 
         <arg name="arm_length"      value="1"     />
@@ -62,8 +62,8 @@
 
         <arg name="perspective_x"   value="1"     />
         <arg name="perspective_y"   value="1"     />
-        <arg name="angle_of_view"   value="20"    />
-        <arg name="desired_range"   value="3"     />
+        <arg name="angle_of_view"   value="30"    />
+        <arg name="desired_range"   value="2"     />
         <arg name="camera_variance" value="2"     />
 
         <arg name="arm_length"      value="1"     />
@@ -84,8 +84,8 @@
 
         <arg name="perspective_x"   value="1"     />
         <arg name="perspective_y"   value="1"     />
-        <arg name="angle_of_view"   value="20"    />
-        <arg name="desired_range"   value="3"     />
+        <arg name="angle_of_view"   value="30"    />
+        <arg name="desired_range"   value="2"     />
         <arg name="camera_variance" value="2"     />
 
         <arg name="arm_length"      value="1"     />
