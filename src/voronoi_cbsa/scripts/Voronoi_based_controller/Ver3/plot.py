@@ -237,6 +237,7 @@ class Visualize2D():
         def ComputeEventDensity(map_size, target, grid_size, role):
 
             event = np.zeros(self.size)
+            min_threshold = 1e-10
 
             for i in range(len(target)):
                 if role in target[i][5] or role == 'All':
@@ -249,6 +250,9 @@ class Visualize2D():
                     print("covariance matrix:\n", covariance)
                     z = multivariate_normal.pdf(xy, mean=mu, cov=covariance)
                     event += z.reshape(x.shape)
+                    event = np.maximum(event, min_threshold)
+                    # if np.max(event) > 0:
+                    #     event = event / np.max(event) # 將event標準化到[0,1]範圍
              
             return event
         
@@ -290,7 +294,8 @@ class Visualize2D():
                                 print(agent, ": ", weight)
                             # cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2)
                             #         - weight**2)*global_event#self.ComputeCost(role, pos_self, grid_size, x_coords, y_coords)
-                            cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2))*global_event
+                            cost = (((pos_self[0]/grid_size[0] - x_coords)**2 + (pos_self[1]/grid_size[1] - y_coords)**2)
+                                    - weight**2)*global_event
                             sensor_voronoi = np.where(cost < total_cost, agent, sensor_voronoi)
                             total_cost = np.where(cost < total_cost, cost, total_cost)
 
@@ -343,15 +348,15 @@ class Visualize2D():
                     original_center = np.array(self.targets[i][0])/self.grid_size*self.blockSize
                     center = self.flip_position(original_center)
                     
-                    offset = 15
-                    # 三角形頂點需要按照翻轉後的方向重新計算
-                    pygame.draw.polygon(self.display, (0, 0, 0), (
-                        (center[0], center[1] + offset),           # 底部中心點變成頂部中心點
-                        (center[0] - offset, center[1] - offset),  # 左下角變成左上角
-                        (center[0] + offset, center[1] - offset)   # 右下角變成右上角
-                    ))
+                    # offset = 5
+                    # # 三角形頂點需要按照翻轉後的方向重新計算
+                    # pygame.draw.polygon(self.display, (0, 0, 0), (
+                    #     (center[0], center[1] + offset),           # 底部中心點變成頂部中心點
+                    #     (center[0] - offset, center[1] - offset),  # 左下角變成左上角
+                    #     (center[0] + offset, center[1] - offset)   # 右下角變成右上角
+                    # ))
                     
-                    font = pygame.font.Font('freesansbold.ttf', 20)
+                    font = pygame.font.Font('freesansbold.ttf', 15)
                     context_sensor = str(i+1) + ": " + "{"
                     for sensor in self.sensor_pool:
                         if sensor in self.targets[i][5]:
@@ -381,13 +386,13 @@ class Visualize2D():
                                 context_sensor += sensor + " "
                     context_sensor += "}"
                     
-                    text = font.render(context_sensor, True, self.color[id])
+                    text = font.render(context_sensor, True, (0, 0, 0))
                     textRect = text.get_rect()
                     upper = center[1] + 20 if center[1] + 20 < self.window_size[1] else center[1] - 20  # 翻轉上方判斷
                     textRect.center = (center[0], upper)
                     self.display.blit(text, textRect)
                     
-                    text = font.render(str(id+1), True, self.color[id])
+                    text = font.render(str(id+1), True, (0, 0, 0))
                     textRect = text.get_rect()
                     upper = center[1] + 40 if center[1] + 40 < self.window_size[1] else center[1] - 40  # 翻轉上方判斷
                     textRect.center = (center[0], upper)
@@ -410,10 +415,44 @@ class Visualize2D():
                             
                             # 翻轉方向向量
                             original_per = self.agent_per[id]/self.grid_size*self.blockSize
+                            original_per *= 2.5
                             # 方向向量需要特殊處理，翻轉後方向也要相反
                             per = np.array([original_per[0], -original_per[1]])
                             
                             pygame.draw.line(self.display, self.color[id], pos, pos + per, 2)
+
+                            # 繪製Camera FOV(半透明扇形)
+                            radius = 250  # 增加扇形半徑以便更明顯
+                            
+                            # 正確計算方向向量的角度
+                            # 使用arctan2來獲取-180到180度的角度
+                            angle_rad = np.arctan2(per[1], per[0])  # 注意：是per而不是-per[1]
+                            angle_deg = np.degrees(angle_rad)
+                            
+                            # 扇形角度範圍
+                            fov = 30  # 視場角度(Field of View)
+                            start_angle = angle_deg - fov/2
+                            end_angle = angle_deg + fov/2
+                            
+                            # 創建半透明扇形
+                            color = self.color[id]
+                            alpha = 100  # 透明度值(0-255)
+                            
+                            # 計算扇形的頂點
+                            points = [pos]
+                            for angle in range(int(start_angle), int(end_angle) + 1, 1):
+                                rad = np.radians(angle)
+                                x = pos[0] + radius * np.cos(rad)
+                                y = pos[1] + radius * np.sin(rad)
+                                points.append((x, y))
+                            
+                            # 創建適當大小的臨時表面
+                            temp_surface = pygame.Surface(self.window_size, pygame.SRCALPHA)
+                            # 繪製扇形到臨時表面
+                            pygame.draw.polygon(temp_surface, (*color, alpha), points)
+                            self.display.blit(temp_surface, (0, 0))
+
+                            
                 else:
                     # 繪製失效代理位置
                     original_center = self.agent_pos[id]/self.grid_size*self.blockSize
