@@ -25,7 +25,7 @@ def plot_RMSE_p(timeStamps, RMSE_p, dataset_label):
     average_RMSE_p = sum(RMSE_p) / len(RMSE_p)  # Calculate average RMSE for position
     plt.plot(timeStamps, RMSE_p, label=f'Position RMSE for {dataset_label}')
     plt.axhline(y=average_RMSE_p, color='r', linestyle='--', label=f'Average RMSE: {average_RMSE_p:.3f}')  # Plot average RMSE line
-    plt.text(timeStamps[int(len(timeStamps) / 10)], average_RMSE_p, f'Average RMSE: {average_RMSE_p:.3f}', color='red')  # Print average RMSE on plot
+    plt.text(timeStamps[int(len(timeStamps) / 10)], average_RMSE_p, f'Average RMSE: {average_RMSE_p:.3f}', color='orange')  # Print average RMSE on plot
     plt.xlabel('Time (seconds)')
     plt.ylabel('Position RMSE (m)')
     plt.title(f'Position RMSE for {dataset_label}')
@@ -38,7 +38,7 @@ def plot_RMSE_v(timeStamps, RMSE_v, dataset_label):
     average_RMSE_v = sum(RMSE_v) / len(RMSE_v)  # Calculate average RMSE for velocity
     plt.plot(timeStamps, RMSE_v, label=f'Velocity RMSE for {dataset_label}', color='orange')
     plt.axhline(y=average_RMSE_v, color='r', linestyle='--', label=f'Average RMSE: {average_RMSE_v:.3f}')  # Plot average RMSE line
-    plt.text(timeStamps[int(len(timeStamps) / 10)], average_RMSE_v, f'Average RMSE: {average_RMSE_v:.3f}', color='red')  # Print average RMSE on plot
+    plt.text(timeStamps[int(len(timeStamps) / 10)], average_RMSE_v, f'Average RMSE: {average_RMSE_v:.3f}', color='orange')  # Print average RMSE on plot
     plt.xlabel('Time (seconds)')
     plt.ylabel('Velocity RMSE (m/s)')
     plt.title(f'Velocity RMSE for {dataset_label}')
@@ -51,7 +51,7 @@ def plot_det_p(timeStamps, det_p, dataset_label):
     # print(average)
     plt.plot(timeStamps, det_p, label=f'det p for {dataset_label}',color='orange')
     plt.axhline(y=average, color='r', linestyle='--',label=f'Average det_p: {average}')
-    plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='red')
+    plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='orange')
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
     plt.title(f'det p for {dataset_label}')
@@ -202,7 +202,7 @@ def plot_imu(timeStamps, GT_poses, dataset_label):
     # plt.plot(timeStamps, GT_z, label=f'orientation z for {dataset_label}',color='green')
     
     # plt.axhline(y=average, color='r', linestyle='--',label=f'Average det_p: {average}')
-    # plt.text(timeStamps[int(len(timeStamps)/ 10)],  color='red')
+    # plt.text(timeStamps[int(len(timeStamps)/ 10)],  color='orange')
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
     plt.title(f'orenitation for {dataset_label}')
@@ -318,19 +318,24 @@ def plot_combine_det_p( det_p, det_p2, dataset_label, dataset_label2):
 
     average = sum(det_p)/len(det_p)
     average2 = sum(det_p2)/len(det_p2)  
+    print("\nResults:")
+    # print(f"avg cov (Simulation 7): {average:.2f}")
+    # print(f"avg cov (Simulation 8): {average2:.2f}")
+    print(f"Improvement (%): {((average - average2)/average)*100:.2f}%")
     # print(average)
     plt.scatter(timeStamps, det_p, label=f'trace(p) for {dataset_label}',color='orange')
     plt.axhline(y=average, color='r', linestyle='--',label=f'Average trace(p): {average}')
-    # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='red')
-    plt.scatter(timeStamps, det_p2, label=f'trace(p) for {dataset_label2}',color='blue')
-    plt.axhline(y=average2, color='g', linestyle='--',label=f'Average trace(p): {average2}')
-    # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average2}', color='red')    
+    # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='orange')
+    plt.scatter(timeStamps, det_p2, label=f'trace(p) for {dataset_label2}',color='lightblue')
+    plt.axhline(y=average2, color='b', linestyle='--',label=f'Average trace(p): {average2}')
+    # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average2}', color='orange')    
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
-    plt.title(f'Comparison of trace(p) between Sim7 and Sim8')
+    plt.title(f'Comparison of trace(p) between Sim7&8, constant&time-varying cov')
     plt.legend()
     plt.grid(True)
     plt.show()
+
 def plotFromTwoBags(file1, file2, topic, label1, label2):
     # Open both bag files
     bag1 = rosbag.Bag(file1)
@@ -350,11 +355,17 @@ def plotFromTwoBags(file1, file2, topic, label1, label2):
     plot_combine_det_p( p1, p2, label1, label2)
 folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 
-file1 = folder + '7_1_trimmed.bag'
-file2 = folder + '8_1_trimmed.bag'
-# file2 = folder + 'lidar.bag'
+# Multi-targets dynamic simulation
+# file1 = folder + '7_10_trimmed.bag'
+# file2 = folder + '8_10_trimmed.bag'
+
+# Multi-targets dynamic simulation
+file1 = folder + '7_10_trimmed.bag'
+file2 = folder + '8_10_trimmed.bag'
+
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
 topic = '/iris_1/TEIF/target_1/Plot'
-plotFromTwoBags(file1, file2, topic, 'Sim7', 'Sim8')
+plotFromTwoBags(file1, file2, topic, 'Sim7, constant cov', 'Sim8, time-varying cov')
+# plotFromTwoBags(file1, file2, topic, 'Sim7, balance = T', 'Sim8, balance = T')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')

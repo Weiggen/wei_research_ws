@@ -102,3 +102,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/voronoi_cbsa" TYPE FILE FILES "/home/weiggen/wei_research_ws/src/voronoi_cbsa/package.xml")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/voronoi_cbsa" TYPE PROGRAM FILES "/home/weiggen/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/control_target_1.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/voronoi_cbsa" TYPE PROGRAM FILES "/home/weiggen/wei_research_ws/build/voronoi_cbsa/catkin_generated/installspace/control_target_2.py")
+endif()
+

@@ -253,6 +253,7 @@ class PTZCamera():
    
         self.pub_exchange_data.publish(data)
         self.pub_sensor_weight.publish(weight_arr)
+        self.pub_sensor_scores.publish(scores_arr)
         
         # publish valid sensors
         valid_sensor = ValidSensors()

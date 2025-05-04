@@ -98,7 +98,7 @@ class PTZCamera():
         self.cooperation    = coop 
         self.sensor_balance = balance
         self.w_coop         = strength
-        self.safe_distance  = 1
+        self.safe_distance  = 0.4
         self.avoid_weight   = 0.05
         
         # Setting up environment parameters
@@ -201,7 +201,8 @@ class PTZCamera():
 
         self.pub_sensor_weight      = rospy.Publisher("visualize/sensor_weights", WeightArray, queue_size=10)
         self.pub_total_score        = rospy.Publisher("visualize/total_score", Float64, queue_size=10)
-        self.pub_sensor_scores      = rospy.Publisher("visualize/sensor_scores", SensorArray, queue_size=10)
+        # self.pub_sensor_scores      = rospy.Publisher("visualize/sensor_scores", SensorArray, queue_size=10)
+        self.pub_sensor_scores      = rospy.Publisher("visualize/sensor_scores", WeightArray, queue_size=10)
         self.pub_pose               = rospy.Publisher("visualize/pose", Pose, queue_size=10)
         self.pub_valid_sensors      = rospy.Publisher("visualize/valid_sensors", ValidSensors, queue_size=10)
         
@@ -402,6 +403,7 @@ class PTZCamera():
    
         self.pub_exchange_data.publish(data)
         self.pub_sensor_weight.publish(weight_arr)
+        self.pub_sensor_scores.publish(scores_arr)
         
         # publish valid sensors
         valid_sensor = ValidSensors()
@@ -547,7 +549,7 @@ class PTZCamera():
     def UpdatePosition(self, u_p):
         # Maximum Speed restriction
         # k = 1.2 # static tuned
-        k = 1. # dynamic tuned
+        k = 100. # dynamic tuned
         u_p = k*u_p
 
         for role in self.valid_sensors.keys():
@@ -632,9 +634,9 @@ class PTZCamera():
         # single target dynamic scenario
         # k_yaw = 0.08
         # muti-target static scenario
-        # k_yaw = 0.04
+        k_yaw = 0.02
         # muti-target dynamic scenario
-        k_yaw = 0.06
+        # k_yaw = 0.06
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
@@ -669,7 +671,7 @@ class PTZCamera():
     def qp(self, role, event, u_des):
         # CBF
         alpha = 3.
-        d_min = 0.2
+        d_min = self.safe_distance
 
         P = matrix(np.eye(2))
         q = matrix(-u_des)
@@ -716,7 +718,11 @@ class PTZCamera():
                             if neighbor['role'][sensor] > 0:
                                 single_sensor_sum += neighbor['sensor_scores'][sensor][event]
                                 
-                        self.sensor_weight[sensor][event] = (1 + self.sensor_scores[sensor][event])/(1 + self.sensor_scores[sensor][event] + single_sensor_sum)
+                        self.sensor_weight[sensor][event] = (5 + self.sensor_scores[sensor][event])/(5 + self.sensor_scores[sensor][event] + single_sensor_sum)
+                        print("Agent ID: {}".format(self.id))
+                        print("sensor_weight[{}][{}]: {}".format(sensor, event, self.sensor_weight[sensor][event]))
+                        print("sensor_scores[{}][{}]: {}".format(sensor, event, self.sensor_scores[sensor][event]))
+                        print("single_sensor_sum: {}".format(single_sensor_sum))
                     
                     else: 
                         self.sensor_weight[sensor][event] = 0
@@ -743,6 +749,8 @@ class PTZCamera():
                 for sensor in self.valid_sensors.keys():
                     if self.valid_sensors[sensor] and sensor in self.targets[event][5]:
                         self.sensor_weight[sensor][event] = 1/cnt
+                        print("Agent ID: {}".format(self.id))
+                        print("sensor_weight[{}][{}]: {}".format(sensor, event, self.sensor_weight[sensor][event]))
                     else:
                         self.sensor_weight[sensor][event] = 0
                                     
@@ -753,7 +761,7 @@ class PTZCamera():
                 tmp = np.zeros(self.size, dtype=np.float64)
                 quality = np.zeros(self.size, dtype=np.float64)
                 if self.valid_sensors[role] and role in self.targets[event][5]:
-                    quality = self.ComputeSelfQuality(role=role, event=event)
+                    quality = self.ComputeSelfQuality(role=role, event=event) # f inside the voronoi cell & FOV
                     tmp = quality
                     
                     for k in self.valid_sensors.keys():
@@ -762,9 +770,9 @@ class PTZCamera():
 
                             tmp *= (1 + self.w_coop*coop_quality)
 
-                    tmp *= self.event_density[event]*self.grid_size[0]
+                    tmp *= self.event_density[event]*self.grid_size[0] # ϕ
 
-                    self.total_score += self.sensor_weight[role][event]*np.sum(tmp)
+                    self.total_score += self.sensor_weight[role][event]*np.sum(tmp) # w ∫_q fϕ dq
                 self.sensor_scores[role][event] = np.sum(quality)
         self.pub_utility.publish(self.total_score)
                     
@@ -778,17 +786,15 @@ class PTZCamera():
         # k_1 = .255
         # k_2 = .00000000125
         # static tuned for multi-target
-        # k_1 = 0.08
+        # k_1 = 0.05
         # k_2 = 0.0000000001
         # dynamic tuned for multi-target
-        k_1 = 0.15
-        k_2 = 0.0000000015
+        k_1 = 0.1
+        k_2 = 0.000000001
         # k_1 = 0.
         # k_2 = 0.
-        k_3 = 0.
 
         total_gradient = [np.zeros(self.size), np.zeros(self.size)]
-        total_gradient_1 = [np.zeros(self.size), np.zeros(self.size)]
         sensor_gradient = [np.zeros(self.size), np.zeros(self.size)]
         event_gradient = [np.zeros(self.size), np.zeros(self.size)]
         f = np.zeros(self.size)
@@ -973,6 +979,7 @@ class PTZCamera():
         return gradient
     
     def ComputeSelfQuality(self, role, event):
+        # Compute sensing capability
         x_coords, y_coords = np.meshgrid(np.arange(self.size[0]), np.arange(self.size[1]), indexing='ij')
         pos_self = self.pos
         grid_size = self.grid_size
@@ -991,15 +998,15 @@ class PTZCamera():
             
         elif role == 'camera':
             dist = np.sqrt((pos_self[0] - x_coords*grid_size[0])**2 + (pos_self[1] - y_coords*grid_size[1])**2)-self.camera_range
-            self_quality = np.exp(-(dist**2)/(2*self.camera_variance**2)) # q_res
+            self_quality = np.exp(-(dist**2)/(2*self.camera_variance**2)) # guassian like
             
             dist = np.sqrt((pos_self[0] - x_coords*grid_size[0])**2 + (pos_self[1] - y_coords*grid_size[1])**2)
             x = (x_coords*grid_size[0] - pos_self[0])
             y = (y_coords*grid_size[1] - pos_self[1])
             per_quality = (1/(1-np.cos(self.angle_of_view)))*((x*self.perspective[0] + y*self.perspective[1])/dist - np.cos(self.angle_of_view)) # \hat{q}_pers
-            self_quality[per_quality < 0] = 0
+            self_quality[per_quality < 0] = 0   # out of the agent's field of view (perspective), relative to \alpha(FOV angle)
                     
-            self_quality = np.where(self_territory > -1, 0, self_quality)
+            self_quality = np.where(self_territory > -1, 0, self_quality)   # out of the agent's Voronoi cell = 0
         
         return self_quality
     
@@ -1232,7 +1239,7 @@ if __name__ == "__main__":
                         manipulator_properties=manipulator_info, coop = True, balance = True, strength = 10000)
     
     rospy.Subscriber("/kill", Int16, KillCB)
-    rospy.Subscriber("/agent_"+str(id)+"/failure", Int16, FailureCB)
+    rospy.Subscriber("/iris_"+str(id)+"/failure", Int16, FailureCB)
     
     frame = []
     score = []
