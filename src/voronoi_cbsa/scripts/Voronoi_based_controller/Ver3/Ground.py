@@ -65,13 +65,15 @@ def Target1CovCallback(msg):
     global target_covariances
     target_covariance = np.array(msg.P_hat).reshape((6, 6))
     target_covariances[0] = (target_covariance[:2, :2]).flatten()
-    # target_covariances[0] = [4, 0, 0, 4]
+    constant_deviation = 1
+    target_covariances[0] = [constant_deviation, 0, 0, constant_deviation]
 
 def Target2CovCallback(msg):
     global target_covariances
     target_covariance = np.array(msg.P_hat).reshape((6, 6))
     target_covariances[1] = (target_covariance[:2, :2]).flatten()
-    # target_covariances[1] = [4, 0, 0, 4]
+    constant_deviation = 1
+    target_covariances[1] = [constant_deviation, 0, 0, constant_deviation]
 
 def TargetDynamics(x, y, v):
     spd = 0.005

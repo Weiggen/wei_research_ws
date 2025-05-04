@@ -54,20 +54,22 @@ def plot_comparison(bag_file1, bag_file2):
     timestamps2, H_data2, R_overall2 = process_rosbag(bag_file2)
 
     # 繪製兩組H數據
-    plt.plot(timestamps1, H_data1, label='H (Sim 7)', linewidth=2)
-    plt.plot(timestamps2, H_data2, label='H (Sim 8)', linewidth=2, linestyle='--')
+    plt.plot(timestamps1, H_data1, label='H (Sim 7, constant cov)', linewidth=2)
+    plt.plot(timestamps2, H_data2, label='H (Sim 8, time-varying cov)', linewidth=2, linestyle='--')
+    # plt.plot(timestamps1, H_data1, label='H (Sim 7, balance = False)', linewidth=2)
+    # plt.plot(timestamps2, H_data2, label='H (Sim 8, balance = False)', linewidth=2, linestyle='--')
 
     # 設置圖表屬性
     plt.xlabel('Time (seconds)')
     plt.ylabel('H Value')
-    plt.title('Comparison of H Values between Simulation 7 & 8')
+    plt.title('Comparison of H Values between Simulation 7&8, constant&time-varying cov')
     plt.legend()
     plt.grid(True)
 
     # 在終端機顯示 R_overall 值
     print("\nResults:")
-    print(f"R_overall (Simulation 7): {R_overall1:.2f}")
-    print(f"R_overall (Simulation 8): {R_overall2:.2f}")
+    print(f"R_overall (Simulation 7, constant cov): {R_overall1:.2f}")
+    print(f"R_overall (Simulation 8, time-varying cov): {R_overall2:.2f}")
     print(f"Improvement (%): {((R_overall2 - R_overall1)/R_overall1)*100:.2f}%")
 
     # 顯示圖表
@@ -75,8 +77,8 @@ def plot_comparison(bag_file1, bag_file2):
 
 def main():
     # 替換為您的兩個rosbag文件路徑
-    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/7_1_trimmed.bag'
-    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/8_1_trimmed.bag'
+    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/7_11_trimmed.bag'
+    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/8_11_trimmed.bag'
     # bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_constantCov.bag'
     # bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_dynamicCov.bag'
 

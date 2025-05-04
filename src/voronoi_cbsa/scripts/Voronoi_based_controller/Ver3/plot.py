@@ -317,7 +317,7 @@ class Visualize2D():
                     for y_map, y in enumerate(range(0, self.window_size[1], self.blockSize)):
                         
                         id = voronoi_plt[y_map, x_map]
-                        # 翻轉矩形位置
+                        # 翻轉畫面矩形位置
                         rect = pygame.Rect(
                             self.flip_x(x + self.blockSize) - self.blockSize, 
                             self.flip_y(y + self.blockSize) - self.blockSize, 
