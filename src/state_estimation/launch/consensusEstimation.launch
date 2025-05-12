@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-        <arg name="vehicle" default="iris"/>
+        <arg name="vehicle" default="tb"/>
         <arg name="consensus" default="true"/>
         <arg name="rate" default="60"/>
         <arg name="fusionNum" default="2"/>

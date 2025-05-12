@@ -33,7 +33,7 @@ class DataCenter():
 
         for id in range(1, self.total_agent+1):
             if id != self.id:
-                rospy.Subscriber("/iris_"+str(id)+"/global/exchange_data", ExchangeData, self.NeighborCallback) # id = [1, 2, 3]
+                rospy.Subscriber("/tb_"+str(id)+"/global/exchange_data", ExchangeData, self.NeighborCallback) # id = [1, 2, 3]
                 
         rospy.Subscriber("local/exchange_data", ExchangeData, self.SelfCallback)
         rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)

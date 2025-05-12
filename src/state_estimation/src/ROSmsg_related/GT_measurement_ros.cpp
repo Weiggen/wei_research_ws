@@ -50,44 +50,52 @@ void GT_measurement::setRosRate(int rate)
 
 void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& msg)
 {
-	GTs_count++; // GroundTruth call back rate = 500hz
+    GTs_count++; // GroundTruth call back rate = 500hz
 
-	////////////////////////// get groundTruth model states and arrange their ID////////////////////
-	std::vector<string> name = msg->name;
-	for(int i=0; i< name.size(); i++)
-	{
-		if(std::isdigit(name[i].back())) ////// First one is ground, skip it
-		{
-			GTs[int(name[i].back()-'0')].setPose(msg->pose[i]);
-			GTs[int(name[i].back()-'0')].setTwist(msg->twist[i]);
-		}
-	}
-	GTs_eigen = mavsMsg2Eigen(GTs, mavNum+targetNum);
-	std::vector<MAV_eigen> formation_eigen_GT(GTs_eigen.begin()+1, GTs_eigen.begin()+GTs_eigen.size()); // First one is target, we want all UAV
+    ////////////////////////// get groundTruth model states and arrange their ID////////////////////
+    std::vector<string> name = msg->name;
+    for(int i = 0; i < name.size(); i++)
+    {
+        // Agents: start with tb
+        if (name[i].substr(0, 2) == "tb" && std::isdigit(name[i].back()))
+        {
+            int id = int(name[i].back() - '0');
+            GTs[id].setPose(msg->pose[i]);
+        }
+        // Targets: start with "target"
+        else if (name[i].substr(0, 6) == "target" && std::isdigit(name[i].back()))
+        {
+            int id = int(name[i].back() - '0');
+            GTs[id].setTwist(msg->twist[i]);
+        }
+    }
+    
+    GTs_eigen = mavsMsg2Eigen(GTs, mavNum+targetNum);
+    std::vector<MAV_eigen> formation_eigen_GT(GTs_eigen.begin()+1, GTs_eigen.begin()+GTs_eigen.size()); // First one is target, we want all UAV
 
-	////////////////////////// Transform from groundtruth to measurements,  ////////////////////////
-	static std::default_random_engine generator;
-	if(GTs_count % (GTs_rate/lidar_rate) == 0) // lidar_rate = 10hz means that we do a measurement evry 50 count 
-	{
-		lidarMeasurements = lidarMeasure(formation_eigen_GT, generator);
-		lidar4target = lidarmeasure4target(formation_eigen_GT, GTs_eigen[0], generator);
-		CameraModel = Camera4Neighbor(formation_eigen_GT, generator);
-		CameraModel4target_1 = CameraMeasure4target_1(formation_eigen_GT, GTs_eigen[0], generator);  // CameraMeasure4target_1(<all robots' pose>, <target_1 pose>, generator)
-		CameraModel4target_2 = CameraMeasure4target_2(formation_eigen_GT, GTs_eigen[4], generator);
+    ////////////////////////// Transform from groundtruth to measurements,  ////////////////////////
+    static std::default_random_engine generator;
+    if(GTs_count % (GTs_rate/lidar_rate) == 0) // lidar_rate = 10hz means that we do a measurement evry 50 count 
+    {
+        lidarMeasurements = lidarMeasure(formation_eigen_GT, generator);
+        lidar4target = lidarmeasure4target(formation_eigen_GT, GTs_eigen[0], generator);
+        CameraModel = Camera4Neighbor(formation_eigen_GT, generator);
+        CameraModel4target_1 = CameraMeasure4target_1(formation_eigen_GT, GTs_eigen[0], generator);  // CameraMeasure4target_1(<all robots' pose>, <target_1 pose>, generator)
+        CameraModel4target_2 = CameraMeasure4target_2(formation_eigen_GT, GTs_eigen[4], generator);
 
-		// for (int i = 0; i < targetNum; i++)
-		// {
-		// 	if (i < GTs_eigen.size())
-		// 	{
-		// 		lidar4targets[i] = lidar4targets();
-		// 		Camera4targets[i] = Camera4targets();
-		// 	}
-		// }
-	}
-	if(GTs_count % (GTs_rate/position_rate) == 0) // position_rate = 10hz means that we do a measurement evry 50 count 
-		positionMeasurement = positionMeasure(GTs_eigen[ID], generator);
-	if(GTs_count == GTs_rate)
-		GTs_count = 0;
+        // for (int i = 0; i < targetNum; i++)
+        // {
+        //     if (i < GTs_eigen.size())
+        //     {
+        //         lidar4targets[i] = lidar4targets();
+        //         Camera4targets[i] = Camera4targets();
+        //     }
+        // }
+    }
+    if(GTs_count % (GTs_rate/position_rate) == 0) // position_rate = 10hz means that we do a measurement evry 50 count 
+        positionMeasurement = positionMeasure(GTs_eigen[ID], generator);
+    if(GTs_count == GTs_rate)
+        GTs_count = 0;
 }
 
 std::vector<MAV_eigen> GT_measurement::getGTs_eigen(){return GTs_eigen;}

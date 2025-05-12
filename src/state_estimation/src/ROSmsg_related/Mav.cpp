@@ -73,6 +73,42 @@ void MAV::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& msg)
     }
 
 }
+
+// void MAV::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& msg)
+// {
+//     ////////////////////////// get groundTruth model states and arrange their ID////////////////////
+//     std::vector<string> name = msg->name;
+//     string iris_prefix = string("iris") + to_string(id);
+    
+//     for (int i = 0; i < name.size(); i++)
+//     {
+//         // 檢查名稱是否以"tb"開頭且最後一個字符是數字
+//         if (name[i].substr(0, 1) == "tb" && std::isdigit(name[i].back()))
+//         {
+//             int model_id = int(name[i].back() - '0');
+            
+//             // 如果當前模型的ID與我們要尋找的ID相匹配
+//             if (model_id == id)
+//             {
+//                 setPose(msg->pose[i]);
+//                 setTwist(msg->twist[i]);
+//                 // std::cout << name[i] << "\n" << id << "\n";
+//             }
+//         }
+//         else if (name[i].substr(0, 1) == "target" && std::isdigit(name[i].back()))
+//         {
+//             int target_id = int(name[i].back() - '0');
+            
+//             // 如果當前模型的ID與我們要尋找的ID相匹配
+//             if (target_id == id)
+//             {
+//                 setPose(msg->pose[i]);
+//                 setTwist(msg->twist[i]);
+//             }
+//         }
+//     }
+// }
+
 void MAV::mav_state_cb(const mavros_msgs::State::ConstPtr& msg) 
 {
     state = *msg;
