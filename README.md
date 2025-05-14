@@ -1,23 +1,21 @@
 https://github.com/qq44642754a/Yolov8_ros
 
 # Run Simulation
-1. Open the environment and the drones in gazebo.
+1. Open the environment and the turtleBots in gazebo.
 ```
-roslaunch formation_ctrl test_formation.launch
+roslaunch voronoi_cbsa 2T3R_turtle.launch 
 ```
-2. UAVs' control node
+2. Record the ros bag
 ```
-roslaunch voronoi_cbsa CBSA.kaunch
+cd /wei_research_ws/src/voronoi_cbsa/bag
+rosbag record -O [file name] /tb_1/TEIF/target_1/Plot /tb_1/TEIF/target_2/Plot /tb_1/utility /tb_2/utility /tb_3/utility /tb_1/cmd_vel /tb_2/cmd_vel /tb_3/cmd_vel /iris_1/local/position /tb_2/local/position /tb_3/local/position
+
 ```
-3. Our agents(3 on the outside) flight mode control node
-```
-rosrun formation_ctrl cmd_node
-```
-4. Estimation nodes
+3. Estimation nodes
 ```
 roslaunch state_estimation consensusEstimation.launch
 ```
-5. Target's flight mode switching & motion control nodes
+4. Agents' control node and the real-time pygame image
 ```
-roslaunch formation_ctrl target_kb_ctrl.launch
+roslaunch voronoi_cbsa CBSA_tb.kaunch
 ```
