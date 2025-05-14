@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from geometry_msgs.msg import Pose, Point, PoseStamped, TwistStamped
+from geometry_msgs.msg import Pose, Point, PoseStamped, TwistStamped, Twist
 from mavros_msgs.msg import State
 from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeRequest, CommandTOL
 from voronoi_cbsa.msg import ExchangeData, ExchangeDataArray, TargetInfoArray, SensorArray, Sensor, ValidSensors, WeightArray, Weight, densityGradient
@@ -10,6 +10,8 @@ from cv_bridge import CvBridge
 from gazebo_msgs.msg import ModelStates, LinkStates
 from qpsolvers import solve_qp
 from cvxopt import matrix, solvers
+from scipy.spatial.transform import Rotation as R
+from pynput import keyboard
 
 import numpy as np
 import pandas as pd
@@ -98,7 +100,7 @@ class PTZCamera():
         self.cooperation    = coop 
         self.sensor_balance = balance
         self.w_coop         = strength
-        self.safe_distance  = 0.4
+        self.safe_distance  = 0.1
         self.avoid_weight   = 0.05
         
         # Setting up environment parameters
@@ -116,6 +118,8 @@ class PTZCamera():
         self.max_speed          = general_properties['max_speed']
         self.sensor_qualities   = {}
         self.agent_ready        = False
+        self.vehicle            = "tb"
+        self.prefix             = "/tb_"+str(self.id)      
 
         if self.valid_sensors['camera']:
             # Camera property
@@ -184,20 +188,26 @@ class PTZCamera():
         # rospy.Subscriber("/iris_"+str(self.id)+"/mavros/local_position/pose", PoseStamped, self.AgentPosCallback)
         rospy.Subscriber("/gazebo/model_states", ModelStates, self.AgentPosCallback)
 
-        rospy.Subscriber("/iris_"+str(self.id)+"/heading_cmd", Float64MultiArray, self.HeadingCmdCallback)
+        rospy.Subscriber(self.prefix+"/heading_cmd", Float64MultiArray, self.HeadingCmdCallback)
         # # Single target scenario
         # rospy.Subscriber("/iris_"+str(self.id)+"/densityGradient", densityGradient, self.DensityGradientCallback)
-        # Multi-target scenario
-        rospy.Subscriber("/iris_"+str(self.id)+"/target_1/densityGradient", densityGradient, self.DensityGradientCallback_1)
-        rospy.Subscriber("/iris_"+str(self.id)+"/target_2/densityGradient", densityGradient, self.DensityGradientCallback_2)
+        # # Multi-target scenario
+        # rospy.Subscriber("/iris_"+str(self.id)+"/target_1/densityGradient", densityGradient, self.DensityGradientCallback_1)
+        # rospy.Subscriber("/iris_"+str(self.id)+"/target_2/densityGradient", densityGradient, self.DensityGradientCallback_2)
+        # TurtleBots scenario
+        rospy.Subscriber(self.prefix+"/target_1/densityGradient", densityGradient, self.DensityGradientCallback_1)
+        rospy.Subscriber(self.prefix+"/target_2/densityGradient", densityGradient, self.DensityGradientCallback_2)
 
         self.pub_pos                = rospy.Publisher("local/position", Point, queue_size=10)
         self.pub_exchange_data      = rospy.Publisher("local/exchange_data",ExchangeData, queue_size=10)
-        self.pub_utility            = rospy.Publisher("/iris_"+str(self.id)+"/utility", Float64, queue_size=10)
+        self.pub_utility            = rospy.Publisher(self.prefix+"/utility", Float64, queue_size=10)
 
-        self.pub_vel_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_velocity/cmd_vel", TwistStamped, queue_size=10)
-        self.pub_pos_cmd            = rospy.Publisher("/iris_"+str(self.id)+"/mavros/setpoint_position/local", PoseStamped, queue_size=10)
-        self.pub_heading_cmd        = rospy.Publisher("/iris_"+str(self.id)+"/heading_cmd", Float64MultiArray, queue_size=10)
+        # # Multi-targets scenario
+        # self.pub_vel_cmd            = rospy.Publisher(self.prefix+"/mavros/setpoint_velocity/cmd_vel", TwistStamped, queue_size=10)
+        # # self.pub_pos_cmd            = rospy.Publisher(self.prefix+"/mavros/setpoint_position/local", PoseStamped, queue_size=10)
+        # TurtleBots scenario
+        self.pub_vel_cmd            = rospy.Publisher(self.prefix+"/cmd_vel", Twist, queue_size=10)
+        self.pub_heading_cmd        = rospy.Publisher(self.prefix+"/heading_cmd", Float64MultiArray, queue_size=10)
 
         self.pub_sensor_weight      = rospy.Publisher("visualize/sensor_weights", WeightArray, queue_size=10)
         self.pub_total_score        = rospy.Publisher("visualize/total_score", Float64, queue_size=10)
@@ -275,37 +285,35 @@ class PTZCamera():
             self.target_buffer[target.id] = [pos, cov, weight, vel, target.id, requirements, height]
                 
     def AgentPosCallback(self, msg):
+        # # UAV version
         # self.agent_ready = True
-        # self.pos = np.array([msg.pose.position.x, msg.pose.position.y])
-        # self.pos_z = msg.pose.position.z
-        # q_current = [msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w]
+        # index = msg.name.index("iris_"+str(self.id))
+        # pose = msg.pose[index]
+        # self.pos = np.array([pose.position.x, pose.position.y])
+        # self.pos_z = pose.position.z
+        # q_current = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
         # euler = tf.euler_from_quaternion(q_current)
         # self.yaw = euler[2] # rad
         # self.perspective = [math.cos(self.yaw), math.sin(self.yaw)] # [v_x, v_y]
-        # # print("heading vector_"+str(self.id)+": \n{}\n".format(self.perspective))
+
+        # TB version
         self.agent_ready = True
-        index = msg.name.index("tb_"+str(self.id))
+        num = len(msg.name)
+        for (i, name) in enumerate(msg.name):
+            if name == "tb_"+str(self.id):
+                index = i
+                break
+
         pose = msg.pose[index]
         self.pos = np.array([pose.position.x, pose.position.y])
-        self.pos_z = pose.position.z
-        q_current = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
-        euler = tf.euler_from_quaternion(q_current)
-        self.yaw = euler[2] # rad
-        self.perspective = [math.cos(self.yaw), math.sin(self.yaw)] # [v_x, v_y]
-
-    # def DensityGradientCallback(self, msg):
-    #     self.agent_ready = True
-    #     self.event_density_gradient = [np.zeros(self.size), np.zeros(self.size)]
-    #     gradient_x_array = np.array(msg.gradient_x).reshape(self.size[0], self.size[1])
-    #     gradient_y_array = np.array(msg.gradient_y).reshape(self.size[0], self.size[1])
-    #     gradient_x_array = np.nan_to_num(gradient_x_array, nan=0.0)
-    #     gradient_y_array = np.nan_to_num(gradient_y_array, nan=0.0)
-    #     self.event_density_gradient[0] += gradient_x_array
-    #     self.event_density_gradient[1] += gradient_y_array
-    #     # rospy.loginfo("Size of self.event_density_gradient[0]: {}".format(self.event_density_gradient[0].shape))
-    #     # rospy.loginfo("Size of self.event_density_gradient[1]: {}".format(self.event_density_gradient[1].shape))
-    #     # rospy.loginfo("msg.gradient_x: \n{}".format(np.array(msg.gradient_x)[:3]))
-    #     # rospy.loginfo("self.event_density_gradient[0]: \n{}".format(self.event_density_gradient[0][:3, :3]))
+        # print("pos: ", self.pos)
+        qx = pose.orientation.x
+        qy = pose.orientation.y
+        qz = pose.orientation.z
+        qw = pose.orientation.w
+        r = R.from_quat([qx, qy, qz, qw])
+        self.yaw = r.as_euler('xyz')[2] # rad
+        # print("yaw: ", self.yaw)
 
     def DensityGradientCallback_1(self, msg):
         self.agent_ready = True
@@ -532,13 +540,21 @@ class PTZCamera():
                 array_msg.data = u_v.tolist()
                 self.pub_heading_cmd.publish(array_msg)
 
-            twistStamped_msg = TwistStamped()
-            twistStamped_msg.header.stamp = rospy.Time.now()
-            twistStamped_msg.twist.linear.x = self.u_p[0]
-            twistStamped_msg.twist.linear.y = self.u_p[1]
-            twistStamped_msg.twist.linear.z = self.u_h
-            twistStamped_msg.twist.angular.z = self.yaw_rate
-            self.pub_vel_cmd.publish(twistStamped_msg)
+            # # Multi-targets scenario, UAV version
+            # twistStamped_msg = TwistStamped()
+            # twistStamped_msg.header.stamp = rospy.Time.now()
+            # twistStamped_msg.twist.linear.x = self.u_p[0]
+            # twistStamped_msg.twist.linear.y = self.u_p[1]
+            # # twistStamped_msg.twist.linear.z = self.u_h
+            # twistStamped_msg.twist.angular.z = self.yaw_rate
+            # self.pub_vel_cmd.publish(twistStamped_msg)
+
+            # TurtleBots scenario
+            twist_msg = Twist()
+            twist_msg.linear.x = self.u_p[0]
+            twist_msg.linear.y = self.u_p[1]
+            twist_msg.angular.z = self.yaw_rate
+            self.pub_vel_cmd.publish(twist_msg)
             
             # if self.valid_sensors['camera']:
             #     self.UpdatePerspective(u_v)
@@ -569,39 +585,22 @@ class PTZCamera():
         else :
             self.u_p[1] = u_p[1]
 
-        # Height
-        target_heights = {}
-        for target in self.targets.keys():
-            target_heights[target] = self.targets[target][6]
-        if target_heights:
-            hightest = max(target_heights.values())
-        k_h = 1
-        tolerance = 1
-        ideal_z = 2.5 + hightest
-        if self.pos_z < ideal_z - tolerance :
-            self.u_h = k_h*(ideal_z - self.pos_z)
-        elif self.pos_z > ideal_z + tolerance:
-            self.u_h = k_h*(ideal_z - self.pos_z)
-        else :
-            self.u_h = 0
+        # # Height
+        # target_heights = {}
+        # for target in self.targets.keys():
+        #     target_heights[target] = self.targets[target][6]
+        # if target_heights:
+        #     hightest = max(target_heights.values())
+        # k_h = 1
+        # tolerance = 1
+        # ideal_z = 2.5 + hightest
+        # if self.pos_z < ideal_z - tolerance :
+        #     self.u_h = k_h*(ideal_z - self.pos_z)
+        # elif self.pos_z > ideal_z + tolerance:
+        #     self.u_h = k_h*(ideal_z - self.pos_z)
+        # else :
+        #     self.u_h = 0
 
-        ###########################################################
-        # u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
-        # self.u_p = u_p
-
-        # u_avoid = np.array([0., 0.])
-          
-        # self.pos += self.K_p * ((1 - self.avoid_weight)*u_p + self.avoid_weight*u_avoid) * self.step if not np.isnan(u_p)[0] else self.pos
-        
-        # if self.pos[0] < 0:
-        #     self.pos[0] = 0
-        # elif self.pos[0] > self.map_size[0]:
-        #     self.pos[0] = self.map_size[0]
-            
-        # if self.pos[1] < 0:
-        #     self.pos[1] = 0
-        # elif self.pos[1] > self.map_size[1]:
-        #     self.pos[1] = self.map_size[1]
                 
     def UpdatePerspective(self, u_v):
         
@@ -719,10 +718,10 @@ class PTZCamera():
                                 single_sensor_sum += neighbor['sensor_scores'][sensor][event]
                                 
                         self.sensor_weight[sensor][event] = (5 + self.sensor_scores[sensor][event])/(5 + self.sensor_scores[sensor][event] + single_sensor_sum)
-                        print("Agent ID: {}".format(self.id))
-                        print("sensor_weight[{}][{}]: {}".format(sensor, event, self.sensor_weight[sensor][event]))
-                        print("sensor_scores[{}][{}]: {}".format(sensor, event, self.sensor_scores[sensor][event]))
-                        print("single_sensor_sum: {}".format(single_sensor_sum))
+                        # print("Agent ID: {}".format(self.id))
+                        # print("sensor_weight[{}][{}]: {}".format(sensor, event, self.sensor_weight[sensor][event]))
+                        # print("sensor_scores[{}][{}]: {}".format(sensor, event, self.sensor_scores[sensor][event]))
+                        # print("single_sensor_sum: {}".format(single_sensor_sum))
                     
                     else: 
                         self.sensor_weight[sensor][event] = 0
@@ -749,8 +748,8 @@ class PTZCamera():
                 for sensor in self.valid_sensors.keys():
                     if self.valid_sensors[sensor] and sensor in self.targets[event][5]:
                         self.sensor_weight[sensor][event] = 1/cnt
-                        print("Agent ID: {}".format(self.id))
-                        print("sensor_weight[{}][{}]: {}".format(sensor, event, self.sensor_weight[sensor][event]))
+                        # print("Agent ID: {}".format(self.id))
+                        # print("sensor_weight[{}][{}]: {}".format(sensor, event, self.sensor_weight[sensor][event]))
                     else:
                         self.sensor_weight[sensor][event] = 0
                                     
@@ -779,6 +778,7 @@ class PTZCamera():
     def ComputeControlSignal(self):
         u_p = np.array([0., 0.])  
         u_v = np.array([0., 0.])
+        # UAV scenario
         # static tuned for single target
         # k_1 = 0.2
         # k_2 = 0.0000000001
@@ -789,8 +789,12 @@ class PTZCamera():
         # k_1 = 0.05
         # k_2 = 0.0000000001
         # dynamic tuned for multi-target
-        k_1 = 0.1
-        k_2 = 0.000000001
+        # k_1 = 0.1
+        # k_2 = 0.000000001
+
+        # TurtleBots scenario, static tuned
+        k_1 = .1
+        k_2 = 0.0000000001
         # k_1 = 0.
         # k_2 = 0.
 
@@ -1232,14 +1236,14 @@ if __name__ == "__main__":
 
     # Set Offboard Mode
     uav_id = id
-    cmd = CMD(uav_id)
+    # cmd = CMD(uav_id)
 
     UAV_self = PTZCamera(map_size = map_size, grid_size = grid_size, general_properties=general_info,
                         camera_properties=camera_info, smoke_detector_properties=smoke_detector_info, 
-                        manipulator_properties=manipulator_info, coop = True, balance = True, strength = 10000)
+                        manipulator_properties=manipulator_info, coop = True, balance = False, strength = 10000)
     
     rospy.Subscriber("/kill", Int16, KillCB)
-    rospy.Subscriber("/iris_"+str(id)+"/failure", Int16, FailureCB)
+    rospy.Subscriber("/tb_"+str(id)+"/failure", Int16, FailureCB)
     
     frame = []
     score = []
@@ -1250,9 +1254,10 @@ if __name__ == "__main__":
     cnt = 0
     
     while not rospy.is_shutdown() and not kill and not failure:
+        
+
         UAV_self.Update()
-        # rospy.loginfo("Updating...")
-            
+        rospy.loginfo("Updating...")
         frame.append(cnt)
         score.append(UAV_self.total_score)
         pos_x.append(UAV_self.pos[0])

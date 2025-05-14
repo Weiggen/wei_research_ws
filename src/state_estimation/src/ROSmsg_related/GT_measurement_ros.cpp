@@ -54,46 +54,66 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
 
     ////////////////////////// get groundTruth model states and arrange their ID////////////////////
     std::vector<string> name = msg->name;
+    
+    // 初始化映射表示每個名稱應該對應的索引，跳過 ground_plane
+    std::map<string, int> name_to_index;
+    name_to_index["tb_1"] = 1;
+    name_to_index["tb_2"] = 2;
+    name_to_index["tb_3"] = 3;
+    name_to_index["target_1"] = 0;
+    name_to_index["target_2"] = 4;
+    
     for(int i = 0; i < name.size(); i++)
     {
-        // Agents: start with tb
-        if (name[i].substr(0, 2) == "tb" && std::isdigit(name[i].back()))
+        if(name_to_index.find(name[i]) != name_to_index.end())
         {
-            int id = int(name[i].back() - '0');
-            GTs[id].setPose(msg->pose[i]);
-        }
-        // Targets: start with "target"
-        else if (name[i].substr(0, 6) == "target" && std::isdigit(name[i].back()))
-        {
-            int id = int(name[i].back() - '0');
-            GTs[id].setTwist(msg->twist[i]);
+            int target_index = name_to_index[name[i]];
+            GTs[target_index].setPose(msg->pose[i]);
+            GTs[target_index].setTwist(msg->twist[i]);
         }
     }
     
-    GTs_eigen = mavsMsg2Eigen(GTs, mavNum+targetNum);
-    std::vector<MAV_eigen> formation_eigen_GT(GTs_eigen.begin()+1, GTs_eigen.begin()+GTs_eigen.size()); // First one is target, we want all UAV
+    /*  @ Now we have the groundtruth of all UAVs and targets (without ground_plane):
+        @ GTs[0]: target_1
+        @ GTs[1]: tb_1
+        @ GTs[2]: tb_2
+        @ GTs[3]: tb_3
+        @ GTs[4]: target_2 */
+    
+    GTs_eigen = mavsMsg2Eigen(GTs, name_to_index.size());
+    
+    // 修正：只取 tb_1, tb_2, tb_3，它們現在是索引 1, 2, 3
+    std::vector<MAV_eigen> formation_eigen_GT;
+    formation_eigen_GT.push_back(GTs_eigen[1]); // tb_1
+    formation_eigen_GT.push_back(GTs_eigen[2]); // tb_2
+    formation_eigen_GT.push_back(GTs_eigen[3]); // tb_3
+    
+    // 打印所有 GTs_eigen 元素
+    for(int i = 0; i < GTs_eigen.size(); i++) {
+        printf("GTs_eigen[%d]: \n [%f, %f]\n", i, GTs_eigen[i].r(0), GTs_eigen[i].r(1));
+    }
 
     ////////////////////////// Transform from groundtruth to measurements,  ////////////////////////
     static std::default_random_engine generator;
-    if(GTs_count % (GTs_rate/lidar_rate) == 0) // lidar_rate = 10hz means that we do a measurement evry 50 count 
+    if(GTs_count % (GTs_rate/lidar_rate) == 0) 
     {
         lidarMeasurements = lidarMeasure(formation_eigen_GT, generator);
+        
+        // 修正：target_1 現在是 GTs_eigen[0]
         lidar4target = lidarmeasure4target(formation_eigen_GT, GTs_eigen[0], generator);
         CameraModel = Camera4Neighbor(formation_eigen_GT, generator);
-        CameraModel4target_1 = CameraMeasure4target_1(formation_eigen_GT, GTs_eigen[0], generator);  // CameraMeasure4target_1(<all robots' pose>, <target_1 pose>, generator)
+        CameraModel4target_1 = CameraMeasure4target_1(formation_eigen_GT, GTs_eigen[0], generator);
+        
+        // target_2 仍然是 GTs_eigen[4]
         CameraModel4target_2 = CameraMeasure4target_2(formation_eigen_GT, GTs_eigen[4], generator);
-
-        // for (int i = 0; i < targetNum; i++)
-        // {
-        //     if (i < GTs_eigen.size())
-        //     {
-        //         lidar4targets[i] = lidar4targets();
-        //         Camera4targets[i] = Camera4targets();
-        //     }
-        // }
     }
-    if(GTs_count % (GTs_rate/position_rate) == 0) // position_rate = 10hz means that we do a measurement evry 50 count 
+    
+    // 修正：如果 ID 是 1-3 範圍內的，則需要轉換為 GTs_eigen 的索引
+    if(GTs_count % (GTs_rate/position_rate) == 0) {
+        // ID 從 1 開始，而 tb_1 在 GTs_eigen 中的索引是 1，所以使用 ID 即可
         positionMeasurement = positionMeasure(GTs_eigen[ID], generator);
+    }
+    
     if(GTs_count == GTs_rate)
         GTs_count = 0;
 }

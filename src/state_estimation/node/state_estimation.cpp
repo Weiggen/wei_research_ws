@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	double targetTimeTol = 0.05;
 	double last_t;
 	double dt;
-    ros::param::get("vehicle", vehicle);
+    ros::param::get("vehicle", vehicle); // From launch file, tb, means turtleBot
 	ros::param::get("ID", ID);
     ros::param::get("rate", rosRate);
 	ros::param::get("consensus", consensus);
@@ -88,9 +88,11 @@ int main(int argc, char **argv)
 	geometry_msgs::TwistStamped target_fusedTwistMsg_2;
 	ROS_INFO("target Msgs created.");
 
+	/* ----- UAV scenario ----- */
 	MAV mav(nh);
 	MAV mav_t1(nh);
 	MAV mav_t2(nh);
+
 	EIFpairs_ros eif_ros(nh, vehicle, ID, mavNum, targetNum);
 	Camera cam(nh, false);
 	GT_measurement gt_m(nh, ID, mavNum+targetNum);
@@ -182,8 +184,10 @@ int main(int argc, char **argv)
 
 		mav.setOrientation(gt_m.getGTorientation(ID));   // set orientation of robot
 		mav_eigen = mavMsg2Eigen(mav); 					 // convert mav message to eigen format
+
 		mav_t1.setOrientation(gt_m.getGTorientation(0)); // set orientation of target_1
 		mav_eigen_t1 = mavMsg2Eigen(mav_t1); 			 // convert mav message to eigen format
+		
 		mav_t2.setOrientation(gt_m.getGTorientation(4)); // set orientation of target_2
 		mav_eigen_t2 = mavMsg2Eigen(mav_t2);  			 // convert mav message to eigen format
 		/*=================================================================================================================================
@@ -210,9 +214,9 @@ int main(int argc, char **argv)
 			// For the first iteration, the GT is the initial value of the target
 			Eigen::Vector3d initialBbox;
 			if (i == 0) {
-				initialBbox << gt_m.getGTs_eigen()[0].r;
+				initialBbox << gt_m.getGTs_eigen()[0].r; // target_1
 			} else {
-				initialBbox << gt_m.getGTs_eigen()[4].r;
+				initialBbox << gt_m.getGTs_eigen()[4].r; // target_2
 			}
 			if (iteration_count == 0) {
 				teif_objects[i].setInitialState(initialBbox);
@@ -230,7 +234,10 @@ int main(int argc, char **argv)
 			teif_objects[i].setSEIFpredData(SEIF_pose.getEIFData());
 			teif_objects[i].computePredPairs(dt);
 		}
-		// std::cout << "Robot" << ID << " set Pred TEIF:\n" << "target_1:\n" << teif_objects[0].getTgtData().X_hat << "\n\n" << "target_2:\n" << teif_objects[1].getTgtData().X_hat << "\n\n";
+		// std::cout << "Robot" << ID << " set Pred TEIF:\n" 
+		// 			<< "target_1:\n" << teif_objects[0].getTgtData().X_hat << "\n" 
+		// 			<< "target_2:\n" << teif_objects[1].getTgtData().X_hat << "\n\n";
+		std::cout << "Robot" << ID << " set Pred SEIF:\n" << SEIF_pose.getEIFData().X_hat << "\n\n";
 
 		// teif.setCamera(cam);
 		// teif.setMavSelfData(mav_eigen); 

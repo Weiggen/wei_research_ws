@@ -213,10 +213,10 @@ def plotFromBag(bag, name):
     E_x = []
     E_y = []
     E_z = []
-    # timestamps1, EIF_1_GTpose, EIF_1_Estpose, EIF_1_RMSE_p, EIF_1_RMSE_v , EIF_1_det_p  = extract_data(bag, '/iris_1/SHEIF/Plot')
-    # timestamps2, EIF_2_GTpose, EIF_2_Estpose, EIF_2_RMSE_p, EIF_2_RMSE_v , EIF_2_det_p  = extract_data(bag, '/iris_2/SHEIF/Plot')
-    # timestamps3, EIF_3_GTpose, EIF_3_Estpose, EIF_3_RMSE_p, EIF_3_RMSE_v , EIF_3_det_p  = extract_data(bag, '/iris_3/SHEIF/Plot')
-    timestampst, EIF_t_GTpose, EIF_t_Estpose, EIF_t_RMSE_p, EIF_t_RMSE_v , EIF_t_det_p = extract_data(bag, '/iris_1/THEIF/Plot')
+    # timestamps1, EIF_1_GTpose, EIF_1_Estpose, EIF_1_RMSE_p, EIF_1_RMSE_v , EIF_1_det_p  = extract_data(bag, '/tb_1/SHEIF/Plot')
+    # timestamps2, EIF_2_GTpose, EIF_2_Estpose, EIF_2_RMSE_p, EIF_2_RMSE_v , EIF_2_det_p  = extract_data(bag, '/tb_2/SHEIF/Plot')
+    # timestamps3, EIF_3_GTpose, EIF_3_Estpose, EIF_3_RMSE_p, EIF_3_RMSE_v , EIF_3_det_p  = extract_data(bag, '/tb_3/SHEIF/Plot')
+    timestampst, EIF_t_GTpose, EIF_t_Estpose, EIF_t_RMSE_p, EIF_t_RMSE_v , EIF_t_det_p = extract_data(bag, '/tb_1/THEIF/Plot')
     # for (GTpose, Estpose) in zip(EIF_1_GTpose, EIF_1_Estpose):
         # E_x.append(abs(GTpose.position.x - Estpose.position.x))
         # E_y.append(abs(GTpose.position.y - Estpose.position.y))
@@ -244,9 +244,9 @@ def plotFromBag(bag, name):
     # plot_RMSE_v(timestamps3, EIF_3_RMSE_v, "3")
     plot_RMSE_p(timestampst, EIF_t_RMSE_p, "target")
     plot_RMSE_v(timestampst, EIF_t_RMSE_v, "target")
-    # plot_imu(timestamps1,EIF_1_GTpose, "iris_1")
-    # plot_imu(timestamps2,EIF_2_GTpose, "iris_2")
-    # plot_imu(timestamps3,EIF_3_GTpose, "iris_3")
+    # plot_imu(timestamps1,EIF_1_GTpose, "tb_1")
+    # plot_imu(timestamps2,EIF_2_GTpose, "tb_2")
+    # plot_imu(timestamps3,EIF_3_GTpose, "tb_3")
     
     plot_det_p(timestampst, EIF_t_det_p, "target")
     # plot_det_p(timestamps1, EIF_1_det_p, "1")
@@ -323,10 +323,10 @@ def plot_combine_det_p( det_p, det_p2, dataset_label, dataset_label2):
     # print(f"avg cov (Simulation 8): {average2:.2f}")
     print(f"Improvement (%): {((average - average2)/average)*100:.2f}%")
     # print(average)
-    plt.scatter(timeStamps, det_p, label=f'trace(p) for {dataset_label}',color='orange')
+    plt.scatter(timeStamps, det_p, label=f'trace(p) for {dataset_label}',color='r')
     plt.axhline(y=average, color='r', linestyle='--',label=f'Average trace(p): {average}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='orange')
-    plt.scatter(timeStamps, det_p2, label=f'trace(p) for {dataset_label2}',color='lightblue')
+    plt.scatter(timeStamps, det_p2, label=f'trace(p) for {dataset_label2}',color='b')
     plt.axhline(y=average2, color='b', linestyle='--',label=f'Average trace(p): {average2}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average2}', color='orange')    
     plt.xlabel('Time (seconds)')
@@ -360,12 +360,12 @@ folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 # file2 = folder + '8_10_trimmed.bag'
 
 # Multi-targets dynamic simulation
-file1 = folder + '7_10_trimmed.bag'
-file2 = folder + '8_10_trimmed.bag'
+file1 = folder + 'tb_record.bag'
+file2 = folder + 'tb_record.bag'
 
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
-topic = '/iris_1/TEIF/target_1/Plot'
+topic = '/tb_1/TEIF/target_1/Plot'
 plotFromTwoBags(file1, file2, topic, 'Sim7, constant cov', 'Sim8, time-varying cov')
 # plotFromTwoBags(file1, file2, topic, 'Sim7, balance = T', 'Sim8, balance = T')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')

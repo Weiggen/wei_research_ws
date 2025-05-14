@@ -97,14 +97,14 @@ if __name__ == "__main__":
     rate = rospy.Rate(60)
 
     # # Subscriber for single target's positions & cavariances
-    # target_pos_sub = rospy.Subscriber("/iris_1/THEIF/pose", PoseStamped, callback = TargetPosCallback)
-    # target_cov_sub = rospy.Subscriber("/iris_1/TEIF/fusionPairs", EIFpairStamped, callback = TargetCovCallback)
+    # target_pos_sub = rospy.Subscriber("/tb_1/THEIF/pose", PoseStamped, callback = TargetPosCallback)
+    # target_cov_sub = rospy.Subscriber("/tb_1/TEIF/fusionPairs", EIFpairStamped, callback = TargetCovCallback)
 
     # Subscribers for multi-targets scenario
-    target_1_pos_sub = rospy.Subscriber("/iris_1/THEIF/target_1/pose", PoseStamped, callback = Target1PosCallback)
-    target_1_cov_sub = rospy.Subscriber("/iris_1/TEIF/target_1/fusionPairs", EIFpairStamped, callback = Target1CovCallback)
-    target_2_pos_sub = rospy.Subscriber("/iris_1/THEIF/target_2/pose", PoseStamped, callback = Target2PosCallback)
-    target_2_cov_sub = rospy.Subscriber("/iris_1/TEIF/target_2/fusionPairs", EIFpairStamped, callback = Target2CovCallback)
+    target_1_pos_sub = rospy.Subscriber("/tb_1/THEIF/target_1/pose", PoseStamped, callback = Target1PosCallback)
+    target_1_cov_sub = rospy.Subscriber("/tb_1/TEIF/target_1/fusionPairs", EIFpairStamped, callback = Target1CovCallback)
+    target_2_pos_sub = rospy.Subscriber("/tb_1/THEIF/target_2/pose", PoseStamped, callback = Target2PosCallback)
+    target_2_cov_sub = rospy.Subscriber("/tb_1/TEIF/target_2/fusionPairs", EIFpairStamped, callback = Target2CovCallback)
     # Publisher for target's(targets') information that will be sent to the agents and use for the coverage control
     target_pub = rospy.Publisher("/target", TargetInfoArray, queue_size=10)
     

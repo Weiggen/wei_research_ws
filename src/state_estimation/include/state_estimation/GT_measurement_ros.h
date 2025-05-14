@@ -7,6 +7,7 @@
 #include <gazebo_msgs/ModelStates.h>
 #include <Eigen/Dense>
 #include <random>
+#include <map>
 
 #include "Mav.h"
 

@@ -15,9 +15,9 @@ def process_rosbag(bag_file):
     # 打開rosbag文件
     with rosbag.Bag(bag_file, 'r') as bag:
         # 讀取三個不同話題的數據
-        h1_msgs = bag.read_messages(topics=['/iris_1/utility'])
-        h2_msgs = bag.read_messages(topics=['/iris_2/utility'])
-        h3_msgs = bag.read_messages(topics=['/iris_3/utility'])
+        h1_msgs = bag.read_messages(topics=['/tb_1/utility'])
+        h2_msgs = bag.read_messages(topics=['/tb_2/utility'])
+        h3_msgs = bag.read_messages(topics=['/tb_3/utility'])
 
         # 處理每個消息
         for h1_msg, h2_msg, h3_msg in zip(h1_msgs, h2_msgs, h3_msgs):
@@ -67,8 +67,7 @@ def main():
     # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_dynamicCov.bag'
     # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_constantCov.bag'
     # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_dynamicCov.bag'
-    # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/result.bag'
-    bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/multipleTask_record.bag'
+    bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/tb_record.bag'
 
     try:
         # 處理數據

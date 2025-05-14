@@ -7,8 +7,10 @@ MAV::MAV(ros::NodeHandle &nh_)
 
     pose_sub = nh_.subscribe<geometry_msgs::PoseStamped>("mavros/vision_pose/pose", 10, &MAV::pose_cb, this);
     vel_sub = nh_.subscribe<geometry_msgs::TwistStamped>("mavros/vision_pose/twist", 10, &MAV::vel_cb, this);
-    imu_sub = nh_.subscribe<sensor_msgs::Imu>("mavros/imu/data", 10, &MAV::imu_cb, this);
+    imu_sub = nh_.subscribe<sensor_msgs::Imu>("imu", 10, &MAV::imu_cb, this);
     mav_state_sub = nh_.subscribe<mavros_msgs::State>("mavros/state", 10, &MAV::mav_state_cb, this);
+    // TurtleBots don't use mavros
+    // TODO: to find the correct topic and msg type
 }
 MAV::MAV(ros::NodeHandle &nh_, string vehicle, int ID)
 {
@@ -23,7 +25,7 @@ MAV::MAV(ros::NodeHandle &nh_, string vehicle, int ID)
     {
         pose_sub = nh_.subscribe<geometry_msgs::PoseStamped>(prefix + string("/mavros/local_position/pose"), 10, &MAV::pose_cb, this);
         vel_sub = nh_.subscribe<geometry_msgs::TwistStamped>(prefix + string("/mavros/local_position/twist"), 10, &MAV::vel_cb, this);
-        imu_sub = nh_.subscribe<sensor_msgs::Imu>(prefix + string("/mavros/imu/data"), 10, &MAV::imu_cb, this);
+        imu_sub = nh_.subscribe<sensor_msgs::Imu>(prefix + string("/imu"), 10, &MAV::imu_cb, this);
     }
     else
     {
@@ -174,6 +176,7 @@ MAV_eigen mavMsg2Eigen(MAV Mav)
 {
 	MAV_eigen Mav_eigen;
     // std::cout << Mav.getPose().pose << std::endl;
+    /* ----- UAV dynamic ----- */
 	Mav_eigen.r(0) = Mav.getPose().pose.position.x;
 	Mav_eigen.r(1) = Mav.getPose().pose.position.y;
 	Mav_eigen.r(2) = Mav.getPose().pose.position.z;

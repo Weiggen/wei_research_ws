@@ -58,6 +58,7 @@ class Visualize2D():
         self.cnt                    = 0
         self.agent_sensor_weights   = {}
         self.agent_failure          = {}
+        self.vehicle                = "tb"
         #self.FetchAgentInfo()
         
         # color_pool = [(0, 255, 0), (255, 128, 0), (255,255,0), (255, 0, 0), (0,255,255), (0,0,255), (178,102,255), (255,0,255), (13, 125, 143)]
@@ -76,12 +77,12 @@ class Visualize2D():
             except:
                 self.color[i] = list(np.random.choice(range(255),size=3))
             
-            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/sensor_weights", WeightArray, self.WeightCB(i))           
-            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/valid_sensors", ValidSensors, self.ValidSensorCB(i))
-            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/sensor_scores", SensorArray, self.SensorScoresCB(i))
-            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/total_score", Float64, self.TotalScoreCB(i))
-            rospy.Subscriber("/iris_"+str(i+1)+"/visualize/pose", Pose, self.PoseCB(i))
-            rospy.Subscriber("/iris_"+str(i+1)+"/failure", Int16, self.FailureCB(i))
+            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/sensor_weights", WeightArray, self.WeightCB(i))           
+            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/valid_sensors", ValidSensors, self.ValidSensorCB(i))
+            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/sensor_scores", SensorArray, self.SensorScoresCB(i))
+            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/total_score", Float64, self.TotalScoreCB(i))
+            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/pose", Pose, self.PoseCB(i))
+            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/failure", Int16, self.FailureCB(i))
                     
         self.window_size = self.size*4
         self.display = pygame.display.set_mode(self.window_size)
@@ -116,7 +117,7 @@ class Visualize2D():
 
         for agent in range(self.total_agents):
             # General Agent's Settings
-            prefix = "iris_" + str(agent) + "/Controller"
+            prefix = self.vehicle+"_" + str(agent) + "/Controller"
             id                      = rospy.get_param(prefix+"/id", default=0)
             camera_valid            = rospy.get_param(prefix+"/camera", default=0)
             manipulator_valid       = rospy.get_param(prefix+"manipulator", default=0)
@@ -415,7 +416,7 @@ class Visualize2D():
                             
                             # 翻轉方向向量
                             original_per = self.agent_per[id]/self.grid_size*self.blockSize
-                            original_per *= 2.5
+                            original_per *= 1
                             # 方向向量需要特殊處理，翻轉後方向也要相反
                             per = np.array([original_per[0], -original_per[1]])
                             
