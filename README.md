@@ -17,5 +17,5 @@ roslaunch state_estimation consensusEstimation.launch
 ```
 4. Agents' control node and the real-time pygame image
 ```
-roslaunch voronoi_cbsa CBSA_tb.kaunch
+roslaunch voronoi_cbsa CBSA_tb.launch
 ```
