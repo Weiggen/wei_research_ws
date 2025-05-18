@@ -67,7 +67,7 @@ def main():
     # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_dynamicCov.bag'
     # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_constantCov.bag'
     # bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_dynamicSim_dynamicCov.bag'
-    bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/tb_record.bag'
+    bag_file = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/tb_dynamic.bag'
 
     try:
         # 處理數據

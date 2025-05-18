@@ -8,7 +8,7 @@ import numpy as np
 
 def calculate_H_data(bag_path):
     """
-    計算 H_data，即三個 iris 的 utility.data 總和
+    計算 H_data，即三個 tb 的 utility.data 總和
     
     Args:
         bag_path (str): bag 文件路徑
@@ -31,13 +31,13 @@ def calculate_H_data(bag_path):
             h3_msgs = {}
             
             # 先讀取所有訊息到字典中，以時間戳為鍵
-            for topic, msg, t in bag.read_messages(topics=['/iris_1/utility', '/iris_2/utility', '/iris_3/utility']):
+            for topic, msg, t in bag.read_messages(topics=['/tb_1/utility', '/tb_2/utility', '/tb_3/utility']):
                 t_sec = t.to_sec()
-                if topic == '/iris_1/utility':
+                if topic == '/tb_1/utility':
                     h1_msgs[t_sec] = msg.data
-                elif topic == '/iris_2/utility':
+                elif topic == '/tb_2/utility':
                     h2_msgs[t_sec] = msg.data
-                elif topic == '/iris_3/utility':
+                elif topic == '/tb_3/utility':
                     h3_msgs[t_sec] = msg.data
             
             # 取得所有時間戳
@@ -75,7 +75,7 @@ def calculate_H_data(bag_path):
                     except Exception as inner_e:
                         print(f"處理訊息時發生錯誤: {str(inner_e)}")
     
-    # 計算 H_data (三個 iris 的 utility.data 總和)
+    # 計算 H_data (三個 tb 的 utility.data 總和)
     H_data = [h1 + h2 + h3 for h1, h2, h3 in zip(h1_data, h2_data, h3_data)]
     
     if not timestamps:
@@ -92,7 +92,7 @@ def find_H_data_threshold(bag_path, threshold=2.0):
     
     Args:
         bag_path (str): bag 文件路徑
-        threshold (float): 閾值，預設為 2.0
+        threshold (float): 閾值
         
     Returns:
         float: 第一次達到閾值的時間戳（秒），如果找不到則返回 None
@@ -174,7 +174,7 @@ def main():
     output_dir = sys.argv[3]
     
     # 閾值設定為 2.0，按照要求
-    threshold = 2.0
+    threshold = 0.5
     
     # 確保輸出目錄存在
     if not os.path.exists(output_dir):
@@ -198,7 +198,7 @@ def main():
         print(f"Bag 2 原始時間範圍: {datetime.fromtimestamp(bag2_start)} 到 {datetime.fromtimestamp(bag2_end)}")
         
         # 尋找兩個 bag 中 H_data 達到閾值的時間點
-        print(f"正在尋找 H_data (三個 iris utility.data 的總和) 達到 {threshold} 的時間點...")
+        print(f"正在尋找 H_data (三個 tb utility.data 的總和) 達到 {threshold} 的時間點...")
         
         threshold_time1 = find_H_data_threshold(bag1_path, threshold=threshold)
         threshold_time2 = find_H_data_threshold(bag2_path, threshold=threshold)

@@ -17,7 +17,7 @@
         <arg name="x" value="10"/>
         <arg name="y" value="12"/>
         <arg name="z" value="0"/>
-        <arg name="Y" value="0"/>
+        <arg name="Y" value="3.14"/>
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
@@ -29,7 +29,7 @@
     </group>
     <!-- Agent1 -->
     <group ns = "$(arg name)_1">
-        <arg name="x" value="9.4"/>
+        <arg name="x" value="9"/>
         <arg name="y" value="10.5"/>
         <arg name="z" value="0"/>
         <arg name="Y" value="0"/>
@@ -60,7 +60,7 @@
     <!-- Agent3 -->
     <group ns="$(arg name)_3">
         <arg name="x" value="14.06"/>
-        <arg name="y" value="10.5"/>
+        <arg name="y" value="7"/>
         <arg name="z" value="0"/>
         <arg name="Y" value="-1.57"/>
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />

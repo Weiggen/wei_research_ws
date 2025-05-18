@@ -416,7 +416,7 @@ class Visualize2D():
                             
                             # 翻轉方向向量
                             original_per = self.agent_per[id]/self.grid_size*self.blockSize
-                            original_per *= 1
+                            original_per *= 0.9*3
                             # 方向向量需要特殊處理，翻轉後方向也要相反
                             per = np.array([original_per[0], -original_per[1]])
                             

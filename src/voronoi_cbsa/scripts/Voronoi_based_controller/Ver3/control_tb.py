@@ -574,6 +574,8 @@ class PTZCamera():
 
         if np.linalg.norm(u_p) > self.max_speed:
             u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
+        else:
+            u_p = u_p
 
         if self.pos[0] < 0 or self.pos[0] > self.map_size[0]:
             self.u_p[0] = 0
@@ -668,6 +670,7 @@ class PTZCamera():
             self.sensor_voronoi[role][event] = sensor_voronoi
 
     def qp(self, role, event, u_des):
+        ## TODO: Target & agent collision avoidance add
         # CBF
         alpha = 3.
         d_min = self.safe_distance
@@ -677,6 +680,27 @@ class PTZCamera():
         rel_pos = np.zeros_like(self.pos)
         
         target = self.targets[event]
+
+#       def TargetCallback(self, msg):
+#         self.target_ready = True
+#         for target in msg.targets:
+
+#             pos_x   = target.position.x
+#             pos_y   = target.position.y
+#             pos     = np.array([pos_x, pos_y])
+#             height  = target.height
+
+# #           std     = target.standard_deviation
+#             cov     = target.covariance
+#             weight  = target.weight
+
+#             vel_x   = target.velocity.linear.x
+#             vel_y   = target.velocity.linear.y
+#             vel     = np.array([vel_x, vel_y])
+            
+#             requirements = [target.required_sensor[i] for i in range(len(target.required_sensor))]
+
+#             self.target_buffer[target.id] = [pos, cov, weight, vel, target.id, requirements, height]
 
         G_ = []
         h_ = []
@@ -792,9 +816,13 @@ class PTZCamera():
         # k_1 = 0.1
         # k_2 = 0.000000001
 
+        # # TurtleBots scenario, static tuned
+        # k_1 = .00025
+        # k_2 = 0.00000000001
+
         # TurtleBots scenario, static tuned
-        k_1 = .1
-        k_2 = 0.0000000001
+        k_1 = .0008
+        k_2 = 0.000000001
         # k_1 = 0.
         # k_2 = 0.
 
@@ -1240,7 +1268,7 @@ if __name__ == "__main__":
 
     UAV_self = PTZCamera(map_size = map_size, grid_size = grid_size, general_properties=general_info,
                         camera_properties=camera_info, smoke_detector_properties=smoke_detector_info, 
-                        manipulator_properties=manipulator_info, coop = True, balance = False, strength = 10000)
+                        manipulator_properties=manipulator_info, coop = False, balance = False, strength = 10000)
     
     rospy.Subscriber("/kill", Int16, KillCB)
     rospy.Subscriber("/tb_"+str(id)+"/failure", Int16, FailureCB)
@@ -1257,7 +1285,7 @@ if __name__ == "__main__":
         
 
         UAV_self.Update()
-        rospy.loginfo("Updating...")
+        # rospy.loginfo("Updating...")
         frame.append(cnt)
         score.append(UAV_self.total_score)
         pos_x.append(UAV_self.pos[0])

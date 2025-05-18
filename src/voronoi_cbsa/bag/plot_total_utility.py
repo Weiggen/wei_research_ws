@@ -15,9 +15,9 @@ def process_rosbag(bag_file):
     # 打開rosbag文件
     with rosbag.Bag(bag_file, 'r') as bag:
         # 讀取三個不同話題的數據
-        h1_msgs = bag.read_messages(topics=['/iris_1/utility'])
-        h2_msgs = bag.read_messages(topics=['/iris_2/utility'])
-        h3_msgs = bag.read_messages(topics=['/iris_3/utility'])
+        h1_msgs = bag.read_messages(topics=['/tb_1/utility'])
+        h2_msgs = bag.read_messages(topics=['/tb_2/utility'])
+        h3_msgs = bag.read_messages(topics=['/tb_3/utility'])
 
         # 處理每個消息
         for h1_msg, h2_msg, h3_msg in zip(h1_msgs, h2_msgs, h3_msgs):
@@ -54,22 +54,22 @@ def plot_comparison(bag_file1, bag_file2):
     timestamps2, H_data2, R_overall2 = process_rosbag(bag_file2)
 
     # 繪製兩組H數據
-    plt.plot(timestamps1, H_data1, label='H (Sim 7, constant cov)', linewidth=2)
-    plt.plot(timestamps2, H_data2, label='H (Sim 8, time-varying cov)', linewidth=2, linestyle='--')
+    plt.plot(timestamps1, H_data1, label='H (constant cov)', linewidth=2)
+    plt.plot(timestamps2, H_data2, label='H (time-varying cov)', linewidth=2, linestyle='--')
     # plt.plot(timestamps1, H_data1, label='H (Sim 7, balance = False)', linewidth=2)
     # plt.plot(timestamps2, H_data2, label='H (Sim 8, balance = False)', linewidth=2, linestyle='--')
 
     # 設置圖表屬性
     plt.xlabel('Time (seconds)')
     plt.ylabel('H Value')
-    plt.title('Comparison of H Values between Simulation 7&8, constant&time-varying cov')
+    plt.title('Comparison of H Values between constant & time-varying cov')
     plt.legend()
     plt.grid(True)
 
     # 在終端機顯示 R_overall 值
     print("\nResults:")
-    print(f"R_overall (Simulation 7, constant cov): {R_overall1:.2f}")
-    print(f"R_overall (Simulation 8, time-varying cov): {R_overall2:.2f}")
+    print(f"R_overall (constant cov): {R_overall1:.2f}")
+    print(f"R_overall (time-varying cov): {R_overall2:.2f}")
     print(f"Improvement (%): {((R_overall2 - R_overall1)/R_overall1)*100:.2f}%")
 
     # 顯示圖表
@@ -77,8 +77,8 @@ def plot_comparison(bag_file1, bag_file2):
 
 def main():
     # 替換為您的兩個rosbag文件路徑
-    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/7_11_trimmed.bag'
-    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/8_11_trimmed.bag'
+    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/tb_dynamic_constant_trimmed.bag'
+    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/tb_dynamic_timevaring_trimmed.bag'
     # bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_constantCov.bag'
     # bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_dynamicCov.bag'
 

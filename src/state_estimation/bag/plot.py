@@ -88,13 +88,13 @@ def plot_combined_position_3D(GT_poses1, est_poses1,
     est_y3 = [pose.position.y for pose in est_poses3]
     est_z3 = [pose.position.z for pose in est_poses3]
 
-    # Plotting
+    # Plotting - 點的大小從默認調整為更小的值 (s=1)
     ax.plot(GT_x1, GT_y1, GT_z1, label='GT Pose 1')
-    ax.scatter(est_x1, est_y1, est_z1,  marker = 'o', label='Est Pose 1')
+    ax.scatter(est_x1, est_y1, est_z1, s=1, marker='o', label='Est Pose 1')
     ax.plot(GT_x2, GT_y2, GT_z2, label='GT Pose 2')
-    ax.scatter(est_x2, est_y2, est_z2,  marker = 'o', label='Est Pose 2')
+    ax.scatter(est_x2, est_y2, est_z2, s=1, marker='o', label='Est Pose 2')
     ax.plot(GT_x3, GT_y3, GT_z3, label='GT Pose 3')
-    ax.scatter(est_x3, est_y3, est_z3,  marker = 'o', label='Est Pose 3')
+    ax.scatter(est_x3, est_y3, est_z3, s=1, marker='o', label='Est Pose 3')
 
     ax.set_xlabel('X-axis')
     ax.set_ylabel('Y-axis')
@@ -116,9 +116,9 @@ def plot_target_position_3D(GT_posest, est_posest):
     est_yt = [pose.position.y for pose in est_posest]
     est_zt = [pose.position.z for pose in est_posest]
 
-    # Plotting
+    # Plotting - 點的大小從默認調整為更小的值 (s=1)
     ax.plot(GT_xt, GT_yt, GT_zt, label='GT Pose target')
-    ax.scatter(est_xt, est_yt, est_zt, c = 'g', marker = 'o', label='EST Pose t')
+    ax.scatter(est_xt, est_yt, est_zt, c='g', s=1, marker='o', label='EST Pose t')
 
     ax.set_xlabel('X-axis')
     ax.set_ylabel('Y-axis')
@@ -167,20 +167,20 @@ def ploterror3D(GT_poses1, est_poses1,
     est_xt = np.array([pose.position.x for pose in est_posest])
     est_yt = np.array([pose.position.y for pose in est_posest])
     est_zt = np.array([pose.position.z for pose in est_posest])    
-    # Plotting
-    ax.scatter(GT_x1[new_bool], GT_y1[new_bool], GT_z1[new_bool],c = 'r', s = 5, label='GT Pose 1')
-    # ax.scatter(est_x1[new_bool], est_y1[new_bool], est_z1[new_bool], c = 'b', s = 5,  label='Est Pose 1')
-    ax.scatter(GT_xt[new_bool], GT_yt[new_bool], GT_zt[new_bool],c = 'b', marker = '^', label='GT Pose t')
-    ax.scatter(est_xt[new_bool], est_yt[new_bool], est_zt[new_bool],c = 'g', marker = '^', label='EST Pose t')
-    ax.scatter(GT_x2[new_bool], GT_y2[new_bool], GT_z2[new_bool], c = 'y', s = 5, label='GT Pose 2')
+    # Plotting - 點的大小從 s=5 改為 s=1
+    ax.scatter(GT_x1[new_bool], GT_y1[new_bool], GT_z1[new_bool],c = 'r', s=1, label='GT Pose 1')
+    # ax.scatter(est_x1[new_bool], est_y1[new_bool], est_z1[new_bool], c = 'b', s=1,  label='Est Pose 1')
+    ax.scatter(GT_xt[new_bool], GT_yt[new_bool], GT_zt[new_bool],c = 'b', s=1, marker = '^', label='GT Pose t')
+    ax.scatter(est_xt[new_bool], est_yt[new_bool], est_zt[new_bool],c = 'g', s=1, marker = '^', label='EST Pose t')
+    ax.scatter(GT_x2[new_bool], GT_y2[new_bool], GT_z2[new_bool], c = 'y', s=1, label='GT Pose 2')
 
     print(len(new_bool))
     # new_bool = np.append(new_bool, False)
     print(len(new_bool))
 
-    # ax.scatter(est_x2[new_bool], est_y2[new_bool], est_z2[new_bool], c = 'r', s = 5, label='Est Pose 2')
-    ax.scatter(GT_x3[new_bool], GT_y3[new_bool], GT_z3[new_bool], c = 'b', s = 5, label='GT Pose 3')
-    # ax.scatter(est_x3[new_bool], est_y3[new_bool], est_z3[new_bool], c = 'r', s = 5 , label='Est Pose 3')
+    # ax.scatter(est_x2[new_bool], est_y2[new_bool], est_z2[new_bool], c = 'r', s=1, label='Est Pose 2')
+    ax.scatter(GT_x3[new_bool], GT_y3[new_bool], GT_z3[new_bool], c = 'b', s=1, label='GT Pose 3')
+    # ax.scatter(est_x3[new_bool], est_y3[new_bool], est_z3[new_bool], c = 'r', s=1 , label='Est Pose 3')
 
 
     ax.set_xlabel('X-axis')
@@ -305,7 +305,7 @@ def plot_combined_RMSE_v(RMSE_v1, label1, RMSE_v2, label2):
     plt.grid(True)
     plt.show()
 
-def plot_combine_det_p( det_p, det_p2, dataset_label, dataset_label2):
+def plot_combine_det_p(det_p, det_p2, dataset_label, dataset_label2):
     plt.figure(figsize = (10,6))
     min_length = min(len(det_p), len(det_p2))
     timeStamps = list(range(min_length))  # Creating a list from 0 to min_length
@@ -323,15 +323,17 @@ def plot_combine_det_p( det_p, det_p2, dataset_label, dataset_label2):
     # print(f"avg cov (Simulation 8): {average2:.2f}")
     print(f"Improvement (%): {((average - average2)/average)*100:.2f}%")
     # print(average)
-    plt.scatter(timeStamps, det_p, label=f'trace(p) for {dataset_label}',color='r')
+    
+    # 改變點的大小 - 從沒指定大小改為 s=1
+    plt.scatter(timeStamps, det_p, s=4, label=f'trace(p) for {dataset_label}',color='r')
     plt.axhline(y=average, color='r', linestyle='--',label=f'Average trace(p): {average}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='orange')
-    plt.scatter(timeStamps, det_p2, label=f'trace(p) for {dataset_label2}',color='b')
+    plt.scatter(timeStamps, det_p2, s=4, label=f'trace(p) for {dataset_label2}',color='b')
     plt.axhline(y=average2, color='b', linestyle='--',label=f'Average trace(p): {average2}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average2}', color='orange')    
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
-    plt.title(f'Comparison of trace(p) between Sim7&8, constant&time-varying cov')
+    plt.title(f'Comparison of trace(p) between constant & time-varying cov')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -352,7 +354,7 @@ def plotFromTwoBags(file1, file2, topic, label1, label2):
     # Plot combined RMSE for position from both bags with normalized time steps
     # plot_combined_RMSE_p(RMSE_p1, label1, RMSE_p2, label2)
     # plot_combined_RMSE_v(RMSE_v1, label1, RMSE_v2, label2)
-    plot_combine_det_p( p1, p2, label1, label2)
+    plot_combine_det_p(p1, p2, label1, label2)
 folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 
 # Multi-targets dynamic simulation
@@ -360,12 +362,12 @@ folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 # file2 = folder + '8_10_trimmed.bag'
 
 # Multi-targets dynamic simulation
-file1 = folder + 'tb_record.bag'
-file2 = folder + 'tb_record.bag'
+file1 = folder + 'tb_dynamic_constant_trimmed.bag'
+file2 = folder + 'tb_dynamic_timevaring_trimmed.bag'
 
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
 topic = '/tb_1/TEIF/target_1/Plot'
-plotFromTwoBags(file1, file2, topic, 'Sim7, constant cov', 'Sim8, time-varying cov')
+plotFromTwoBags(file1, file2, topic, 'constant cov', 'time-varying cov')
 # plotFromTwoBags(file1, file2, topic, 'Sim7, balance = T', 'Sim8, balance = T')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')
