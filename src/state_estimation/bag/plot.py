@@ -45,19 +45,21 @@ def plot_RMSE_v(timeStamps, RMSE_v, dataset_label):
     plt.legend()
     plt.grid(True)
     plt.show()
+
 def plot_det_p(timeStamps, det_p, dataset_label):
     plt.figure(figsize = (10,6))
     average = sum(det_p)/len(det_p)
     # print(average)
     plt.plot(timeStamps, det_p, label=f'det p for {dataset_label}',color='orange')
-    plt.axhline(y=average, color='r', linestyle='--',label=f'Average det_p: {average}')
-    plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='orange')
+    plt.axhline(y=average, color='r', linestyle='--',label=f'Avg det_p: {average}')
+    plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Avg : {average}', color='orange')
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
     plt.title(f'det p for {dataset_label}')
     plt.legend()
     plt.grid(True)
     plt.show()
+
 def plot_combined_position_3D(GT_poses1, est_poses1,
                                GT_poses2, est_poses2,
                                 GT_poses3, est_poses3):
@@ -324,12 +326,11 @@ def plot_combine_det_p(det_p, det_p2, dataset_label, dataset_label2):
     print(f"Improvement (%): {((average - average2)/average)*100:.2f}%")
     # print(average)
     
-    # 改變點的大小 - 從沒指定大小改為 s=1
-    plt.scatter(timeStamps, det_p, s=4, label=f'trace(p) for {dataset_label}',color='r')
-    plt.axhline(y=average, color='r', linestyle='--',label=f'Average trace(p): {average}')
+    plt.scatter(timeStamps, det_p, s=4, color='r')
+    plt.axhline(y=average, color='r', linestyle='--',label=f'Avg trace(p) of constant cov algorithm: {average}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average}', color='orange')
-    plt.scatter(timeStamps, det_p2, s=4, label=f'trace(p) for {dataset_label2}',color='b')
-    plt.axhline(y=average2, color='b', linestyle='--',label=f'Average trace(p): {average2}')
+    plt.scatter(timeStamps, det_p2, s=4, color='b')
+    plt.axhline(y=average2, color='b', linestyle='--',label=f'Avg trace(p) of time-varying cov algorithm: {average2}')
     # plt.text(timeStamps[int(len(timeStamps)/ 10)], average, f'Average : {average2}', color='orange')    
     plt.xlabel('Time (seconds)')
     plt.ylabel('')
@@ -355,6 +356,7 @@ def plotFromTwoBags(file1, file2, topic, label1, label2):
     # plot_combined_RMSE_p(RMSE_p1, label1, RMSE_p2, label2)
     # plot_combined_RMSE_v(RMSE_v1, label1, RMSE_v2, label2)
     plot_combine_det_p(p1, p2, label1, label2)
+
 folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 
 # Multi-targets dynamic simulation
@@ -362,8 +364,8 @@ folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 # file2 = folder + '8_10_trimmed.bag'
 
 # Multi-targets dynamic simulation
-file1 = folder + 'tb_dynamic_constant_trimmed.bag'
-file2 = folder + 'tb_dynamic_timevaring_trimmed.bag'
+file1 = folder + 'tb_static_constantCov_trimmed.bag'
+file2 = folder + 'tb_static_timevaringCov_trimmed.bag'
 
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
