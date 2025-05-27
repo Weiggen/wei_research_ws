@@ -1,8 +1,0 @@
-prefix=/home/weiggen/wei_research_ws/install
-
-Name: formation_ctrl
-Description: Description of formation_ctrl
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

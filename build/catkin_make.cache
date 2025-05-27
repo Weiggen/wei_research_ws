@@ -1,2 +1,0 @@
-Yolov8_ros/yolov8_ros:Yolov8_ros/yolov8_ros_msgs:formation_gaz_sim:state_estimation:turtlebot3_simulations/turtlebot3_fake:turtlebot3_simulations/turtlebot3_gazebo:turtlebot3_simulations/turtlebot3_simulations:voronoi_cbsa
--DCATKIN_DEVEL_PREFIX=/home/weiggen/wei_research_ws/devel -DCMAKE_INSTALL_PREFIX=/home/weiggen/wei_research_ws/install -G Unix Makefiles
