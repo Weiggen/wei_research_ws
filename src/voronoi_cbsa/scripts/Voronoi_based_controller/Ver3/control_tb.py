@@ -90,7 +90,7 @@ class CMD:
 class PTZCamera():
     def __init__(self, map_size, grid_size, general_properties,
                  coop, balance, strength, camera_properties=None, 
-                 manipulator_properties=None, smoke_detector_properties=None, K_p=0.8, K_v=0.5, step = 0.1):
+                 manipulator_properties=None, smoke_detector_properties=None, K_p=0.8, K_v=0.4, step = 0.1):
 
         self.K_p            = K_p
         self.K_v            = K_v

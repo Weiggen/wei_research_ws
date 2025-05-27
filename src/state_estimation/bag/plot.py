@@ -1,3 +1,4 @@
+# plot.py
 import rosbag
 import matplotlib.pyplot as plt
 import numpy as np
@@ -357,6 +358,103 @@ def plotFromTwoBags(file1, file2, topic, label1, label2):
     # plot_combined_RMSE_v(RMSE_v1, label1, RMSE_v2, label2)
     plot_combine_det_p(p1, p2, label1, label2)
 
+def plot_combine_det_p_after_5s(timeStamps1, det_p1, timeStamps2, det_p2, dataset_label1, dataset_label2, offset_seconds=5.0):
+    plt.figure(figsize=(10, 6))
+    
+    # 計算相對於各自開始時間的過濾點
+    start_time1 = timeStamps1[0] + offset_seconds  # 第一個數據集開始時間 + 5秒
+    start_time2 = timeStamps2[0] + offset_seconds  # 第二個數據集開始時間 + 5秒
+    
+    print(f"Dataset1 starts at {timeStamps1[0]:.3f}s, filtering after {start_time1:.3f}s")
+    print(f"Dataset2 starts at {timeStamps2[0]:.3f}s, filtering after {start_time2:.3f}s")
+    
+    # 過濾第一個數據集的指定時間後數據
+    filtered_timestamps1 = []
+    filtered_det_p1 = []
+    for i, timestamp in enumerate(timeStamps1):
+        if timestamp >= start_time1:
+            filtered_timestamps1.append(timestamp)
+            filtered_det_p1.append(det_p1[i])
+    
+    # 過濾第二個數據集的指定時間後數據
+    filtered_timestamps2 = []
+    filtered_det_p2 = []
+    for i, timestamp in enumerate(timeStamps2):
+        if timestamp >= start_time2:
+            filtered_timestamps2.append(timestamp)
+            filtered_det_p2.append(det_p2[i])
+    
+    print(f"Filtered data length - Dataset1: {len(filtered_det_p1)}, Dataset2: {len(filtered_det_p2)}")
+    print(f"Original data length - Dataset1: {len(det_p1)}, Dataset2: {len(det_p2)}")
+    
+    if not filtered_det_p1 or not filtered_det_p2:
+        print(f"Insufficient data after {offset_seconds} seconds for comparison")
+        return
+    
+    # 正規化時間步長（從0開始）
+    min_length = min(len(filtered_det_p1), len(filtered_det_p2))
+    normalized_timestamps = list(range(min_length))
+    
+    filtered_det_p1 = filtered_det_p1[:min_length]
+    filtered_det_p2 = filtered_det_p2[:min_length]
+    
+    average1 = sum(filtered_det_p1) / len(filtered_det_p1)
+    average2 = sum(filtered_det_p2) / len(filtered_det_p2)
+    
+    print(f"\nResults (after {offset_seconds} seconds from start):")
+    print(f"avg cov ({dataset_label1}): {average1}")
+    print(f"avg cov ({dataset_label2}): {average2}")
+    print(f"Improvement (%): {((average1 - average2) / average1) * 100:.2f}%")
+    
+    plt.scatter(normalized_timestamps, filtered_det_p1, s=4, color='r')
+    plt.axhline(y=average1, color='r', linestyle='--', 
+                label=f'Avg trace(p) of {dataset_label1}: {average1}')
+    
+    plt.scatter(normalized_timestamps, filtered_det_p2, s=4, color='b')
+    plt.axhline(y=average2, color='b', linestyle='--', 
+                label=f'Avg trace(p) of {dataset_label2}: {average2}')
+    
+    plt.xlabel(f'Time (seconds)')
+    plt.ylabel('det_p')
+    plt.title(f'Comparison of trace(p) between constant & time-varying cov')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plotFromTwoBags_after_5s(file1, file2, topic, label1, label2):
+    # Open both bag files
+    bag1 = rosbag.Bag(file1)
+    bag2 = rosbag.Bag(file2)
+
+    # Extract data from both bags
+    timestamps1, _, _, _, _, p1 = extract_data(bag1, topic)
+    timestamps2, _, _, _, _, p2 = extract_data(bag2, topic)
+
+    # Close the bag files
+    bag1.close()
+    bag2.close()
+
+    # 添加調試信息
+    print("=== DEBUG INFORMATION ===")
+    print(f"File1 ({label1}):")
+    print(f"  First timestamp: {timestamps1[0]}")
+    print(f"  Last timestamp: {timestamps1[-1]}")
+    print(f"  Total data points: {len(timestamps1)}")
+    
+    print(f"File2 ({label2}):")
+    print(f"  First timestamp: {timestamps2[0]}")  
+    print(f"  Last timestamp: {timestamps2[-1]}")
+    print(f"  Total data points: {len(timestamps2)}")
+    
+    # 檢查有多少數據點在5秒後
+    count1_after_5s = sum(1 for t in timestamps1 if t >= 5.0)
+    count2_after_5s = sum(1 for t in timestamps2 if t >= 5.0)
+    print(f"Data points after 5s - File1: {count1_after_5s}, File2: {count2_after_5s}")
+    print("========================")
+
+    # Plot combined det_p from both bags starting from 5 seconds
+    plot_combine_det_p_after_5s(timestamps1, p1, timestamps2, p2, label1, label2)
+
 folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 
 # Multi-targets dynamic simulation
@@ -364,12 +462,13 @@ folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
 # file2 = folder + '8_10_trimmed.bag'
 
 # Multi-targets dynamic simulation
-file1 = folder + 'tb_static_constantCov_trimmed.bag'
-file2 = folder + 'tb_static_timevaringCov_trimmed.bag'
+file1 = folder + 'setIC_dynamic_cCov_trimmed.bag'
+file2 = folder + 'setIC_dynamic_tCov_trimmed.bag'
 
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
 topic = '/tb_1/TEIF/target_1/Plot'
 plotFromTwoBags(file1, file2, topic, 'constant cov', 'time-varying cov')
+plotFromTwoBags_after_5s(file1, file2, topic, 'constant cov', 'time-varying cov')
 # plotFromTwoBags(file1, file2, topic, 'Sim7, balance = T', 'Sim8, balance = T')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')

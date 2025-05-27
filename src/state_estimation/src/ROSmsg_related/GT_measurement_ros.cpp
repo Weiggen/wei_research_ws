@@ -88,10 +88,9 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
     formation_eigen_GT.push_back(GTs_eigen[2]); // tb_2
     formation_eigen_GT.push_back(GTs_eigen[3]); // tb_3
     
-    // 打印所有 GTs_eigen 元素
-    for(int i = 0; i < GTs_eigen.size(); i++) {
-        printf("GTs_eigen[%d]: \n [%f, %f]\n", i, GTs_eigen[i].r(0), GTs_eigen[i].r(1));
-    }
+    // for(int i = 0; i < GTs_eigen.size(); i++) {
+    //     printf("GTs_eigen[%d]: \n [%f, %f]\n", i, GTs_eigen[i].r(0), GTs_eigen[i].r(1));
+    // }
 
     ////////////////////////// Transform from groundtruth to measurements,  ////////////////////////
     static std::default_random_engine generator;

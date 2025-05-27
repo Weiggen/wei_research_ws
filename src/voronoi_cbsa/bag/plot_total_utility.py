@@ -77,8 +77,8 @@ def plot_comparison(bag_file1, bag_file2):
 
 def main():
     # 替換為您的兩個rosbag文件路徑
-    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/tb_dynamic_constant_trimmed.bag'
-    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/tb_dynamic_timevaring_trimmed.bag'
+    bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/setIC_dynamic_cCov_trimmed.bag'
+    bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/setIC_dynamic_tCov_trimmed.bag'
     # bag_file1 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_constantCov.bag'
     # bag_file2 = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/trimmed_staticSim_dynamicCov.bag'
 

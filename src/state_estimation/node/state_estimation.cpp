@@ -177,11 +177,11 @@ int main(int argc, char **argv)
 	last_t = ros::Time::now().toSec();
 
 	std_msgs::Bool isTargetEst_msg;
+
+	int iteration_count = 0;
 	
     while(ros::ok())
     {
-		int iteration_count = 0;
-
 		mav.setOrientation(gt_m.getGTorientation(ID));   // set orientation of robot
 		mav_eigen = mavMsg2Eigen(mav); 					 // convert mav message to eigen format
 
@@ -218,11 +218,13 @@ int main(int argc, char **argv)
 			} else {
 				initialBbox << gt_m.getGTs_eigen()[4].r; // target_2
 			}
-			if (iteration_count == 0) {
+
+			if (iteration_count < 5) {
+				teif_objects[i].setInitialState(initialBbox, iteration_count);
+			}else{
 				teif_objects[i].setInitialState(initialBbox);
-			} else {
-				teif_objects[i].setInitialState(gt_m.getGTs_eigen()[i].r);
 			}
+
 			if (i == 0){
 				teif_objects[i].setMavSelfData(mav_eigen_t1);
 				teif_objects[i].setMeasurement(gt_m.getCamera4target_1()); // camera measurement(u, v, d) for target_1
@@ -237,7 +239,8 @@ int main(int argc, char **argv)
 		// std::cout << "Robot" << ID << " set Pred TEIF:\n" 
 		// 			<< "target_1:\n" << teif_objects[0].getTgtData().X_hat << "\n" 
 		// 			<< "target_2:\n" << teif_objects[1].getTgtData().X_hat << "\n\n";
-		std::cout << "Robot" << ID << " set Pred SEIF:\n" << SEIF_pose.getEIFData().X_hat << "\n\n";
+	
+		// std::cout << "Robot" << ID << " set Pred SEIF:\n" << SEIF_pose.getEIFData().X_hat << "\n\n";
 
 		// teif.setCamera(cam);
 		// teif.setMavSelfData(mav_eigen); 

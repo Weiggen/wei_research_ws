@@ -27,6 +27,7 @@ private:
 public:
     target_EIF(int state_size);
     ~target_EIF();
+    void setInitialState(Eigen::Vector3d Bbox, int ite_count);
     void setInitialState(Eigen::Vector3d Bbox);
     void computePredPairs(double delta_t);
     void computeCorrPairs();

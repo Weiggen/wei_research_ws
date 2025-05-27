@@ -23,6 +23,22 @@ target_EIF::target_EIF(int state_size)
 }
 target_EIF::~target_EIF(){}
 
+void target_EIF::setInitialState(Eigen::Vector3d Bbox, int ite_count)
+{
+	Eigen::Matrix3d K;
+	K << cam.fx(), 0, cam.cx(),
+		0, cam.fy(), cam.cy(),
+		0, 0, Bbox(2);
+	
+	// T.X.segment(0, 3) << 0, 0, 5;
+	T.X.segment(0, 3) = Bbox;
+	T.X.segment(3, 3) << 0, 0, 0;
+	// std::cout << "Init:\n" << T.X.segment(0, 3) << std::endl;
+	T.P.setIdentity();
+	T.P *= 1;
+	filter_init = true;
+}
+
 void target_EIF::setInitialState(Eigen::Vector3d Bbox)
 {
 	Eigen::Matrix3d K;
