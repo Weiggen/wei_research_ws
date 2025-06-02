@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 	int targetNum = 2;
     int rosRate = 50;
 	int ID = 0;
-	int state_size = 6;
+	int state_size = 3; // 3 for position, 6 for position and velocity
 	double targetTimeTol = 0.05;
 	double last_t;
 	double dt;
@@ -145,16 +145,7 @@ int main(int argc, char **argv)
 		teif_objects.push_back(teif);
 	}
 
-	HEIF_self sheif(6);
-	// HEIF_target theif(6);
-
-	// std::vector<HEIF_target> theif_objects;
-	//
-	// for (int i = 0; i < targetNum; i++)
-	// {
-	// 	HEIF_target theif(state_size);
-	// 	theif_objects.push_back(theif);
-	// }
+	HEIF_self sheif(state_size);
 	
 	std::vector<std::unique_ptr<HEIF_target>> theif_objects;
 
@@ -220,7 +211,7 @@ int main(int argc, char **argv)
 			}
 
 			if (iteration_count < 5) {
-				teif_objects[i].setInitialState(initialBbox, iteration_count);
+				teif_objects[i].setInitialState(initialBbox, iteration_count); // initially maintain the cov in [1, 0, 0, 1]
 			}else{
 				teif_objects[i].setInitialState(initialBbox);
 			}

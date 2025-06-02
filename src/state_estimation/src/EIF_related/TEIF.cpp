@@ -60,7 +60,7 @@ void target_EIF::setMeasurement(Eigen::Vector3d bBox){boundingBox = bBox;}
 void target_EIF::setSEIFpredData(EIF_data self_data)
 {
 	self = self_data;
-	self.X_hat.segment(0, 3) = self.X_hat.segment(0, 3) + Mav_eigen_self.R_w2b*cam.t_B2C(); ///???????????????????
+	self.X_hat.segment(0, 3) = self.X_hat.segment(0, 3) + Mav_eigen_self.R_w2b*cam.t_B2C(); // transfer the self position to camera frame
 }
 
 void target_EIF::computePredPairs(double delta_t)
@@ -69,6 +69,7 @@ void target_EIF::computePredPairs(double delta_t)
 	
 	///////////////////////////// X, F ////////////////////////////////
 
+	// TODO: Motion model needs to be modified
 	T.X_hat.segment(0, 3) = T.X.segment(0, 3) + T.X.segment(3, 3)*dt + 1/2*u*dt*dt;
 	T.X_hat.segment(3, 3) = T.X.segment(3, 3) + u*dt;
 

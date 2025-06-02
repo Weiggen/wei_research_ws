@@ -12,6 +12,7 @@ GT_measurement::GT_measurement(ros::NodeHandle& nh_, int id, int mavnum)
 		groundtruth
 	=================================================================================================================================*/
   	groundTruth_sub = nh.subscribe<gazebo_msgs::ModelStates>("/gazebo/model_states", 30, &GT_measurement::groundTruth_cb, this);
+	// TODO: change the subscribe topic to those optitrack topics
 	GTs_rate = 500;
 	GTs_count = 0;
 	GTs = new MAV[mavNum];
@@ -55,7 +56,7 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
     ////////////////////////// get groundTruth model states and arrange their ID////////////////////
     std::vector<string> name = msg->name;
     
-    // 初始化映射表示每個名稱應該對應的索引，跳過 ground_plane
+    // TODO: change the name to index relation according to subscribers
     std::map<string, int> name_to_index;
     name_to_index["tb_1"] = 1;
     name_to_index["tb_2"] = 2;
@@ -69,8 +70,9 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
         {
             int target_index = name_to_index[name[i]];
             GTs[target_index].setPose(msg->pose[i]);
-            GTs[target_index].setTwist(msg->twist[i]);
-        }
+            // GTs[target_index].setTwist(msg->twist[i]);
+			// @ In the indoor environment, the GT velocity and acceleration of the targets is not available.
+		}
     }
     
     /*  @ Now we have the groundtruth of all UAVs and targets (without ground_plane):
