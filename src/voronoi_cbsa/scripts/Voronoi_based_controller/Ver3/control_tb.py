@@ -185,8 +185,10 @@ class PTZCamera():
         rospy.Subscriber("local/neighbor_info", ExchangeDataArray, self.NeighborCallback)
         rospy.Subscriber("local/target", TargetInfoArray, self.TargetCallback)
         # rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)
+        # # UAV simulation version
         # rospy.Subscriber("/iris_"+str(self.id)+"/mavros/local_position/pose", PoseStamped, self.AgentPosCallback)
-        rospy.Subscriber("/gazebo/model_states", ModelStates, self.AgentPosCallback)
+        # rospy.Subscriber("/gazebo/model_states", ModelStates, self.AgentPosCallback)
+        rospy.Subscriber("/vrpn_client_node/tb_"+str(self.id)+"/pose", PoseStamped, self.AgentPosCallback)
 
         rospy.Subscriber(self.prefix+"/heading_cmd", Float64MultiArray, self.HeadingCmdCallback)
         # # Single target scenario
@@ -266,7 +268,11 @@ class PTZCamera():
     def TargetCallback(self, msg):
         self.target_ready = True
         for target in msg.targets:
-
+            # Indoor Experiment - TB version
+            # In Ground.py - Target1PosCallback()/Target2PosCallback()
+            # Fix optitrsck bias:
+            #   set (0, 0)->(2.5, 2)
+            #   left-down(0, 0)
             pos_x   = target.position.x
             pos_y   = target.position.y
             pos     = np.array([pos_x, pos_y])
@@ -279,13 +285,15 @@ class PTZCamera():
             vel_x   = target.velocity.linear.x
             vel_y   = target.velocity.linear.y
             vel     = np.array([vel_x, vel_y])
+
+            # print("target_{}: {}".format(target.id+1, pos))
             
             requirements = [target.required_sensor[i] for i in range(len(target.required_sensor))]
 
             self.target_buffer[target.id] = [pos, cov, weight, vel, target.id, requirements, height]
                 
     def AgentPosCallback(self, msg):
-        # # UAV version
+        # # Simulation - UAV version
         # self.agent_ready = True
         # index = msg.name.index("iris_"+str(self.id))
         # pose = msg.pose[index]
@@ -296,24 +304,39 @@ class PTZCamera():
         # self.yaw = euler[2] # rad
         # self.perspective = [math.cos(self.yaw), math.sin(self.yaw)] # [v_x, v_y]
 
-        # TB version
-        self.agent_ready = True
-        num = len(msg.name)
-        for (i, name) in enumerate(msg.name):
-            if name == "tb_"+str(self.id):
-                index = i
-                break
+        # # Simulation - TB version
+        # self.agent_ready = True
+        # num = len(msg.name)
+        # for (i, name) in enumerate(msg.name):
+        #     if name == "tb_"+str(self.id):
+        #         index = i
+        #         break
 
-        pose = msg.pose[index]
-        self.pos = np.array([pose.position.x, pose.position.y])
-        # print("pos: ", self.pos)
-        qx = pose.orientation.x
-        qy = pose.orientation.y
-        qz = pose.orientation.z
-        qw = pose.orientation.w
+        # pose = msg.pose[index]
+        # self.pos = np.array([pose.position.x, pose.position.y])
+        # # print("pos: ", self.pos)
+        # qx = pose.orientation.x
+        # qy = pose.orientation.y
+        # qz = pose.orientation.z
+        # qw = pose.orientation.w
+        # r = R.from_quat([qx, qy, qz, qw])
+        # self.yaw = r.as_euler('xyz')[2] # rad
+        # print("yaw: ", self.yaw)
+
+        # Indoor Experiment - TB version
+        self.agent_ready = True
+        # Fix optitrsck bias:
+        #   set (0, 0)->(2.5, 2)
+        #   left-down(0, 0)
+        self.pos = np.array([msg.pose.position.x+2.5 , msg.pose.position.y+2.])
+        # print("agent_{} pos: {}\n".format(self.id, self.pos))
+        qx = msg.pose.orientation.x
+        qy = msg.pose.orientation.y
+        qz = msg.pose.orientation.z
+        qw = msg.pose.orientation.w
         r = R.from_quat([qx, qy, qz, qw])
         self.yaw = r.as_euler('xyz')[2] # rad
-        # print("yaw: ", self.yaw)
+        print("tb_{}: yaw = {} degrees".format(self.id, (self.yaw*180/np.pi)))
 
     def DensityGradientCallback_1(self, msg):
         self.agent_ready = True
@@ -565,7 +588,9 @@ class PTZCamera():
     def UpdatePosition(self, u_p):
         # Maximum Speed restriction
         # k = 1.2 # static tuned
-        k = 100. # dynamic tuned
+        # k = 100. # dynamic tuned
+
+        k = 10.
         u_p = k*u_p
 
         for role in self.valid_sensors.keys():
@@ -622,11 +647,11 @@ class PTZCamera():
         self.perspective += self.K_v*u_v*self.step
         self.perspective /= self.Norm(self.perspective)
 
-        if self.pos[0] + self.perspective[0] < 0 or self.pos[0] + self.perspective[0] > 24:
-           self.perspective[0] *= -1  
+        # if self.pos[0] + self.perspective[0] < 0 or self.pos[0] + self.perspective[0] > 24:
+        #    self.perspective[0] *= -1  
         
-        if self.pos[1] + self.perspective[1] < 0 or self.pos[1] + self.perspective[1] > 24:
-           self.perspective[1] *= -1 
+        # if self.pos[1] + self.perspective[1] < 0 or self.pos[1] + self.perspective[1] > 24:
+        #    self.perspective[1] *= -1 
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
@@ -635,9 +660,11 @@ class PTZCamera():
         # single target dynamic scenario
         # k_yaw = 0.08
         # muti-target static scenario
-        k_yaw = 0.02
+        # k_yaw = 0.02
         # muti-target dynamic scenario
         # k_yaw = 0.06
+        # Indoor TB experiment
+        k_yaw = 0.2
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
@@ -820,9 +847,14 @@ class PTZCamera():
         # k_1 = .00025
         # k_2 = 0.00000000001
 
-        # TurtleBots scenario, static tuned
-        k_1 = .0008
-        k_2 = 0.000000001
+        # # TurtleBots scenario, dynamic tuned
+        # k_1 = .0008
+        # k_2 = 0.000000001
+
+        # Indoor Experiment - TB version
+        k_1 = .001
+        k_2 = 0.00000001
+
         # k_1 = 0.
         # k_2 = 0.
 

@@ -5,17 +5,44 @@ GT_measurement::GT_measurement(ros::NodeHandle& nh_, int id, int mavnum)
     nh = nh_;
     ID = id;
     self_index = ID-1;
-    mavNum = mavnum;
+    mavNum = mavnum; // mavNum here is total number of vehicles: agents+targets.
     formation_num = mavNum-1;
 
 	/*=================================================================================================================================
 		groundtruth
 	=================================================================================================================================*/
-  	groundTruth_sub = nh.subscribe<gazebo_msgs::ModelStates>("/gazebo/model_states", 30, &GT_measurement::groundTruth_cb, this);
+  	// groundTruth_sub = nh.subscribe<gazebo_msgs::ModelStates>("/gazebo/model_states", 30, &GT_measurement::groundTruth_cb, this);
 	// TODO: change the subscribe topic to those optitrack topics
+	std::vector<std::string> gt_topics(mavNum);
+	gt_topics[0] = "/vrpn_client_node/target_1/pose";
+	gt_topics[1] = "/vrpn_client_node/tb_1/pose";
+	gt_topics[2] = "/vrpn_client_node/tb_2/pose";
+	gt_topics[3] = "/vrpn_client_node/tb_3/pose";
+	gt_topics[4] = "/vrpn_client_node/target_2/pose";
+
+	// Initialize pose received flags
+	pose_received = new bool[mavNum];
+	for(int i = 0; i < mavNum; i++) {
+		pose_received[i] = false;
+	}
+
+	gt_subs = new ros::Subscriber[mavNum];
+	gt_subs[0] = nh.subscribe<geometry_msgs::PoseStamped>(gt_topics[0], 30, 
+		[this](const geometry_msgs::PoseStamped::ConstPtr& msg) { this->poseCallback(msg, 0); });
+	gt_subs[1] = nh.subscribe<geometry_msgs::PoseStamped>(gt_topics[1], 30, 
+		[this](const geometry_msgs::PoseStamped::ConstPtr& msg) { this->poseCallback(msg, 1); });
+	gt_subs[2] = nh.subscribe<geometry_msgs::PoseStamped>(gt_topics[2], 30, 
+		[this](const geometry_msgs::PoseStamped::ConstPtr& msg) { this->poseCallback(msg, 2); });
+	gt_subs[3] = nh.subscribe<geometry_msgs::PoseStamped>(gt_topics[3], 30, 
+		[this](const geometry_msgs::PoseStamped::ConstPtr& msg) { this->poseCallback(msg, 3); });
+	gt_subs[4] = nh.subscribe<geometry_msgs::PoseStamped>(gt_topics[4], 30, 
+		[this](const geometry_msgs::PoseStamped::ConstPtr& msg) { this->poseCallback(msg, 4); });
+
 	GTs_rate = 500;
 	GTs_count = 0;
 	GTs = new MAV[mavNum];
+
+	measurement_timer = nh.createTimer(ros::Duration(1.0/GTs_rate), &GT_measurement::measurementTimerCallback, this);
 
 	/*=================================================================================================================================
         Lidar, position
@@ -38,6 +65,8 @@ GT_measurement::GT_measurement(ros::NodeHandle& nh_, int id, int mavnum)
 GT_measurement::~GT_measurement()
 {
     delete[] GTs;
+	delete[] gt_subs;
+	delete[] pose_received;  // ADD THIS LINE
 }
 
 void GT_measurement::setRosRate(int rate)
@@ -94,7 +123,7 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
     //     printf("GTs_eigen[%d]: \n [%f, %f]\n", i, GTs_eigen[i].r(0), GTs_eigen[i].r(1));
     // }
 
-    ////////////////////////// Transform from groundtruth to measurements,  ////////////////////////
+    ////////////////////////// Transform from groundgroundTruth_cbtruth to measurements,  ////////////////////////
     static std::default_random_engine generator;
     if(GTs_count % (GTs_rate/lidar_rate) == 0) 
     {
@@ -112,6 +141,94 @@ void GT_measurement::groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& ms
     // 修正：如果 ID 是 1-3 範圍內的，則需要轉換為 GTs_eigen 的索引
     if(GTs_count % (GTs_rate/position_rate) == 0) {
         // ID 從 1 開始，而 tb_1 在 GTs_eigen 中的索引是 1，所以使用 ID 即可
+        positionMeasurement = positionMeasure(GTs_eigen[ID], generator);
+    }
+    
+    if(GTs_count == GTs_rate)
+        GTs_count = 0;
+}
+
+void GT_measurement::poseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg, int vehicle_index)
+{
+    // Convert geometry_msgs::Pose to whatever format MAV::setPose expects
+    geometry_msgs::Pose pose = msg->pose;
+    GTs[vehicle_index].setPose(pose);
+    pose_received[vehicle_index] = true;
+    
+    // // DEBUG: Print when each pose is received (limit to avoid spam)
+    // static int debug_count = 0;
+    // debug_count++;
+    // if(debug_count % 100 == 0) {  // Print every 100th message
+    //     printf("Received pose for vehicle %d: pos(%.3f, %.3f, %.3f) orient(%.3f, %.3f, %.3f, %.3f)\n", 
+    //            vehicle_index,
+    //            pose.position.x, pose.position.y, pose.position.z,
+    //            pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w);
+    // }
+}
+
+/*=================================================================================================================================
+    Timer-based measurement processing
+=================================================================================================================================*/
+void GT_measurement::measurementTimerCallback(const ros::TimerEvent& event)
+{
+    GTs_count++; // GroundTruth call back rate = 500hz
+    
+    // Check if we have received poses from all vehicles
+    bool all_poses_received = true;
+    for(int i = 0; i < mavNum; i++) {
+        if(!pose_received[i]) {
+            all_poses_received = false;
+            break;
+        }
+    }
+    
+    // Only process if we have all poses
+    if(!all_poses_received) {
+        return;
+    }
+    
+    /*  @ Now we have the groundtruth of all UAVs and targets:
+        @ GTs[0]: target_1
+        @ GTs[1]: tb_1
+        @ GTs[2]: tb_2
+        @ GTs[3]: tb_3
+        @ GTs[4]: target_2 */
+    GTs_eigen.resize(mavNum);
+    GTs_eigen = mavsMsg2Eigen(GTs, mavNum);
+	
+	// DEBUG: Print GTs_eigen positions every 250 cycles (every 0.5 seconds)
+	if(GTs_count % 100 == 0) {
+		printf("=== GTs_eigen positions (count=%d) ===\n", GTs_count);
+		for(int i = 0; i < GTs_eigen.size(); i++) {
+			printf("GTs_eigen[%d]: pos(%.3f, %.3f, %.3f)\n", 
+					i, GTs_eigen[i].r(0), GTs_eigen[i].r(1), GTs_eigen[i].r(2));
+		}
+		printf("=====================================\n");
+	}
+
+    // Extract formation UAVs (tb_1, tb_2, tb_3) - indices 1, 2, 3
+    std::vector<MAV_eigen> formation_eigen_GT;
+    formation_eigen_GT.push_back(GTs_eigen[1]); // tb_1
+    formation_eigen_GT.push_back(GTs_eigen[2]); // tb_2
+    formation_eigen_GT.push_back(GTs_eigen[3]); // tb_3
+    
+    ////////////////////////// Transform from groundtruth to measurements ////////////////////////
+    static std::default_random_engine generator;
+    
+    // Lidar measurements at 50Hz
+    if(GTs_count % (GTs_rate/lidar_rate) == 0) 
+    {
+        lidarMeasurements = lidarMeasure(formation_eigen_GT, generator);
+        
+        lidar4target = lidarmeasure4target(formation_eigen_GT, GTs_eigen[0], generator); // target_1
+        CameraModel = Camera4Neighbor(formation_eigen_GT, generator);
+        CameraModel4target_1 = CameraMeasure4target_1(formation_eigen_GT, GTs_eigen[0], generator); // target_1
+        CameraModel4target_2 = CameraMeasure4target_2(formation_eigen_GT, GTs_eigen[4], generator); // target_2
+    }
+    
+    // Position measurements at 10Hz
+    if(GTs_count % (GTs_rate/position_rate) == 0) {
+        // ID corresponds to the vehicle index in GTs array
         positionMeasurement = positionMeasure(GTs_eigen[ID], generator);
     }
     

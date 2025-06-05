@@ -50,14 +50,14 @@ def norm(arr):
 def Target1PosCallback(msg):
     global target_positions
     idx = 0 
-    position = np.array((msg.pose.position.x, msg.pose.position.y))
+    position = np.array((msg.pose.position.x+2.5, msg.pose.position.y+2))
     target_positions[idx] = position
     target_heights[idx] = msg.pose.position.z
 
 def Target2PosCallback(msg):
     global target_positions
     idx = 1 
-    position = np.array((msg.pose.position.x, msg.pose.position.y))
+    position = np.array((msg.pose.position.x+2.5, msg.pose.position.y+2))
     target_positions[idx] = position
     target_heights[idx] = msg.pose.position.z
 
@@ -65,15 +65,15 @@ def Target1CovCallback(msg):
     global target_covariances
     target_covariance = np.array(msg.P_hat).reshape((6, 6))
     target_covariances[0] = (target_covariance[:2, :2]).flatten()
-    constant_deviation = 1
-    target_covariances[0] = [constant_deviation, 0, 0, constant_deviation]
+    # constant_deviation = .1
+    # target_covariances[0] = [constant_deviation, 0, 0, constant_deviation]
 
 def Target2CovCallback(msg):
     global target_covariances
     target_covariance = np.array(msg.P_hat).reshape((6, 6))
     target_covariances[1] = (target_covariance[:2, :2]).flatten()
-    constant_deviation = 1
-    target_covariances[1] = [constant_deviation, 0, 0, constant_deviation]
+    # constant_deviation = .1
+    # target_covariances[1] = [constant_deviation, 0, 0, constant_deviation]
 
 def TargetDynamics(x, y, v):
     spd = 0.005

@@ -5,6 +5,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Float64MultiArray.h>
 #include <gazebo_msgs/ModelStates.h>
+#include <geometry_msgs/PoseStamped.h>
 #include <Eigen/Dense>
 #include <random>
 #include <map>
@@ -17,6 +18,9 @@ private:
     ros::NodeHandle nh;
     ros::Subscriber bboxes_sub;
     ros::Subscriber groundTruth_sub;
+    ros::Subscriber* gt_subs;
+    bool* pose_received;
+    ros::Timer measurement_timer;
     
     int self_index;
     int formation_num;
@@ -80,6 +84,8 @@ public:
     void groundTruth_cb(const gazebo_msgs::ModelStates::ConstPtr& msg);
     std::vector<MAV_eigen> getGTs_eigen();
     geometry_msgs::Quaternion getGTorientation(int ID);
+    void poseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg, int vehicle_index);
+    void measurementTimerCallback(const ros::TimerEvent& event);
 
     /*=================================================================================================================================
         Lidar, position

@@ -455,15 +455,15 @@ def plotFromTwoBags_after_5s(file1, file2, topic, label1, label2):
     # Plot combined det_p from both bags starting from 5 seconds
     plot_combine_det_p_after_5s(timestamps1, p1, timestamps2, p2, label1, label2)
 
-folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
+folder = '/home/ncrl/wei_research_ws/src/voronoi_cbsa/bag/'
 
 # Multi-targets dynamic simulation
 # file1 = folder + '7_10_trimmed.bag'
 # file2 = folder + '8_10_trimmed.bag'
 
 # Multi-targets dynamic simulation
-file1 = folder + 'setIC_dynamic_cCov_trimmed.bag'
-file2 = folder + 'setIC_dynamic_tCov_trimmed.bag'
+file1 = folder + 'indoorExpConstCov1_trimmed.bag'
+file2 = folder + 'indoorExpTVCov1_trimmed.bag'
 
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)

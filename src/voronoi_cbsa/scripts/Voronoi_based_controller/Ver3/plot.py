@@ -130,7 +130,7 @@ class Visualize2D():
                 # Camera Settings
                 per_x               = rospy.get_param("~per_x", default=0)
                 per_y               = rospy.get_param("~per_y", default=0)
-                init_perspective    = np.array([float(per_x), float(per_y)])
+                init_perspective    = np.array([-float(per_x), -float(per_y)])
                 angle_of_view       = rospy.get_param("~angle_of_view")
                 range_limit         = rospy.get_param("~desired_range")
                 camera_variance     = rospy.get_param("~camera_variance", default=1)
@@ -174,6 +174,10 @@ class Visualize2D():
         self.targets = []
 
         for target in msg.targets:
+            # Fix optitrsck bias:
+            #   set (0, 0)->(2.5, 2)
+            #   left-down(0, 0)
+            # Done in control_tb - AgentCallback(), don't need here.
             pos_x = target.position.x
             pos_y = target.position.y
             pos = np.array([pos_x, pos_y])
@@ -218,7 +222,6 @@ class Visualize2D():
     
     def PoseCB(self, id):
         def callback(msg):
-
             self.agent_pos[id] = np.asarray([msg.position.x, msg.position.y])
             self.agent_per[id] = np.asarray([msg.orientation.x, msg.orientation.y])
 
@@ -248,7 +251,7 @@ class Visualize2D():
                     # sigma = np.array([target[i][1], target[i][1]])
                     # covariance = np.diag(sigma**2)
                     covariance = np.array(target[i][1]).reshape(2,2)
-                    print("covariance matrix:\n", covariance)
+                    # print("covariance matrix:\n", covariance)
                     z = multivariate_normal.pdf(xy, mean=mu, cov=covariance)
                     event += z.reshape(x.shape)
                     event = np.maximum(event, min_threshold)
@@ -416,7 +419,7 @@ class Visualize2D():
                             
                             # 翻轉方向向量
                             original_per = self.agent_per[id]/self.grid_size*self.blockSize
-                            original_per *= 1.0*3
+                            original_per *= 0.5
                             # 方向向量需要特殊處理，翻轉後方向也要相反
                             per = np.array([original_per[0], -original_per[1]])
                             

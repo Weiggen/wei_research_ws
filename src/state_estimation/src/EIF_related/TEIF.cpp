@@ -35,7 +35,7 @@ void target_EIF::setInitialState(Eigen::Vector3d Bbox, int ite_count)
 	T.X.segment(3, 3) << 0, 0, 0;
 	// std::cout << "Init:\n" << T.X.segment(0, 3) << std::endl;
 	T.P.setIdentity();
-	T.P *= 1;
+	T.P *= .1;
 	filter_init = true;
 }
 

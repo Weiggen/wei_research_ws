@@ -86,7 +86,6 @@ int main(int argc, char **argv)
 	geometry_msgs::TwistStamped target_fusedTwistMsg_1;
 	geometry_msgs::PoseStamped target_fusedPoseMsg_2;
 	geometry_msgs::TwistStamped target_fusedTwistMsg_2;
-	ROS_INFO("target Msgs created.");
 
 	/* ----- UAV scenario ----- */
 	MAV mav(nh);
@@ -117,15 +116,15 @@ int main(int argc, char **argv)
 	ros::Publisher target2_pose_pub = nh.advertise<geometry_msgs::PoseStamped>("THEIF/target_2/pose", 10);
 	ros::Publisher target2_twist_pub = nh.advertise<geometry_msgs::TwistStamped>("THEIF/target_2/twist", 10);
 
-	while(ros::ok())
-	{
-		if(mav.imu_init)
-				break;
-		else
-			printf("[%s_%i]: Waiting for Imu topic...\n", vehicle.c_str(), ID);
-		rate.sleep();
-		ros::spinOnce();
-	}
+	// while(ros::ok())
+	// {
+	// 	if(mav.imu_init)
+	// 			break;
+	// 	else
+	// 		printf("[%s_%i]: Waiting for Imu topic...\n", vehicle.c_str(), ID);
+	// 	rate.sleep();
+	// 	ros::spinOnce();
+	// }
 	printf("\n[%s_%i EIF]: Topic checked\n", vehicle.c_str(), ID);
 	for(int i=0; i< 20; i++)
 	{
@@ -144,6 +143,7 @@ int main(int argc, char **argv)
 		target_EIF teif(state_size);
 		teif_objects.push_back(teif);
 	}
+	printf("\n[%s_%i TEIF]: Target objects created.\n", vehicle.c_str(), ID);
 
 	HEIF_self sheif(state_size);
 	
@@ -291,11 +291,14 @@ int main(int argc, char **argv)
 			gradient_M = teif_objects[i].getGradientDensityFnc(theif_objects[i]->getFusedCov(), theif_objects[i]->getWeightedS(), theif_objects[i]->getWeightedY(), theif_objects[i]->getWeightedXi_hat(), theif_objects[i]->getEta_ij());
 			eif_ros.densityGradient_pubs[i].publish(eigen2densityGradient(gradient_M));		
 
-			std::cout << ID << " TEIF_" << i+1 << ":\n";
-			if (i == 0)
+			// std::cout << ID << " TEIF_" << i+1 << ":\n";
+			if (i == 0){
+				std::cout << ID << " TEIF_" << 1 << ":\n";
 				eif_ros.tgtState_Plot_pubs[i].publish(compare(gt_m.getGTs_eigen()[0], theif_objects[i]->getFusedState() , theif_objects[i]->getFusedCov(), gt_m.getGTorientation(ID)));
-			else
+			}else{
+				std::cout << ID << " TEIF_" << 2 << ":\n";
 				eif_ros.tgtState_Plot_pubs[i].publish(compare(gt_m.getGTs_eigen()[4], theif_objects[i]->getFusedState() , theif_objects[i]->getFusedCov(), gt_m.getGTorientation(ID)));
+			}
 		}
 		// allTgtEIFData = eif_ros.get_curr_fusing_data(eif_ros.rbs2Tgt_EIFPairs, 0.05);
 		// allTgtEIFData.push_back(teif.getTgtData());
