@@ -24,8 +24,10 @@ class Visualize2D():
         self.total_agents   = rospy.get_param('/total_agents', 3)
         map_width           = rospy.get_param("/map_width", 24)
         map_height          = rospy.get_param("/map_height", 24)
-        self.map_size       = np.array([map_height, map_width])
+        # self.map_size       = np.array([map_height, map_width])
+        self.map_size       = np.array([5, 5])
         grid_size           = rospy.get_param("/grid_size", 0.1)
+        grid_size = 0.02
         self.grid_size      = np.array([grid_size, grid_size])
         self.size           = (self.map_size/self.grid_size).astype(np.int64)
         self.sensor_pool = ['camera', 'manipulator', 'smoke_detector']
@@ -60,6 +62,7 @@ class Visualize2D():
         self.agent_failure          = {}
         self.vehicle                = "tb"
         #self.FetchAgentInfo()
+        self.scale_factor           = 1
         
         # color_pool = [(0, 255, 0), (255, 128, 0), (255,255,0), (255, 0, 0), (0,255,255), (0,0,255), (178,102,255), (255,0,255), (13, 125, 143)]
         color_pool = [(175, 100, 100), (100, 150, 100), (100,100,150), (255, 0, 0), (0,255,255), (0,0,255), (178,102,255), (255,0,255), (13, 125, 143)]
@@ -84,7 +87,7 @@ class Visualize2D():
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/pose", Pose, self.PoseCB(i))
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/failure", Int16, self.FailureCB(i))
                     
-        self.window_size = self.size*4
+        self.window_size = self.size*4*self.scale_factor
         self.display = pygame.display.set_mode(self.window_size)
         self.display.fill((0,0,0))
         self.blockSize = int(self.window_size[0]/self.size[0])
@@ -352,15 +355,15 @@ class Visualize2D():
                     original_center = np.array(self.targets[i][0])/self.grid_size*self.blockSize
                     center = self.flip_position(original_center)
                     
-                    # offset = 5
-                    # # 三角形頂點需要按照翻轉後的方向重新計算
-                    # pygame.draw.polygon(self.display, (0, 0, 0), (
-                    #     (center[0], center[1] + offset),           # 底部中心點變成頂部中心點
-                    #     (center[0] - offset, center[1] - offset),  # 左下角變成左上角
-                    #     (center[0] + offset, center[1] - offset)   # 右下角變成右上角
-                    # ))
+                    offset = 5
+                    # 三角形頂點需要按照翻轉後的方向重新計算
+                    pygame.draw.polygon(self.display, (0, 100, 0), (
+                        (center[0], center[1] + offset *3),           # 底部中心點變成頂部中心點
+                        (center[0] - offset*3, center[1] - offset*3),  # 左下角變成左上角
+                        (center[0] + offset*3, center[1] - offset*3)   # 右下角變成右上角
+                    ))
                     
-                    font = pygame.font.Font('freesansbold.ttf', 15)
+                    font = pygame.font.Font('freesansbold.ttf', 15*2)
                     context_sensor = str(i+1) + ": " + "{"
                     for sensor in self.sensor_pool:
                         if sensor in self.targets[i][5]:
@@ -382,7 +385,7 @@ class Visualize2D():
                     center = self.flip_position(original_center)
                     
                     # 繪製ID和有效感測器
-                    font = pygame.font.Font('freesansbold.ttf', 15)
+                    font = pygame.font.Font('freesansbold.ttf', 15*2)
                     context_sensor = "{"
                     for sensor in self.sensor_pool:
                         if id in self.agent_valid_sensors.keys():
@@ -398,7 +401,7 @@ class Visualize2D():
                     
                     text = font.render(str(id+1), True, (0, 0, 0))
                     textRect = text.get_rect()
-                    upper = center[1] + 40 if center[1] + 40 < self.window_size[1] else center[1] - 40  # 翻轉上方判斷
+                    upper = center[1] + 60 if center[1] + 60 < self.window_size[1] else center[1] - 60  # 翻轉上方判斷
                     textRect.center = (center[0], upper)
                     self.display.blit(text, textRect)
                     
@@ -410,7 +413,7 @@ class Visualize2D():
                             width = 0
                         else:
                             width = 2
-                        pygame.draw.circle(self.display, self.color[id], center, radius=10, width=width)
+                        pygame.draw.circle(self.display, self.color[id], center, radius=15, width=width)
                         
                         if 'camera' in self.agent_valid_sensors[id]:
                             # 繪製代理視角，需要翻轉方向向量
@@ -419,14 +422,14 @@ class Visualize2D():
                             
                             # 翻轉方向向量
                             original_per = self.agent_per[id]/self.grid_size*self.blockSize
-                            original_per *= 0.5
+                            original_per *= 0.58
                             # 方向向量需要特殊處理，翻轉後方向也要相反
                             per = np.array([original_per[0], -original_per[1]])
                             
-                            pygame.draw.line(self.display, self.color[id], pos, pos + per, 2)
+                            pygame.draw.line(self.display, self.color[id], pos, pos + per, 5)
 
                             # 繪製Camera FOV(半透明扇形)
-                            radius = 250  # 增加扇形半徑以便更明顯
+                            radius = 500  # 增加扇形半徑以便更明顯
                             
                             # 正確計算方向向量的角度
                             # 使用arctan2來獲取-180到180度的角度
@@ -440,7 +443,7 @@ class Visualize2D():
                             
                             # 創建半透明扇形
                             color = self.color[id]
-                            alpha = 100  # 透明度值(0-255)
+                            alpha = 60  # 透明度值(0-255)
                             
                             # 計算扇形的頂點
                             points = [pos]

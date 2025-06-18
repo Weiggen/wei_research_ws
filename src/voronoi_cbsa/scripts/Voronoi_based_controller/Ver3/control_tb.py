@@ -336,7 +336,7 @@ class PTZCamera():
         qw = msg.pose.orientation.w
         r = R.from_quat([qx, qy, qz, qw])
         self.yaw = r.as_euler('xyz')[2] # rad
-        print("tb_{}: yaw = {} degrees".format(self.id, (self.yaw*180/np.pi)))
+        # print("tb_{}: yaw = {} degrees".format(self.id, (self.yaw*180/np.pi)))
 
     def DensityGradientCallback_1(self, msg):
         self.agent_ready = True
@@ -590,7 +590,7 @@ class PTZCamera():
         # k = 1.2 # static tuned
         # k = 100. # dynamic tuned
 
-        k = 10.
+        k = 5.
         u_p = k*u_p
 
         for role in self.valid_sensors.keys():
