@@ -100,7 +100,7 @@ class PTZCamera():
         self.cooperation    = coop 
         self.sensor_balance = balance
         self.w_coop         = strength
-        self.safe_distance  = 0.1
+        self.safe_distance  = 0.3
         self.avoid_weight   = 0.05
         
         # Setting up environment parameters
@@ -587,10 +587,14 @@ class PTZCamera():
             
     def UpdatePosition(self, u_p):
         # Maximum Speed restriction
+        
+        # Simulation
         # k = 1.2 # static tuned
         # k = 100. # dynamic tuned
 
-        k = 5.
+        # Experiment
+        # k = 5. # static tuned
+        k = 8. # dynamic tuned
         u_p = k*u_p
 
         for role in self.valid_sensors.keys():
@@ -634,11 +638,12 @@ class PTZCamera():
         # yaw_c = math.atan2(self.perspective[1], self.perspective[0])
         # print("yaw_current"+str(self.id)+":{}\n".format(yaw_c))
         yaw_c = self.yaw
+        max_turning_degree = 5
         
         try:
             turning = math.acos((u_v @ self.perspective.T)/np.linalg.norm(u_v))
-            if  turning > 15/180*np.pi:
-                u_v *= (15/180*np.pi)/turning
+            if  turning > max_turning_degree/180*np.pi:
+                u_v *= (max_turning_degree/180*np.pi)/turning
         except:
             # u_v = np.array([0., 0.])
             u_v = self.u_v
@@ -664,7 +669,8 @@ class PTZCamera():
         # muti-target dynamic scenario
         # k_yaw = 0.06
         # Indoor TB experiment
-        k_yaw = 0.2
+        # k_yaw = 0.2 # static scenario
+        k_yaw = 0.04 # dynamic scenario
         self.yaw_rate = k_yaw*u_yaw
            
     def UpdateSensorVoronoi(self, role, event):
@@ -699,7 +705,7 @@ class PTZCamera():
     def qp(self, role, event, u_des):
         ## TODO: Target & agent collision avoidance add
         # CBF
-        alpha = 3.
+        alpha = 100.
         d_min = self.safe_distance
 
         P = matrix(np.eye(2))
@@ -735,11 +741,23 @@ class PTZCamera():
         if len(self.neighbors) > 0:
             if role in target[5]:
                 for neighbor in self.sensor_graph[role]:
+                    # agent-agent collision avoidence
                     rel_pos = self.pos - self.neighbors[neighbor]["position"]
                     d = np.linalg.norm(rel_pos)
-                    h_c = d**2-d_min**2
+                    h_c = d**2 - d_min**2
                     G = matrix(-2.0*rel_pos.reshape(1, 2))
                     h = matrix(alpha*h_c - 2.0*np.dot(rel_pos, self.neighbors[neighbor]["velocity"]))
+                    G_.append(G)
+                    h_.append(h)
+                
+                if target:
+                    # agent-target collision avoidence
+                    rel_pos = self.pos - target[0]
+                    d = np.linalg.norm(rel_pos)
+                    h_c = d**2 - d_min**2
+                    G = matrix(-2.0*rel_pos.reshape(1, 2))
+                    h = matrix(alpha*h_c - 2.0*np.dot(rel_pos, target[3]))
+                    print("agent-target collision avoidence triggered !")
                     G_.append(G)
                     h_.append(h)
 
@@ -852,8 +870,9 @@ class PTZCamera():
         # k_2 = 0.000000001
 
         # Indoor Experiment - TB version
+        # Ver 1 , some relative pose cause maintaining the unkown distance
         k_1 = .001
-        k_2 = 0.00000001
+        k_2 = 0.00000001 # low value, no contribution at all
 
         # k_1 = 0.
         # k_2 = 0.

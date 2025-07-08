@@ -20,14 +20,14 @@
         <arg name="perspective_y"   value="1"     />
         <arg name="angle_of_view"   value="30"    />
         <arg name="desired_range"   value=".6"     />
-        <arg name="camera_variance" value=".6"     />
+        <arg name="camera_variance" value=".3"     />
 
         <arg name="arm_length"      value="1"     />
         <arg name="approx_param"    value="3"    />
         
         <arg name="smoke_variance"  value="4"     />
 
-        <arg name="max_speed"       value=".5"     /> 
+        <arg name="max_speed"       value=".08"     /> 
     </include>
 
     <include file="$(find voronoi_cbsa)/launch/tb_agent.launch" >
@@ -42,14 +42,14 @@
         <arg name="perspective_y"   value="1"     />
         <arg name="angle_of_view"   value="30"    />
         <arg name="desired_range"   value=".6"     />
-        <arg name="camera_variance" value=".6"     />
+        <arg name="camera_variance" value=".3"     />
 
         <arg name="arm_length"      value="1"     />
         <arg name="approx_param"    value="3"    />
         
         <arg name="smoke_variance"  value="4"     />
 
-        <arg name="max_speed"       value=".5"     /> 
+        <arg name="max_speed"       value=".08"     /> 
     </include>
 
     <include file="$(find voronoi_cbsa)/launch/tb_agent.launch" >
@@ -64,13 +64,13 @@
         <arg name="perspective_y"   value="1"     />
         <arg name="angle_of_view"   value="30"    />
         <arg name="desired_range"   value=".6"     />
-        <arg name="camera_variance" value=".6"     />
+        <arg name="camera_variance" value=".3"     />
 
         <arg name="arm_length"      value="1"     />
         <arg name="approx_param"    value="3"    />
         
         <arg name="smoke_variance"  value="4"     />
 
-        <arg name="max_speed"       value=".5"     /> 
+        <arg name="max_speed"       value=".08"     /> 
     </include>
 </launch>

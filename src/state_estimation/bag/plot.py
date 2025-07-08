@@ -462,8 +462,8 @@ folder = '/home/ncrl/wei_research_ws/src/voronoi_cbsa/bag/'
 # file2 = folder + '8_10_trimmed.bag'
 
 # Multi-targets dynamic simulation
-file1 = folder + 'indoorExpConstCov1_trimmed.bag'
-file2 = folder + 'indoorExpTVCov1_trimmed.bag'
+file1 = folder + 'Wei_dynamicExp_CstCov888_trimmed.bag'
+file2 = folder + 'Wei_dynamicExp_TVCov888_trimmed.bag'
 
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
