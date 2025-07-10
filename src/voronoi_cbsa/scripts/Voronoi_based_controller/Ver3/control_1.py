@@ -559,6 +559,7 @@ class PTZCamera():
         if np.linalg.norm(u_p) > self.max_speed:
             u_p = self.max_speed*(u_p/np.linalg.norm(u_p))
 
+        # Geofencing
         if self.pos[0] < 0 or self.pos[0] > self.map_size[0]:
             self.u_p[0] = 0
         else :
@@ -620,12 +621,6 @@ class PTZCamera():
             
         self.perspective += self.K_v*u_v*self.step
         self.perspective /= self.Norm(self.perspective)
-
-        if self.pos[0] + self.perspective[0] < 0 or self.pos[0] + self.perspective[0] > 24:
-           self.perspective[0] *= -1  
-        
-        if self.pos[1] + self.perspective[1] < 0 or self.pos[1] + self.perspective[1] > 24:
-           self.perspective[1] *= -1 
 
         # yaw_d = math.atan2(self.perspective[1], self.perspective[0])
         u_yaw = -math.sin(yaw_c)*u_v[0]+math.cos(yaw_c)*u_v[1]
