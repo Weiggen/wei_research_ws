@@ -59,6 +59,8 @@ class Visualize2D():
         self.agent_sensor_weights   = {}
         self.agent_failure          = {}
         self.vehicle                = "tb"
+        self.fov                    = rospy.get_param("~angle_of_view", default=30)
+        self.ideal_range            = rospy.get_param("~desired_range", default=3)
         #self.FetchAgentInfo()
         
         # color_pool = [(0, 255, 0), (255, 128, 0), (255,255,0), (255, 0, 0), (0,255,255), (0,0,255), (178,102,255), (255,0,255), (13, 125, 143)]
@@ -79,7 +81,7 @@ class Visualize2D():
             
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/sensor_weights", WeightArray, self.WeightCB(i))           
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/valid_sensors", ValidSensors, self.ValidSensorCB(i))
-            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/sensor_scores", SensorArray, self.SensorScoresCB(i))
+            rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/sensor_scores", WeightArray, self.SensorScoresCB(i))
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/total_score", Float64, self.TotalScoreCB(i))
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/pose", Pose, self.PoseCB(i))
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/failure", Int16, self.FailureCB(i))
@@ -197,7 +199,7 @@ class Visualize2D():
     
     def SensorScoresCB(self, id):
         def callback(msg):
-            for sensor in msg.sensors:
+            for sensor in msg.weights:
                 self.agent_sensor_scores[id][sensor.type] = sensor.score
             
         return callback
@@ -248,7 +250,7 @@ class Visualize2D():
                     # sigma = np.array([target[i][1], target[i][1]])
                     # covariance = np.diag(sigma**2)
                     covariance = np.array(target[i][1]).reshape(2,2)
-                    print("covariance matrix:\n", covariance)
+                    # print("covariance matrix:\n", covariance)
                     z = multivariate_normal.pdf(xy, mean=mu, cov=covariance)
                     event += z.reshape(x.shape)
                     event = np.maximum(event, min_threshold)
@@ -415,8 +417,9 @@ class Visualize2D():
                             pos = self.flip_position(original_pos)
                             
                             # 翻轉方向向量
+                            desired_range = self.ideal_range
                             original_per = self.agent_per[id]/self.grid_size*self.blockSize
-                            original_per *= 1.0*3
+                            original_per *= desired_range
                             # 方向向量需要特殊處理，翻轉後方向也要相反
                             per = np.array([original_per[0], -original_per[1]])
                             
@@ -431,7 +434,7 @@ class Visualize2D():
                             angle_deg = np.degrees(angle_rad)
                             
                             # 扇形角度範圍
-                            fov = 30  # 視場角度(Field of View)
+                            fov = self.fov
                             start_angle = angle_deg - fov/2
                             end_angle = angle_deg + fov/2
                             

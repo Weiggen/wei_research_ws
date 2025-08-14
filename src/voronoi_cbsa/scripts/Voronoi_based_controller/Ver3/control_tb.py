@@ -102,6 +102,8 @@ class PTZCamera():
         self.w_coop         = strength
         self.safe_distance  = 0.1
         self.avoid_weight   = 0.05
+
+        self.weighted_target = 0
         
         # Setting up environment parameters
         self.total_agents       = rospy.get_param('/total_agents', 1)
@@ -530,7 +532,19 @@ class PTZCamera():
                 for event in self.targets.keys():
                     self.sensor_voronoi[role][event] = np.zeros(self.size, dtype=object)
                     self.UpdateSensorVoronoi(role = role, event = event)
-                        
+
+            # print("Sensor graph:\n")
+            # for role in self.valid_sensors.keys():
+            #     print("self.sensor_graph[{}]: {}".format(role, self.sensor_graph[role]))
+
+            # # Weight Strategy
+            # for role in self.valid_sensors.keys():
+            #     if role == 'camera':
+            #         for event in self.targets.keys():
+            #             if self.valid_sensors[role] and event in self.sensor_voronoi[role].keys():
+            #                 if len(self.sensor_voronoi[role][event]) > 0:
+            #                     self.weighted_target = self.WeightStrategy(role=role, event=event)
+                                
             u_p, u_v = self.ComputeControlSignal()
             self.UpdatePosition(u_p)
 
@@ -611,7 +625,10 @@ class PTZCamera():
         yaw_c = self.yaw
         
         try:
-            turning = math.acos((u_v @ self.perspective.T)/np.linalg.norm(u_v))
+            if np.linalg.norm(u_v) > 1e-6:
+                turning = math.acos((u_v @ self.perspective.T)/np.linalg.norm(u_v))
+            else:
+                turning = math.acos((self.perspective @ self.perspective.T)/1e-6)
             if  turning > 15/180*np.pi:
                 u_v *= (15/180*np.pi)/turning
         except:
@@ -680,27 +697,6 @@ class PTZCamera():
         rel_pos = np.zeros_like(self.pos)
         
         target = self.targets[event]
-
-#       def TargetCallback(self, msg):
-#         self.target_ready = True
-#         for target in msg.targets:
-
-#             pos_x   = target.position.x
-#             pos_y   = target.position.y
-#             pos     = np.array([pos_x, pos_y])
-#             height  = target.height
-
-# #           std     = target.standard_deviation
-#             cov     = target.covariance
-#             weight  = target.weight
-
-#             vel_x   = target.velocity.linear.x
-#             vel_y   = target.velocity.linear.y
-#             vel     = np.array([vel_x, vel_y])
-            
-#             requirements = [target.required_sensor[i] for i in range(len(target.required_sensor))]
-
-#             self.target_buffer[target.id] = [pos, cov, weight, vel, target.id, requirements, height]
 
         G_ = []
         h_ = []
@@ -776,7 +772,48 @@ class PTZCamera():
                         # print("sensor_weight[{}][{}]: {}".format(sensor, event, self.sensor_weight[sensor][event]))
                     else:
                         self.sensor_weight[sensor][event] = 0
-                                    
+
+    def WeightStrategy(self, role, event):
+        # TODO: To solve the hesitation problem: there are multiple targets in the same voronoi cell.
+        #       The farther target will be assigned a additional weight.
+
+        whom = {}
+        dist = {}
+        weight_aimed = None
+
+        for role in self.valid_sensors.keys():
+            if role == 'camera':
+                for event in self.targets.keys():
+                    voronoi_cell = self.sensor_voronoi[role][event]
+                    t_pos = self.targets[event][0]
+                    grid_x = int(t_pos[0] / self.grid_size[0])
+                    grid_y = int(t_pos[1] / self.grid_size[1])
+                    whom[event] = voronoi_cell[grid_x, grid_y]
+                    # print("target_{}, belongs to {}".format(event, whom[event]))
+
+        # for role in self.valid_sensors.keys():
+        #     if role == 'camera':
+        #         print("agent_{}'s neighbor: {}".format(self.id, self.sensor_graph[role]))
+        #         print("targets: {}".format(self.targets.keys()))
+
+        # print("whom: \n{}\n".format(whom))
+
+        # whom[event] is the agent ID that is responsible for the targets
+        for role in self.valid_sensors.keys():
+            if role == 'camera':
+                if len(whom) > 1 and whom[0] == whom[1]:
+                    # if there are multiple targets in the same voronoi cell which belongs to whom[event]
+                    for event in self.targets.keys():
+                        for neighbor in self.sensor_graph[role]:
+                            dist[event] = np.linalg.norm(self.neighbors[neighbor]["position"] - self.targets[event][0])
+                            if len(dist) > 0:
+                                # Find the farthest target
+                                weight_aimed = max(dist, key=dist.get)
+                                # print("WeightStrategy: The targets are in the same voronoi cell.")
+                                # print("for agent_{}".format(whom[event]))
+                                # print("The target {} is the farthest from the neighbor {}.\n".format(weight_aimed, neighbor))
+        return weight_aimed
+
     def ComputeUtility(self):
         
         for event in self.targets.keys():
@@ -860,6 +897,9 @@ class PTZCamera():
                     if role == 'camera':
                         u_v[0] += self.sensor_weight[role][event]*np.sum(perspective_gradient_x * self.event_density[event]) # ctrl signal for heading
                         u_v[1] += self.sensor_weight[role][event]*np.sum(perspective_gradient_y * self.event_density[event]) # ctrl signal for heading
+                        if event == self.weighted_target:
+                            u_v[0] *= 2
+                            u_v[1] *= 2
                                 
                     total_gradient[0] = sensor_gradient[0]
                     total_gradient[1] = sensor_gradient[1]
@@ -902,6 +942,10 @@ class PTZCamera():
                 u_p[1] += (tmp_y_2 if not np.isnan(tmp_y_2) else 0)
                 # u_p[0] *= target_weight
                 # u_p[1] *= target_weight
+                if event == self.weighted_target:
+                    print("weighted_target: {}".format(event))
+                    u_p[0] *= 2
+                    u_p[1] *= 2
         
         return u_p, u_v
               
@@ -995,7 +1039,7 @@ class PTZCamera():
             density_gradient_x = self.event_density_gradients[event][0]
             density_gradient_y = self.event_density_gradients[event][1]
         else:
-            print(f"Warning: event {event} not found in event_density_gradients, using zeros")
+            # print(f"Warning: event {event} not found in event_density_gradients, using zeros")
             density_gradient_x = np.zeros(self.size)
             density_gradient_y = np.zeros(self.size)
 
