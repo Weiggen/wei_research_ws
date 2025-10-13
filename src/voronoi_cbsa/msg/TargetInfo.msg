@@ -5,3 +5,4 @@ float64[]               covariance
 float32                 weight
 geometry_msgs/Twist     velocity
 string[]                required_sensor
+int64[]                 assignment

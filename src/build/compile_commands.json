@@ -1,0 +1,181 @@
+[
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DGTEST_CREATE_SHARED_LIBRARY=1 -Dgmock_main_EXPORTS -isystem /usr/src/googletest/googlemock/include -isystem /usr/src/googletest/googlemock -isystem /usr/src/googletest/googletest/include -isystem /usr/src/googletest/googletest  -g -fPIC   -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -DGTEST_HAS_PTHREAD=1 -std=c++11 -o gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /usr/src/googletest/googlemock/src/gmock_main.cc",
+  "file": "/usr/src/googletest/googlemock/src/gmock_main.cc"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DGTEST_CREATE_SHARED_LIBRARY=1 -Dgmock_EXPORTS -I/usr/src/googletest/googlemock/include -I/usr/src/googletest/googlemock -isystem /usr/src/googletest/googletest/include -isystem /usr/src/googletest/googletest  -g -fPIC   -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -DGTEST_HAS_PTHREAD=1 -std=c++11 -o gtest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /usr/src/googletest/googlemock/src/gmock-all.cc",
+  "file": "/usr/src/googletest/googlemock/src/gmock-all.cc"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DGTEST_CREATE_SHARED_LIBRARY=1 -Dgtest_main_EXPORTS -isystem /usr/src/googletest/googletest/include -isystem /usr/src/googletest/googletest  -g -fPIC   -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -DGTEST_HAS_PTHREAD=1 -std=c++11 -o gtest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /usr/src/googletest/googletest/src/gtest_main.cc",
+  "file": "/usr/src/googletest/googletest/src/gtest_main.cc"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DGTEST_CREATE_SHARED_LIBRARY=1 -Dgtest_EXPORTS -I/usr/src/googletest/googletest/include -I/usr/src/googletest/googletest  -g -fPIC   -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o gtest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /usr/src/googletest/googletest/src/gtest-all.cc",
+  "file": "/usr/src/googletest/googletest/src/gtest-all.cc"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"turtlebot3_fake\\\" -I../turtlebot3_simulations/turtlebot3_fake/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp  -g   -o turtlebot3_simulations/turtlebot3_fake/CMakeFiles/turtlebot3_fake_node.dir/src/turtlebot3_fake.cpp.o -c /home/weiggen/wei_research_ws/src/turtlebot3_simulations/turtlebot3_fake/src/turtlebot3_fake.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/turtlebot3_simulations/turtlebot3_fake/src/turtlebot3_fake.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_DATE_TIME_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_IOSTREAMS_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_TEST_DYN_LINK -DBOOST_THREAD_DYN_LINK -DLIBBULLET_VERSION=2.88 -DLIBBULLET_VERSION_GT_282 -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"turtlebot3_gazebo\\\" -I../turtlebot3_simulations/turtlebot3_gazebo/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/gazebo-11 -I/usr/include/bullet -I/usr/include/sdformat-9.10 -I/usr/include/OGRE -I/usr/include/OGRE/Terrain -I/usr/include/OGRE/Paging -isystem /usr/include/simbody -isystem /usr/include/ignition/math6 -isystem /usr/include/ignition/transport8 -isystem /usr/include/ignition/msgs5 -isystem /usr/include/ignition/common3 -isystem /usr/include/ignition/fuel_tools4 -isystem /usr/include/eigen3 -isystem /usr/include/sdformat-9.10/sdf/.. -isystem /usr/include/ignition/cmake2 -isystem /usr/include/uuid  -g   -std=c++11 -I/usr/include/uuid -std=gnu++17 -o turtlebot3_simulations/turtlebot3_gazebo/CMakeFiles/turtlebot3_drive.dir/src/turtlebot3_drive.cpp.o -c /home/weiggen/wei_research_ws/src/turtlebot3_simulations/turtlebot3_gazebo/src/turtlebot3_drive.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/turtlebot3_simulations/turtlebot3_gazebo/src/turtlebot3_drive.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g   -o state_estimation/CMakeFiles/state_estimation.dir/node/state_estimation.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/node/state_estimation.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/node/state_estimation.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/EIF.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/EIF.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/EIF.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/TEIF.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/TEIF_Lidar.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF_Lidar.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/TEIF_Lidar.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/SEIF.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/SEIF_pose.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_pose.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_pose.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/SEIF_neighbors.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_neighbors.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_neighbors.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/SEIF_lidar_neighbors.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_lidar_neighbors.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/SEIF_lidar_neighbors.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/HEIF.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/HEIF_self.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_self.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_self.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/HEIF_target.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_target.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/HEIF_target.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIF_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I../state_estimation/include/state_estimation -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o state_estimation/CMakeFiles/EIF.dir/src/EIF_related/MathLib.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/MathLib.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/EIF_related/MathLib.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DGT_measurement_ros_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I../state_estimation/include/state_estimation  -g -fPIC   -o state_estimation/CMakeFiles/GT_measurement_ros.dir/src/ROSmsg_related/GT_measurement_ros.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/ROSmsg_related/GT_measurement_ros.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/ROSmsg_related/GT_measurement_ros.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DMav_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I../state_estimation/include/state_estimation  -g -fPIC   -o state_estimation/CMakeFiles/Mav.dir/src/ROSmsg_related/Mav.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/ROSmsg_related/Mav.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/ROSmsg_related/Mav.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I../state_estimation/include/state_estimation  -g   -o state_estimation/CMakeFiles/self_msg_sync.dir/node/self_msg_sync.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/node/self_msg_sync.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/node/self_msg_sync.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DCamera_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I../state_estimation/include/state_estimation  -g -fPIC   -o state_estimation/CMakeFiles/Camera.dir/src/Camera.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/Camera.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/Camera.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DEIFpairs_ros_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"state_estimation\\\" -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I../state_estimation/include/state_estimation  -g -fPIC   -o state_estimation/CMakeFiles/EIFpairs_ros.dir/src/ROSmsg_related/EIFpairs_ros.cpp.o -c /home/weiggen/wei_research_ws/src/state_estimation/src/ROSmsg_related/EIFpairs_ros.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/state_estimation/src/ROSmsg_related/EIFpairs_ros.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"formation_ctrl\\\" -I../formation_gaz_sim/include -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I/usr/include/pcl-1.10 -I/usr/include/vtk-7.1 -I/usr/include/freetype2 -I../formation_gaz_sim/include/formation_ctrl  -g   -o formation_gaz_sim/CMakeFiles/keyboard_ctrl.dir/node/keyboard_ctrl_node.cpp.o -c /home/weiggen/wei_research_ws/src/formation_gaz_sim/node/keyboard_ctrl_node.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/formation_gaz_sim/node/keyboard_ctrl_node.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"formation_ctrl\\\" -I../formation_gaz_sim/include -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I/usr/include/pcl-1.10 -I/usr/include/vtk-7.1 -I/usr/include/freetype2 -I../formation_gaz_sim/include/formation_ctrl  -g   -o formation_gaz_sim/CMakeFiles/keyboard_ctrl.dir/src/getch.cpp.o -c /home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DFormation_EXPORTS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"formation_ctrl\\\" -I../formation_gaz_sim/include -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I/usr/include/pcl-1.10 -I/usr/include/vtk-7.1 -I/usr/include/freetype2 -I../formation_gaz_sim/include/formation_ctrl  -g -fPIC   -o formation_gaz_sim/CMakeFiles/Formation.dir/src/Formation.cpp.o -c /home/weiggen/wei_research_ws/src/formation_gaz_sim/src/Formation.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/Formation.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"formation_ctrl\\\" -DVelocity_cbf_EXPORTS -I../formation_gaz_sim/include -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/pcl-1.10 -I/usr/include/vtk-7.1 -I/usr/include/freetype2 -I../formation_gaz_sim/include/formation_ctrl -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g -fPIC   -o formation_gaz_sim/CMakeFiles/Velocity_cbf.dir/src/Velocity_cbf.cpp.o -c /home/weiggen/wei_research_ws/src/formation_gaz_sim/src/Velocity_cbf.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/Velocity_cbf.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"formation_ctrl\\\" -I../formation_gaz_sim/include -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/pcl-1.10 -I/usr/include/vtk-7.1 -I/usr/include/freetype2 -I../formation_gaz_sim/include/formation_ctrl -isystem /usr/include/eigen3 -isystem /usr/local/include/osqp  -g   -o formation_gaz_sim/CMakeFiles/formation_cbf.dir/node/formation_cbf_node.cpp.o -c /home/weiggen/wei_research_ws/src/formation_gaz_sim/node/formation_cbf_node.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/formation_gaz_sim/node/formation_cbf_node.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"formation_ctrl\\\" -I../formation_gaz_sim/include -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I/usr/include/pcl-1.10 -I/usr/include/vtk-7.1 -I/usr/include/freetype2 -I../formation_gaz_sim/include/formation_ctrl  -g   -o formation_gaz_sim/CMakeFiles/cmd_node.dir/node/cmd_node.cpp.o -c /home/weiggen/wei_research_ws/src/formation_gaz_sim/node/cmd_node.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/formation_gaz_sim/node/cmd_node.cpp"
+},
+
+{
+  "directory": "/home/weiggen/wei_research_ws/src/build",
+  "command": "/usr/bin/g++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"formation_ctrl\\\" -I../formation_gaz_sim/include -Idevel/include -I../state_estimation/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/opencv4 -I/usr/include/eigen3 -I/usr/include/pcl-1.10 -I/usr/include/vtk-7.1 -I/usr/include/freetype2 -I../formation_gaz_sim/include/formation_ctrl  -g   -o formation_gaz_sim/CMakeFiles/cmd_node.dir/src/getch.cpp.o -c /home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.cpp",
+  "file": "/home/weiggen/wei_research_ws/src/formation_gaz_sim/src/getch.cpp"
+}
+]

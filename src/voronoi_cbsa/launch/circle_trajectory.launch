@@ -3,11 +3,11 @@
   <node name="circular_trajectory_controller" pkg="voronoi_cbsa" type="circular_trajectory_controller.py" output="screen">
     <!-- Target 1 parameters -->
     <param name="target1/radius" value="2.0" />                <!-- Radius of the circle in meters -->
-    <param name="target1/angular_velocity" value="0.1" />      <!-- Angular velocity in rad/s -->
+    <param name="target1/angular_velocity" value="0.07" />      <!-- Angular velocity in rad/s -->
     
     <!-- Target 2 parameters -->
     <param name="target2/radius" value="2.0" />                <!-- Radius of the circle in meters -->
-    <param name="target2/angular_velocity" value="0.1" />      <!-- Angular velocity in rad/s -->
+    <param name="target2/angular_velocity" value="0.07" />      <!-- Angular velocity in rad/s -->
     
     <!-- Publishing rate in Hz -->
     <param name="publish_rate" value="10.0" />

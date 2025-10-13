@@ -1,0 +1,80 @@
+<launch>
+    <rosparam param="/total_agents"> 3 </rosparam>
+    <rosparam param="/grid_size"> 0.1 </rosparam>
+    <rosparam param="/map_width"> 24 </rosparam>
+    <rosparam param="/map_height"> 24 </rosparam>
+    <rosparam param="/test"> 0 </rosparam> <!-- 0: False 1: True-->
+
+    <node name="Visualizer" pkg="voronoi_cbsa" type="plot_ptz.py" output="screen" />
+    <rosparam param="angle_of_view"> 30 </rosparam>
+    <rosparam param="desired_range"> 3 </rosparam>
+    <rosparam param="camera_variance"> 2 </rosparam>
+    <node name="TaskAllocation" pkg="voronoi_cbsa" type="task_allocation.py" output="log" />
+    <node name="GroundControlStation" pkg="voronoi_cbsa" type="Ground.py" output="screen" />
+
+    <include file="$(find voronoi_cbsa)/launch/tb_agent_ptz.launch" >
+        <arg name="id"              value="1"     /> 
+        <!-- <arg name="position_x"      value="4"     />
+        <arg name="position_y"      value="3"     /> -->
+        <arg name="camera"          value="1"     />
+        <arg name="manipulator"     value="0"     />
+        <arg name="smoke_detector"  value="0"     />
+
+        <arg name="perspective_x"   value="1"     />
+        <arg name="perspective_y"   value="1"     />
+        <arg name="angle_of_view"   value="30"    />
+        <arg name="desired_range"   value="3"     />
+        <arg name="camera_variance" value="2"     />
+
+        <arg name="arm_length"      value="1"     />
+        <arg name="approx_param"    value="3"    />
+        
+        <arg name="smoke_variance"  value="4"     />
+
+        <arg name="max_speed"       value=".5"     /> 
+    </include>
+
+    <include file="$(find voronoi_cbsa)/launch/tb_agent_ptz.launch" >
+        <arg name="id"              value="2"     /> 
+        <!-- <arg name="position_x"      value="3"     />
+        <arg name="position_y"      value="4"     /> -->
+        <arg name="camera"          value="1"     />
+        <arg name="manipulator"     value="0"     />
+        <arg name="smoke_detector"  value="0"     />
+
+        <arg name="perspective_x"   value="1"     />
+        <arg name="perspective_y"   value="1"     />
+        <arg name="angle_of_view"   value="30"    />
+        <arg name="desired_range"   value="3"     />
+        <arg name="camera_variance" value="2"     />
+
+        <arg name="arm_length"      value="1"     />
+        <arg name="approx_param"    value="3"    />
+        
+        <arg name="smoke_variance"  value="4"     />
+
+        <arg name="max_speed"       value=".4"     /> 
+    </include>
+
+    <include file="$(find voronoi_cbsa)/launch/tb_agent_ptz.launch" >
+        <arg name="id"              value="3"     /> 
+        <!-- <arg name="position_x"      value="0"     />
+        <arg name="position_y"      value="0"     /> -->
+        <arg name="camera"          value="1"     />
+        <arg name="manipulator"     value="0"     />
+        <arg name="smoke_detector"  value="0"     />
+
+        <arg name="perspective_x"   value="1"     />
+        <arg name="perspective_y"   value="1"     />
+        <arg name="angle_of_view"   value="30"    />
+        <arg name="desired_range"   value="3"     />
+        <arg name="camera_variance" value="2"     />
+
+        <arg name="arm_length"      value="1"     />
+        <arg name="approx_param"    value="3"    />
+        
+        <arg name="smoke_variance"  value="4"     />
+
+        <arg name="max_speed"       value=".5"     /> 
+    </include>
+</launch>

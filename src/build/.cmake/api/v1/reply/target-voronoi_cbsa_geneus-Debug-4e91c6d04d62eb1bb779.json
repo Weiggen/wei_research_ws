@@ -1,0 +1,69 @@
+{
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"include",
+			"generate_messages",
+			"add_dependencies"
+		],
+		"files" : 
+		[
+			"build/voronoi_cbsa/cmake/voronoi_cbsa-genmsg.cmake",
+			"/opt/ros/noetic/share/genmsg/cmake/genmsg-extras.cmake",
+			"voronoi_cbsa/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 85,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 307,
+				"parent" : 1
+			},
+			{
+				"file" : 0,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 341,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 342,
+				"parent" : 3
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "voronoi_cbsa_generate_messages_eus::@562cd8e639a8f1deb13a"
+		}
+	],
+	"id" : "voronoi_cbsa_geneus::@562cd8e639a8f1deb13a",
+	"name" : "voronoi_cbsa_geneus",
+	"paths" : 
+	{
+		"build" : "voronoi_cbsa",
+		"source" : "voronoi_cbsa"
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}

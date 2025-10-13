@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- vehicle model and world -->
+    <arg name="name" default="tb"/>    
+    <arg name="model" default="burger"/>
+    <!-- Gazebo sim -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/empty.world"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>  
+    <!-- target 1 -->
+    <group ns = "target_1">
+        <arg name="x" value="10"/>
+        <arg name="y" value="11"/>
+        <arg name="z" value="0"/>
+        <arg name="Y" value="3.14"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" value="target_1" />
+        </node>
+        
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model target_1 -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg Y) -param robot_description" />
+    </group>
+    <!-- target 2 -->
+    <group ns="target_2">
+        <arg name="x" value="16"/>
+        <arg name="y" value="14"/>
+        <arg name="z" value="0"/>
+        <arg name="Y" value="0"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" value="target_2" />
+        </node>
+        
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model target_2 -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg Y) -param robot_description" />
+    </group>
+    <!-- Agent1 -->
+    <group ns = "$(arg name)_1">
+        <arg name="x" value="5.5"/>
+        <arg name="y" value="13"/>
+        <arg name="z" value="0"/>
+        <arg name="Y" value="0"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" value="$(arg name)_1" />
+        </node>
+        
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg name)_1 -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg Y) -param robot_description" />
+    </group>
+    <!-- Agent2 -->
+    <group ns="$(arg name)_2">
+        <arg name="x" value="16"/>
+        <arg name="y" value="15"/>
+        <arg name="z" value="0"/>
+        <arg name="Y" value="-1.57"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" value="$(arg name)_2" />
+        </node>
+        
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg name)_2 -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg Y) -param robot_description" />
+    </group>
+    <!-- Agent3 -->
+    <group ns="$(arg name)_3">
+        <arg name="x" value="16"/>
+        <arg name="y" value="9"/>
+        <arg name="z" value="0"/>
+        <arg name="Y" value="1.57"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" value="$(arg name)_3" />
+        </node>
+        
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg name)_3 -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg Y) -param robot_description" />
+    </group>
+</launch>

@@ -358,7 +358,7 @@ def plotFromTwoBags(file1, file2, topic, label1, label2):
     # plot_combined_RMSE_v(RMSE_v1, label1, RMSE_v2, label2)
     plot_combine_det_p(p1, p2, label1, label2)
 
-def plot_combine_det_p_after_5s(timeStamps1, det_p1, timeStamps2, det_p2, dataset_label1, dataset_label2, offset_seconds=5.0):
+def plot_combine_det_p_after_5s(timeStamps1, det_p1, timeStamps2, det_p2, dataset_label1, dataset_label2, offset_seconds=10.0):
     plt.figure(figsize=(10, 6))
     
     # 計算相對於各自開始時間的過濾點
@@ -416,7 +416,7 @@ def plot_combine_det_p_after_5s(timeStamps1, det_p1, timeStamps2, det_p2, datase
     
     plt.xlabel(f'Time (seconds)')
     plt.ylabel('det_p')
-    plt.title(f'Comparison of trace(p) between constant & time-varying cov')
+    plt.title(f'Comparison of trace(p) between Local Coverage Control and Global CBBA First')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -447,28 +447,28 @@ def plotFromTwoBags_after_5s(file1, file2, topic, label1, label2):
     print(f"  Total data points: {len(timestamps2)}")
     
     # 檢查有多少數據點在5秒後
-    count1_after_5s = sum(1 for t in timestamps1 if t >= 5.0)
-    count2_after_5s = sum(1 for t in timestamps2 if t >= 5.0)
+    count1_after_5s = sum(1 for t in timestamps1 if t >= 20.0)
+    count2_after_5s = sum(1 for t in timestamps2 if t >= 20.0)
     print(f"Data points after 5s - File1: {count1_after_5s}, File2: {count2_after_5s}")
     print("========================")
 
     # Plot combined det_p from both bags starting from 5 seconds
     plot_combine_det_p_after_5s(timestamps1, p1, timestamps2, p2, label1, label2)
 
-folder = '/home/weiggen/wei_research_ws/src/voronoi_cbsa/bag/'
+folder = '../../voronoi_cbsa/bag/'
 
 # Multi-targets dynamic simulation
 # file1 = folder + '7_10_trimmed.bag'
 # file2 = folder + '8_10_trimmed.bag'
 
 # Multi-targets dynamic simulation
-file1 = folder + 'setIC_dynamic_cCov_trimmed.bag'
-file2 = folder + 'setIC_dynamic_tCov_trimmed.bag'
+file1 = folder + 'setIC_dynamic_tCov_trimmed.bag'
+file2 = folder + 'ptz_ver100_trimmed.bag'
 
 bag1 = rosbag.Bag(file1)
 bag2 = rosbag.Bag(file2)
 topic = '/tb_1/TEIF/target_1/Plot'
-plotFromTwoBags(file1, file2, topic, 'constant cov', 'time-varying cov')
-plotFromTwoBags_after_5s(file1, file2, topic, 'constant cov', 'time-varying cov')
+plotFromTwoBags(file1, file2, topic, 'Only Coverage Ctrl', 'Global CBBA + Local CC')
+plotFromTwoBags_after_5s(file1, file2, topic, 'Only Coverage Ctrl', 'Global CBBA + Local CC')
 # plotFromTwoBags(file1, file2, topic, 'Sim7, balance = T', 'Sim8, balance = T')
 # plotFromBag(bag1, 'THEIF, Only one neigbor robots has absolute position rate 5hz')

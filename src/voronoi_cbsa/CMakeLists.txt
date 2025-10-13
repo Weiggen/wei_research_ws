@@ -175,6 +175,7 @@ include_directories(
 catkin_install_python(PROGRAMS
   scripts/Voronoi_based_controller/Ver3/control_target_1.py
   scripts/Voronoi_based_controller/Ver3/control_target_2.py
+  scripts/Voronoi_based_controller/Ver3/task_allocation.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

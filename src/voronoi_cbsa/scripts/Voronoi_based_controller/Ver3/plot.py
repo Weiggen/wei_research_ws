@@ -85,11 +85,11 @@ class Visualize2D():
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/total_score", Float64, self.TotalScoreCB(i))
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/visualize/pose", Pose, self.PoseCB(i))
             rospy.Subscriber("/"+self.vehicle+"_"+str(i+1)+"/failure", Int16, self.FailureCB(i))
-                    
-        self.window_size = self.size*4
+
+        self.blockSize = 4        
+        self.window_size = self.size*self.blockSize
         self.display = pygame.display.set_mode(self.window_size)
         self.display.fill((0,0,0))
-        self.blockSize = int(self.window_size[0]/self.size[0])
 
         # 添加一個函數來翻轉x坐標
         self.flip_x = lambda x: x
@@ -303,6 +303,11 @@ class Visualize2D():
                             total_cost = np.where(cost < total_cost, cost, total_cost)
 
             return sensor_voronoi.transpose()
+    
+        def ComputeVoronoi_CamCapBased(role, agents_pos, global_event):
+            # Create a 240*240 meshgrid
+            x_coords, y_coords = np.meshgrid(np.arange(self.size[0]), np.arange(self.size[1]), indexing='ij')
+
         
         def ComputeSensorFootprint(role, agent_pos, global_event, agent_info):
             for agent in self.agent_pos.keys():
@@ -315,8 +320,12 @@ class Visualize2D():
             event_plt = ((event - event.min()) * (1/(event.max() - event.min()) * 255)).astype('uint8')
             
             if self.plot_type == 'voronoi':
+                # partition
                 voronoi_plt = ComputeSensorVoronoi(self.plot_role, self.agent_pos.copy(), event.copy())
+                
                 for x_map, x in enumerate(range(0, self.window_size[0], self.blockSize)):
+                    # x_map = [0, 1, 2, ..., 240]
+                    # x = [0., 0.1, 0.2, ..., 24.]
                     for y_map, y in enumerate(range(0, self.window_size[1], self.blockSize)):
                         
                         id = voronoi_plt[y_map, x_map]

@@ -1,0 +1,328 @@
+{
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"include",
+			"generate_messages",
+			"add_dependencies"
+		],
+		"files" : 
+		[
+			"build/voronoi_cbsa/cmake/voronoi_cbsa-genmsg.cmake",
+			"/opt/ros/noetic/share/genmsg/cmake/genmsg-extras.cmake",
+			"voronoi_cbsa/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 85,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 307,
+				"parent" : 1
+			},
+			{
+				"file" : 0,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 694,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 789,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 717,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 711,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 713,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 705,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 707,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 701,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 703,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 725,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 709,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 719,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 715,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 723,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 721,
+				"parent" : 3
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "geometry_msgs_generate_messages_py::@6f46da81a91c6db67ad6"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_Sensor::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_TargetInfo::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 8,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_TargetInfoArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 9,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_NeighborInfo::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 10,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_ExchangeData::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 12,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_VoteList::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 13,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_densityGradient::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 14,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_ExchangeDataArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 15,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_ValidSensors::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 16,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_SensorArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 17,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_WeightArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 18,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_Weight::@562cd8e639a8f1deb13a"
+		}
+	],
+	"id" : "voronoi_cbsa_generate_messages_py::@562cd8e639a8f1deb13a",
+	"name" : "voronoi_cbsa_generate_messages_py",
+	"paths" : 
+	{
+		"build" : "voronoi_cbsa",
+		"source" : "voronoi_cbsa"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 4,
+			"isGenerated" : true,
+			"path" : "build/voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_py",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeData.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_VoteList.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfo.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_NeighborInfoArray.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ExchangeDataArray.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfo.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_TargetInfoArray.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_SensorArray.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_Sensor.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_ValidSensors.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_Weight.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_WeightArray.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/_densityGradient.py.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/lib/python3/dist-packages/voronoi_cbsa/msg/__init__.py.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

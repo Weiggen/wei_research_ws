@@ -1,0 +1,321 @@
+{
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"include",
+			"generate_messages",
+			"add_dependencies"
+		],
+		"files" : 
+		[
+			"build/voronoi_cbsa/cmake/voronoi_cbsa-genmsg.cmake",
+			"/opt/ros/noetic/share/genmsg/cmake/genmsg-extras.cmake",
+			"voronoi_cbsa/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 85,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 307,
+				"parent" : 1
+			},
+			{
+				"file" : 0,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 565,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 777,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 588,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 582,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 584,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 576,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 578,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 572,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 574,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 596,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 580,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 590,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 586,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 594,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 592,
+				"parent" : 3
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "geometry_msgs_generate_messages_nodejs::@6f46da81a91c6db67ad6"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_Sensor::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_TargetInfo::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 8,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_TargetInfoArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 9,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_NeighborInfo::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 10,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_NeighborInfoArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_ExchangeData::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 12,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_VoteList::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 13,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_densityGradient::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 14,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_ExchangeDataArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 15,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_ValidSensors::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 16,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_SensorArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 17,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_WeightArray::@562cd8e639a8f1deb13a"
+		},
+		{
+			"backtrace" : 18,
+			"id" : "_voronoi_cbsa_generate_messages_check_deps_Weight::@562cd8e639a8f1deb13a"
+		}
+	],
+	"id" : "voronoi_cbsa_generate_messages_nodejs::@562cd8e639a8f1deb13a",
+	"name" : "voronoi_cbsa_generate_messages_nodejs",
+	"paths" : 
+	{
+		"build" : "voronoi_cbsa",
+		"source" : "voronoi_cbsa"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 4,
+			"isGenerated" : true,
+			"path" : "build/voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_nodejs",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/voronoi_cbsa/CMakeFiles/voronoi_cbsa_generate_messages_nodejs.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeData.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/VoteList.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfo.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/NeighborInfoArray.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/ExchangeDataArray.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfo.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/TargetInfoArray.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/SensorArray.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/Sensor.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/ValidSensors.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/Weight.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/WeightArray.js.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/devel/share/gennodejs/ros/voronoi_cbsa/msg/densityGradient.js.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

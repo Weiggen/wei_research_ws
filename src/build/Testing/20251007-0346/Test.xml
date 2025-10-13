@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20251007-0346-Experimental"
+	Name="weiggen-System-Product-Name"
+	Generator="ctest-3.16.3"
+	CompilerName="/usr/bin/g++"
+	CompilerVersion="9.4.0"
+	OSName="Linux"
+	Hostname="weiggen-System-Product-Name"
+	OSRelease="5.15.0-139-generic"
+	OSVersion="#149~20.04.1-Ubuntu SMP Wed Apr 16 08:29:56 UTC 2025"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="183"
+	ProcessorCacheSize="36864"
+	NumberOfLogicalCPU="32"
+	NumberOfPhysicalCPU="24"
+	TotalVirtualMemory="2047"
+	TotalPhysicalMemory="64035"
+	LogicalProcessorsPerPhysical="1"
+	ProcessorClockFrequency="3200"
+	>
+	<Testing>
+		<StartDateTime>Oct 07 11:46 CST</StartDateTime>
+		<StartTestTime>1759808804</StartTestTime>
+		<TestList/>
+		<EndDateTime>Oct 07 11:46 CST</EndDateTime>
+		<EndTestTime>1759808804</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

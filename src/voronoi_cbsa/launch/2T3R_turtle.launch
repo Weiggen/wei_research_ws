@@ -15,7 +15,7 @@
     <!-- target 1 -->
     <group ns = "target_1">
         <arg name="x" value="10"/>
-        <arg name="y" value="12"/>
+        <arg name="y" value="13"/>
         <arg name="z" value="0"/>
         <arg name="Y" value="3.14"/>
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
@@ -29,8 +29,8 @@
     </group>
     <!-- Agent1 -->
     <group ns = "$(arg name)_1">
-        <arg name="x" value="9"/>
-        <arg name="y" value="10.5"/>
+        <arg name="x" value="5.5"/>
+        <arg name="y" value="13"/>
         <arg name="z" value="0"/>
         <arg name="Y" value="0"/>
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
@@ -44,8 +44,8 @@
     </group>
     <!-- Agent2 -->
     <group ns="$(arg name)_2">
-        <arg name="x" value="14"/>
-        <arg name="y" value="15.5"/>
+        <arg name="x" value="16"/>
+        <arg name="y" value="15"/>
         <arg name="z" value="0"/>
         <arg name="Y" value="-1.57"/>
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
@@ -59,10 +59,10 @@
     </group>
     <!-- Agent3 -->
     <group ns="$(arg name)_3">
-        <arg name="x" value="14.06"/>
-        <arg name="y" value="7"/>
+        <arg name="x" value="16"/>
+        <arg name="y" value="9"/>
         <arg name="z" value="0"/>
-        <arg name="Y" value="-1.57"/>
+        <arg name="Y" value="1.57"/>
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
@@ -74,7 +74,7 @@
     </group>
     <!-- target 2 -->
     <group ns="target_2">
-        <arg name="x" value="14"/>
+        <arg name="x" value="16"/>
         <arg name="y" value="12"/>
         <arg name="z" value="0"/>
         <arg name="Y" value="0"/>

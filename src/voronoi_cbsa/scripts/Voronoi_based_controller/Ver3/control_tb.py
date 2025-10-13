@@ -103,7 +103,7 @@ class PTZCamera():
         self.safe_distance  = 0.1
         self.avoid_weight   = 0.05
 
-        self.weighted_target = 0
+        # self.weighted_target = 0
         
         # Setting up environment parameters
         self.total_agents       = rospy.get_param('/total_agents', 1)
@@ -897,9 +897,9 @@ class PTZCamera():
                     if role == 'camera':
                         u_v[0] += self.sensor_weight[role][event]*np.sum(perspective_gradient_x * self.event_density[event]) # ctrl signal for heading
                         u_v[1] += self.sensor_weight[role][event]*np.sum(perspective_gradient_y * self.event_density[event]) # ctrl signal for heading
-                        if event == self.weighted_target:
-                            u_v[0] *= 2
-                            u_v[1] *= 2
+                        # if event == self.weighted_target:
+                        #     u_v[0] *= 2
+                        #     u_v[1] *= 2
                                 
                     total_gradient[0] = sensor_gradient[0]
                     total_gradient[1] = sensor_gradient[1]
@@ -942,10 +942,11 @@ class PTZCamera():
                 u_p[1] += (tmp_y_2 if not np.isnan(tmp_y_2) else 0)
                 # u_p[0] *= target_weight
                 # u_p[1] *= target_weight
-                if event == self.weighted_target:
-                    print("weighted_target: {}".format(event))
-                    u_p[0] *= 2
-                    u_p[1] *= 2
+
+                # if event == self.weighted_target:
+                #     print("weighted_target: {}".format(event))
+                #     u_p[0] *= 2
+                #     u_p[1] *= 2
         
         return u_p, u_v
               
