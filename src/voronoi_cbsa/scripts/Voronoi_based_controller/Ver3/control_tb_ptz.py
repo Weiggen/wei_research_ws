@@ -177,6 +177,8 @@ class PTZCamera():
         self.assigned_target_pos = None
         self.globalAssignment_done = False
         self.localCC_print = False
+
+        self.score_init = False
             
         self.RosInit()
         self.debug = self.DEBUGTOOL(id = self.id)
@@ -1368,14 +1370,6 @@ class PTZCamera():
 
                     tmp_x_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[0])
                     tmp_y_2 = k_2*self.sensor_weight[role][event]*np.sum(event_gradient[1])
-
-                    if tmp_x_2 < 10e-5 and tmp_y_2 < 10e-5:
-                        u = np.array([tmp_x_2, tmp_y_2])
-                        u = u / self.Norm(u)
-                        u *= 0.001
-                        tmp_x_2 = u[0]
-                        tmp_y_2 = u[1]
-
 
                     u_p[0] = u_p[0] + (tmp_x if not np.isnan(tmp_x) else 0)
                     u_p[1] = u_p[1] + (tmp_y if not np.isnan(tmp_y) else 0)

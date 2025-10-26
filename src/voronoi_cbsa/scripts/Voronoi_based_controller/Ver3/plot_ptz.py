@@ -6,8 +6,10 @@ import matplotlib.pyplot as plt
 
 from std_msgs.msg import Float64, Int16
 from geometry_msgs.msg import Pose
+from gazebo_msgs.msg import ModelStates
 from voronoi_cbsa.msg import TargetInfoArray, ValidSensors, WeightArray
 from scipy.stats import multivariate_normal
+from scipy.spatial.transform import Rotation as R
 
 class Visualization():
     def __init__(self):
@@ -33,10 +35,12 @@ class Visualization():
         self.ideal_range = rospy.get_param("~desired_range", 3.0)
         self.camera_variance = rospy.get_param("~camera_variance", 2)
 
-        # 修正：正確的代理人索引範圍
-        for i in range(self.total_agents):
-            rospy.Subscriber(f"/{self.vehicle}_{i+1}/visualize/pose", 
-                           Pose, self.PoseCB(i))
+        # # 修正：正確的代理人索引範圍
+        # for i in range(self.total_agents):
+        #     rospy.Subscriber(f"/{self.vehicle}_{i+1}/visualize/pose", 
+        #                    Pose, self.PoseCB(i))
+            
+        rospy.Subscriber("/gazebo/model_states", ModelStates, self.AgentCallback)
 
         rospy.Subscriber("/target", TargetInfoArray, self.TargetCallback)
 
@@ -54,12 +58,26 @@ class Visualization():
         # 預載入字體避免重複載入
         self.font = pygame.font.Font(None, 24)
     
-    def PoseCB(self, agent_id):
-        """修正：使用agent_id避免變數名衝突"""
-        def callback(msg):
-            self.agent_pos[agent_id] = np.array([msg.position.x, msg.position.y])
-            self.agent_per[agent_id] = np.array([msg.orientation.x, msg.orientation.y])
-        return callback
+    # def PoseCB(self, agent_id):
+    #     """修正：使用agent_id避免變數名衝突"""
+    #     def callback(msg):
+    #         self.agent_pos[agent_id] = np.array([msg.position.x, msg.position.y])
+    #         self.agent_per[agent_id] = np.array([msg.orientation.x, msg.orientation.y])
+    #     return callback
+    
+    def AgentCallback(self, msg):
+        for agent_id in range(self.total_agents):
+            vehicle_name = f"{self.vehicle}_{agent_id+1}"
+            if vehicle_name in msg.name:
+                index = msg.name.index(vehicle_name)
+                position = msg.pose[index].position
+                self.agent_pos[agent_id] = np.array([position.x, position.y])
+                rotation_matrix = R.from_quat([msg.pose[index].orientation.x,
+                                               msg.pose[index].orientation.y,
+                                                msg.pose[index].orientation.z,
+                                                msg.pose[index].orientation.w])
+                yaw = rotation_matrix.as_euler('zyx', degrees=False)[0]
+                self.agent_per[agent_id] = np.asanyarray([np.cos(yaw), np.sin(yaw)])
 
     def TargetCallback(self, msg):
         """目標回調函數"""

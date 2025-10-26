@@ -579,7 +579,7 @@ class PTZCamera():
     def UpdatePosition(self, u_p):
         # Maximum Speed restriction
         # k = 1.2 # static tuned
-        k = 100. # dynamic tuned
+        k = 1. # dynamic tuned
         u_p = k*u_p
 
         for role in self.valid_sensors.keys():
@@ -652,7 +652,7 @@ class PTZCamera():
         # single target dynamic scenario
         # k_yaw = 0.08
         # muti-target static scenario
-        k_yaw = 0.02
+        k_yaw = 0.01
         # muti-target dynamic scenario
         # k_yaw = 0.06
         self.yaw_rate = k_yaw*u_yaw
